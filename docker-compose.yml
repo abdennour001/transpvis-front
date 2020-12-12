@@ -1,0 +1,12 @@
+transpvis-front:
+    command: npm start
+    container_name: transpvis-front
+    environment:
+        - PORT=3000
+    build: .
+    ports:
+        - "3000:3000"
+    volumes:
+        - .:/code
+        - /code/node_modules
+    tty: true
