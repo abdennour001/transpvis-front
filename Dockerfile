@@ -9,7 +9,7 @@ WORKDIR /code
 
 # Copy the package.json inside the working directory
 COPY package.json /code
-COPY package-lock.json /code
+COPY package-lock.json /code    
 
 # Install required dependencies
 RUN npm install --verbose
