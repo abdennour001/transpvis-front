@@ -8,12 +8,21 @@ body {
 
 .app {
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100vh;
+    background-image: url("../../assets/backgound2.png");
+    background-repeat: space;
+    background-size: 400px;
+    background-position: left center;
 }
 
 img {
-    height: 250px;
+    height: 150px;
     object-fit: contain;
+}
+
+h1 {
+    margin-bottom: 0;
 }

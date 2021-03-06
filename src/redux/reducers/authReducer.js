@@ -1,3 +1,3 @@
-const initialState = {
-    isAuthenticated: null
-};
+// const initialState = {
+//     isAuthenticated: null
+// };
