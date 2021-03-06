@@ -18,9 +18,34 @@ body {
     background-position: left center;
 }
 
+@keyframes bounceIn {
+    0% {
+        opacity: 1;
+        transform: scale(0.3);
+    }
+
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 img {
     height: 150px;
     object-fit: contain;
+    animation: bounceIn 0.6s;
+    transform: rotate(0deg) scale(1) translateZ(0);
+    transition: all 0.4s cubic-bezier(0.8, 1.8, 0.75, 0.75);
 }
 
 h1 {
