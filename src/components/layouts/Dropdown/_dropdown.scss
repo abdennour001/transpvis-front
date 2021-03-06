@@ -1,0 +1,61 @@
+@import "../../styles/themes/_variables";
+
+.dropdown {
+    &:focus,
+    :active {
+        outline: 0px;
+        -webkit-appearance: none;
+    }
+
+    &__toggle {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        list-style: none;
+
+        &:hover {
+            color: lighten($text, 10%);
+        }
+
+        &:focus {
+            color: lighten($text, 10%);
+            outline: 0px;
+            -webkit-appearance: none;
+        }
+    }
+
+    &__toggle::-webkit-details-marker {
+        display: none;
+    }
+
+    &__menu {
+        position: absolute;
+        top: 80%;
+        left: auto;
+        right: 30px;
+        width: 180px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        margin-top: 2px;
+        list-style: none;
+        background-color: white;
+        background-clip: padding-box;
+        border: 1px solid #f5f5f5;
+        border-radius: 6px;
+        box-shadow: 0 7px 30px -10px rgba(150, 170, 180, 0.4);
+    }
+
+    &__item {
+        cursor: pointer;
+        display: block;
+        padding: 4px 20px 4px 20px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.5rem;
+
+        &:hover {
+            color: white;
+            background-color: lighten($text, 10%);
+        }
+    }
+}

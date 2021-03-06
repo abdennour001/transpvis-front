@@ -3,10 +3,7 @@ import { Link } from "react-router-dom";
 
 import "./_header.scss";
 import logo from "../../../assets/logo.png";
-
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import Dropdown from "../Dropdown";
 
 const Header = () => {
     return (
@@ -19,10 +16,7 @@ const Header = () => {
                         <small>v1.0</small>
                     </span>
                 </Link>
-                <div className="header__settings">
-                    <FontAwesomeIcon icon={faCog} fixedWidth />
-                    <FontAwesomeIcon icon={faCaretDown} fixedWidth size="sm" />
-                </div>
+                <Dropdown />
             </header>
         </>
     );
