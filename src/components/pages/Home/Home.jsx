@@ -1,9 +1,16 @@
-import React from 'react';
+import React from "react";
+import Header from "../../layouts/Header";
 
-import './_home.scss';
+import "./_home.scss";
 
 const Home = () => {
-  return <div>Hello 👋, I am a Home component.</div>;
+    return (
+        <>
+            <div className="home">
+                <Header />
+            </div>
+        </>
+    );
 };
 
 export default Home;
