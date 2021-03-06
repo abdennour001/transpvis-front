@@ -58,4 +58,11 @@
             background-color: lighten($text, 10%);
         }
     }
+
+    &__devider {
+        display: block;
+        height: 0;
+        margin: 8px 0;
+        border-top: 1px solid #f5f5f5;
+    }
 }

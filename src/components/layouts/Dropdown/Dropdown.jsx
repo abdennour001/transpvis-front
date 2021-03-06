@@ -35,6 +35,7 @@ const Dropdown = () => {
                 <div className="dropdown__item">
                     <Link to="/">Your applications</Link>
                 </div>
+                <div className="dropdown__devider"></div>
                 <div className="dropdown__item">
                     <Link to="/">Help</Link>
                 </div>
