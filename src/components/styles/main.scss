@@ -24,3 +24,9 @@ a {
     -khtml-user-select: none;
     -webkit-user-select: none;
 }
+
+.d-flex {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
