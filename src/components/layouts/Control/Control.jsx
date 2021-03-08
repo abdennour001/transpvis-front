@@ -68,7 +68,7 @@ const Control = () => {
                     </div>
                 </div>
                 <div className="control__bottom">
-                    <p>✏️ Control here ...</p>
+                    {/* <p>✏️ Control here ...</p> */}
                 </div>
             </div>
         </>

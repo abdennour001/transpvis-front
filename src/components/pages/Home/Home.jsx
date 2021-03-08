@@ -3,6 +3,7 @@ import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
+import Detail from "../../layouts/Detail"
 
 import "./_home.scss";
 
@@ -129,7 +130,7 @@ const Home = () => {
                                 <p>🤙 Main visualisation</p>
                             </div>
                             <div className="home__right">
-                                <p>🤙 More info...</p>
+                                <Detail />
                             </div>
                         </div>
                     </div>
