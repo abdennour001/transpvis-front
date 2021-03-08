@@ -130,7 +130,7 @@ const Home = () => {
                                 <p>🤙 Main visualisation</p>
                             </div>
                             <div className="home__right">
-                                <Detail />
+                                <Detail type={"stakeholder"} />
                             </div>
                         </div>
                     </div>

@@ -83,7 +83,7 @@ const Control = () => {
                         <p>✏️ Control here ...</p>
                     </div>
 
-                    <div className="control__toggle" onClick={handleToggle}>
+                    <div className="control__toggle" onClick={handleToggle} title="Toggle menu">
                         <FontAwesomeIcon icon={faChevronUp} size="sm" />
                         <FontAwesomeIcon icon={faChevronDown} size="sm" />
                     </div>

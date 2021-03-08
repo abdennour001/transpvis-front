@@ -17,16 +17,26 @@
 
     &__grid {
         display: grid;
-        grid-template-columns: 1fr 2fr 1fr;
-        justify-items: center;
+        grid-template-columns: 2.4fr 6fr 2.8fr;
+        // grid-template-columns: 1fr 2fr 1fr;
+        justify-items: start;
         padding: 16px 32px;
     }
 
     &__left {
         width: 100%;
+        max-width: 330px;
+        // height: 82vh;
+        // overflow-y: scroll;
+        // scroll-behavior: smooth;
     }
 
     &__right {
+        width: 100%;
+    }
+
+    &__middle {
+        // background: black;
         width: 100%;
     }
 }
