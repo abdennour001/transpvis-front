@@ -8,13 +8,9 @@ import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 const Control = () => {
     let [isOpen, setIsOpen] = useState(false);
-    let [render, setRender] = useState(false);
 
     const handleToggle = () => {
         setIsOpen(!isOpen);
-        setTimeout(() => {
-            setRender(!render);
-        }, 150);
     };
 
     return (
@@ -78,11 +74,14 @@ const Control = () => {
                     </div>
                 </div>
                 <div className="control__bottom">
-                    {render && (
-                        <div className="control__pannel">
-                            <p>✏️ Control here ...</p>
-                        </div>
-                    )}
+                    <div
+                        className={
+                            "control__pannel" +
+                            (isOpen ? "" : " control__pannel-callapsed")
+                        }
+                    >
+                        <p>✏️ Control here ...</p>
+                    </div>
 
                     <div className="control__toggle" onClick={handleToggle}>
                         <FontAwesomeIcon icon={faChevronUp} size="sm" />
