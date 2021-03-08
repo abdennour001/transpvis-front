@@ -9,19 +9,30 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        padding: 16px 32px;
     }
 
     &__bottom {
+        width: 100%;
+    }
+
+    &__grid {
         display: grid;
         grid-template-columns: 1fr 2fr 1fr;
         justify-items: center;
-        width: 100%;
+        padding: 16px 32px;
     }
 
     &__left {
         width: 100%;
     }
+}
+
+.home__top {
+    display: flex;
+    width: 100%;
+    background-clip: border-box;
+    background-color: $gray-200;
+    border-bottom: 1px solid $gray-300;
 }
 
 .home__navigation {
