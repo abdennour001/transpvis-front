@@ -3,7 +3,7 @@ import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
-import Detail from "../../layouts/Detail"
+import Detail from "../../layouts/Detail";
 
 import "./_home.scss";
 

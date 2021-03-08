@@ -1,15 +1,25 @@
-import React from "react";
+import { React, useState } from "react";
 
 import "./_control.scss";
 
 import Tag from "../Tag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
 const Control = () => {
+    let [isOpen, setIsOpen] = useState(false);
+    let [render, setRender] = useState(false);
+
+    const handleToggle = () => {
+        setIsOpen(!isOpen);
+        setTimeout(() => {
+            setRender(!render);
+        }, 150);
+    };
+
     return (
         <>
-            <div className="control">
+            <div className={"control " + (isOpen ? "" : "control-collapsed")}>
                 <div className="control__header">
                     <div className="control__left">
                         <h2>Amazon Web Services</h2>
@@ -68,7 +78,16 @@ const Control = () => {
                     </div>
                 </div>
                 <div className="control__bottom">
-                    {/* <p>✏️ Control here ...</p> */}
+                    {render && (
+                        <div className="control__pannel">
+                            <p>✏️ Control here ...</p>
+                        </div>
+                    )}
+
+                    <div className="control__toggle" onClick={handleToggle}>
+                        <FontAwesomeIcon icon={faChevronUp} size="sm" />
+                        <FontAwesomeIcon icon={faChevronDown} size="sm" />
+                    </div>
                 </div>
             </div>
         </>

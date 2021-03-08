@@ -7,12 +7,21 @@
     justify-content: center;
     width: 100%;
     padding: 0 32px;
+    position: relative;
+    height: 150px;
+    transition: all .5s ease-out;
+
+    &-collapsed {
+        height: 68px;
+    }
 
     &__header {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        position: absolute;
         width: 100%;
+        top: 0;
     }
 
     &__right {
@@ -20,6 +29,11 @@
         align-items: center;
         justify-content: space-between;
         gap: 24px;
+        padding-right: 32px;
+    }
+
+    &__left {
+        padding-left: 32px;
     }
 
     &__info {
@@ -35,5 +49,38 @@
     }
 
     &__bottom {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    &__pannel {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 24px;
+        position: absolute;
+        bottom: 0;
+    }
+
+    &__toggle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: -18px;
+
+        background-color: white;
+        padding: 4px 12px;
+        border-radius: 200px;
+        box-shadow: 0 1px 8px rgba(109, 117, 141, 0.1);
+        cursor: pointer;
+        transition: all 0.1s ease-in;
+
+        &:hover {
+            color: white;
+            background-color: $text;
+        }
     }
 }
