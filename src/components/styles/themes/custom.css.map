@@ -1,0 +1,10 @@
+{
+    "version": 3,
+    "mappings": "AAIA,OAAO,CAAC,uIAAI",
+    "sources": [
+        "custom.scss",
+        "_variables.scss"
+    ],
+    "names": [],
+    "file": "custom.css"
+}

@@ -4,7 +4,7 @@ import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
 import Detail from "../../layouts/Detail";
-
+import BarChart from '../../layouts/BarChart'
 import "./_home.scss";
 
 const Home = () => {
@@ -128,6 +128,11 @@ const Home = () => {
                             </div>
                             <div className="home__middle">
                                 <p>🤙 Main visualisation</p>
+                                
+                                <div className="home__center">
+                                <BarChart data={[5,10,1,3]} size={[500,500]} />
+                                </div>
+
                             </div>
                             <div className="home__right">
                                 <Detail type={"stakeholder"} />
