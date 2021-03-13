@@ -101,7 +101,7 @@
 
         &_content {
             transition: opacity 1s ease;
-            transition-delay: .1s;
+            transition-delay: 0.1s;
             opacity: 100%;
             &-collapsed {
                 transition: opacity 0.1s ease;

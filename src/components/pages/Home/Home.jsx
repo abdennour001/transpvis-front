@@ -1,13 +1,25 @@
-import React from "react";
+import { React, useState } from "react";
 import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
 import Detail from "../../layouts/Detail";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+    faExpand,
+    faSearchPlus,
+    faSearchMinus,
+    faCompress
+} from "@fortawesome/free-solid-svg-icons";
+
 import "./_home.scss";
 
 const Home = () => {
+    const [expanded, setExpanded] = useState(true);
+    const handleToggleViz = () => {
+        setExpanded(!expanded);
+    };
     return (
         <>
             <div className="home">
@@ -18,7 +30,11 @@ const Home = () => {
                         <Control />
                     </div>
                     <div className="home__bottom">
-                        <div className="home__grid">
+                        <div
+                            className={
+                                "home__grid" + (expanded ? "" : "-expanded")
+                            }
+                        >
                             <div className="home__left">
                                 <div className="home__navigation">
                                     <div className="home__navinfo">
@@ -127,9 +143,38 @@ const Home = () => {
                                 />
                             </div>
                             <div className="home__middle">
+                                <div
+                                    className="home__expand"
+                                    style={{ right: expanded ? "14px" : 0 }}
+                                >
+                                    <FontAwesomeIcon
+                                        icon={expanded ? faExpand : faCompress}
+                                        size="lg"
+                                        fixedWidth
+                                        className="icon"
+                                        onClick={handleToggleViz}
+                                    />
+                                    {/* <FontAwesomeIcon
+                                        icon={faSearchPlus}
+                                        size="lg"
+                                        fixedWidth
+                                        className="icon"
+                                    />
+                                    <FontAwesomeIcon
+                                        icon={faSearchMinus}
+                                        size="lg"
+                                        fixedWidth
+                                        className="icon"
+                                    /> */}
+                                </div>
                                 <p>🤙 Main visualisation</p>
                             </div>
-                            <div className="home__right">
+                            <div
+                                className={
+                                    "home__right" +
+                                    (expanded ? "" : "-expanded")
+                                }
+                            >
                                 <Detail type={"information_element"} />
                             </div>
                         </div>
