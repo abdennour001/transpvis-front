@@ -80,7 +80,9 @@ const Stakeholder = ({ data }) => {
                                         margin: "0",
                                         marginTop: "-1px",
                                         cursor: "pointer",
-                                        userSelect: "none"
+                                        userSelect: "none",
+                                        lineHeight: "2rem",
+                                        maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("production")}
                                 >
@@ -131,7 +133,9 @@ const Stakeholder = ({ data }) => {
                                         margin: "0",
                                         marginTop: "-1px",
                                         cursor: "pointer",
-                                        userSelect: "none"
+                                        userSelect: "none",
+                                        lineHeight: "2rem",
+                                        maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("obligatory")}
                                 >
@@ -187,7 +191,9 @@ const Stakeholder = ({ data }) => {
                                         margin: "0",
                                         marginTop: "-1px",
                                         cursor: "pointer",
-                                        userSelect: "none"
+                                        userSelect: "none",
+                                        lineHeight: "2rem",
+                                        maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("optional")}
                                 >
@@ -242,7 +248,9 @@ const Stakeholder = ({ data }) => {
                                         margin: "0",
                                         marginTop: "-1px",
                                         cursor: "pointer",
-                                        userSelect: "none"
+                                        userSelect: "none",
+                                        lineHeight: "2rem",
+                                        maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("restricted")}
                                 >
