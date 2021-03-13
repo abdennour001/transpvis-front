@@ -1,5 +1,15 @@
 @import "../../styles/themes/_variables";
 
+@keyframes resize {
+    0% {
+        grid-template-columns: 2.4fr 6fr 2.8fr;
+    }
+
+    100% {
+        grid-template-columns: 1.7fr 6fr;
+    }
+}
+
 .home {
     height: 100%;
     background-color: $gray-100;
@@ -18,9 +28,15 @@
     &__grid {
         display: grid;
         grid-template-columns: 2.4fr 6fr 2.8fr;
-        // grid-template-columns: 1fr 2fr 1fr;
         justify-items: start;
         padding: 16px 32px;
+
+        &-expanded {
+            display: grid;
+            justify-items: start;
+            padding: 16px 32px;
+            grid-template-columns: 1.7fr 6fr;
+        }
     }
 
     &__left {
@@ -33,6 +49,15 @@
 
     &__right {
         width: 100%;
+        opacity: 100%;
+        transition: all .5s ease;
+
+        &-expanded {
+            opacity: 0%;
+            transition: all .5s ease;
+            height: 0;
+            overflow: hidden;
+        }
     }
 
     &__middle {
@@ -41,6 +66,33 @@
         align-items: flex-start;
         justify-content: center;
         width: 100%;
+        position: relative;
+    }
+
+    &__expand {
+        position: absolute;
+        right: 14px;
+        top: 0;
+        z-index: 100;
+        cursor: pointer;
+
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+
+        & > .icon {
+            background-color: white;
+            padding: 11px 8px;
+            border-radius: 200px;
+            box-shadow: 0 1px 8px rgba(109, 117, 141, 0.1);
+            cursor: pointer;
+            transition: all 0.1s ease-in;
+
+            &:hover {
+                color: white;
+                background-color: $text;
+            }
+        }
     }
 }
 
