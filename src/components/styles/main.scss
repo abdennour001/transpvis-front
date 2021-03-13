@@ -30,4 +30,29 @@ a {
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
+
+    &.align-items {
+        &-center {
+            align-items: center;
+        }
+        &-start {
+            align-items: flex-start;
+        }
+    }
+
+    &.justify-content {
+        &-center {
+            justify-content: center;
+        }
+        &-start {
+            justify-content: flex-start;
+        }
+        &-between {
+            justify-content: space-between;
+        }
+    }
+}
+
+.text-muted {
+    opacity: 50%;
 }
