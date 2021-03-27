@@ -4,6 +4,11 @@ import { connect } from "react-redux";
 // Actions
 import { getStakeholders } from "../../../redux/actions/stakeholderActions";
 import { getInformationElements } from "../../../redux/actions/informationElementsActions";
+import { getRelationships } from "../../../redux/actions/relationsActions";
+import {
+    getApplications,
+    setApplication
+} from "../../../redux/actions/applicationActions";
 
 import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
@@ -22,10 +27,16 @@ import {
 import "./_home.scss";
 
 const Home = ({
-    informationElements,
-    loading,
+    application,
+    stakeholder,
+    informationElement,
+    relationship,
+
     getStakeholders,
-    getInformationElements
+    getInformationElements,
+    getRelationships,
+    getApplications,
+    setApplication
 }) => {
     const [expanded, setExpanded] = useState(true);
     const handleToggleViz = () => {
@@ -33,13 +44,19 @@ const Home = ({
     };
 
     useEffect(() => {
-        getInformationElements({ application: 1 });
+        const selectedApp = 1;
+        getApplications().then(() => {
+            setApplication(selectedApp);
+        });
+        getStakeholders({ application: selectedApp });
+        getInformationElements({ application: selectedApp });
+        getRelationships({ stakeholder__application: selectedApp });
     }, []);
 
-    useEffect(() => {
-        if (!loading && informationElements && informationElements.length)
-            console.log(informationElements);
-    }, [loading]);
+    // useEffect(() => {
+    //     if (!loading && informationElements && informationElements.length)
+    //         console.log(informationElements);
+    // }, [loading]);
     return (
         <>
             <div className="home">
@@ -101,7 +118,24 @@ const Home = ({
                                     </h3>
                                     <Tag content="3" color="#3d4659" />
                                 </div>
-                                <Card
+                                {stakeholder.loading ? (
+                                    <div>loading...</div>
+                                ) : !stakeholder.stakeholders ||
+                                  !stakeholder.stakeholders ? (
+                                    <div>Empty...</div>
+                                ) : (
+                                    <>
+                                        {stakeholder.stakeholders.map(s => (
+                                            <Card
+                                                key={s.id}
+                                                label={s.id < 10 ? `0${s.id}` : s.id}
+                                                name={s.name}
+                                                color="#4A6FA5"
+                                            />
+                                        ))}
+                                    </>
+                                )}
+                                {/* <Card
                                     label="01"
                                     name="Customers"
                                     color="#4A6FA5"
@@ -115,7 +149,7 @@ const Home = ({
                                     label="03"
                                     name="3rd party services"
                                     color="#4A6FA5"
-                                />
+                                /> */}
                                 <br />
                                 <div
                                     className="d-flex"
@@ -206,11 +240,16 @@ const Home = ({
 };
 
 const mapSateToProps = state => ({
-    informationElements: state.informationElement.informationElements,
-    loading: state.informationElement.loading
+    application: state.application,
+    stakeholder: state.stakeholder,
+    informationElement: state.informationElement,
+    relationship: state.relationship
 });
 
 export default connect(mapSateToProps, {
     getStakeholders,
-    getInformationElements
+    getInformationElements,
+    getRelationships,
+    getApplications,
+    setApplication
 })(Home);
