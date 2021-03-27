@@ -14,7 +14,7 @@ const Detail = ({ type, data }) => {
                     </>
                 )}
 
-                {type == "information_element" && (
+                {type === "information_element" && (
                     <>
                         <InformationElement data={data} />
                     </>
