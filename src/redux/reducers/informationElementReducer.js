@@ -4,7 +4,7 @@ import {
 } from "../types";
 
 const initialState = {
-    information_elements: null,
+    informationElements: null,
     loading: false
 };
 
