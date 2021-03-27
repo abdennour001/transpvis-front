@@ -1,4 +1,10 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
+import { connect } from "react-redux";
+
+// Actions
+import { getStakeholders } from "../../../redux/actions/stakeholderActions";
+import { getInformationElements } from "../../../redux/actions/informationElementsActions";
+
 import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
@@ -8,18 +14,32 @@ import Detail from "../../layouts/Detail";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faExpand,
-    faSearchPlus,
-    faSearchMinus,
+    // faSearchPlus,
+    // faSearchMinus ,
     faCompress
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./_home.scss";
 
-const Home = () => {
+const Home = ({
+    informationElements,
+    loading,
+    getStakeholders,
+    getInformationElements
+}) => {
     const [expanded, setExpanded] = useState(true);
     const handleToggleViz = () => {
         setExpanded(!expanded);
     };
+
+    useEffect(() => {
+        getInformationElements({ application: 1 });
+    }, []);
+
+    useEffect(() => {
+        if (!loading && informationElements && informationElements.length)
+            console.log(informationElements);
+    }, [loading]);
     return (
         <>
             <div className="home">
@@ -185,4 +205,12 @@ const Home = () => {
     );
 };
 
-export default Home;
+const mapSateToProps = state => ({
+    informationElements: state.informationElement.informationElements,
+    loading: state.informationElement.loading
+});
+
+export default connect(mapSateToProps, {
+    getStakeholders,
+    getInformationElements
+})(Home);
