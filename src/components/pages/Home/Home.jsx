@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 // Actions
 import { getStakeholders } from "../../../redux/actions/stakeholderActions";
+import { getInformationElements } from "../../../redux/actions/informationElementsActions";
 
 import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
@@ -20,18 +21,24 @@ import {
 
 import "./_home.scss";
 
-const Home = ({ stakeholders, loading, getStakeholders }) => {
+const Home = ({
+    informationElements,
+    loading,
+    getStakeholders,
+    getInformationElements
+}) => {
     const [expanded, setExpanded] = useState(true);
     const handleToggleViz = () => {
         setExpanded(!expanded);
     };
 
     useEffect(() => {
-        getStakeholders({ application: 1 });
+        getInformationElements({ application: 1 });
     }, []);
 
     useEffect(() => {
-        if (!loading && stakeholders && stakeholders.length) console.log(stakeholders);
+        if (!loading && informationElements && informationElements.length)
+            console.log(informationElements);
     }, [loading]);
     return (
         <>
@@ -199,10 +206,11 @@ const Home = ({ stakeholders, loading, getStakeholders }) => {
 };
 
 const mapSateToProps = state => ({
-    stakeholders: state.stakeholder.stakeholders,
-    loading: state.stakeholder.loading
+    informationElements: state.informationElement.informationElements,
+    loading: state.informationElement.loading
 });
 
 export default connect(mapSateToProps, {
-    getStakeholders
+    getStakeholders,
+    getInformationElements
 })(Home);
