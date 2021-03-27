@@ -1,17 +1,19 @@
-import { GET_STAKEHOLDERS, SET_LOADING_STAKEHOLDERS } from "../types";
+import { GET_STAKEHOLDERS, TOGGLE_LOADING_STAKEHOLDERS } from "../types";
 
 const initialState = {
     stakeholders: null,
     loading: false
 };
 
-export default (state = initialState, action) => {
+const stakeholderReducer = (state = initialState, action) => {
     switch (action.type) {
         case GET_STAKEHOLDERS:
             return { ...state, stakeholders: action.payload, loading: false };
-        case SET_LOADING_STAKEHOLDERS:
-            return { ...state, loading: true };
+        case TOGGLE_LOADING_STAKEHOLDERS:
+            return { ...state, loading: !state.loading };
         default:
             return state;
     }
 };
+
+export default stakeholderReducer;
