@@ -1,8 +1,14 @@
-import { GET_APPLICATIONS, SET_APPLICATION } from "../types";
+import {
+    GET_APPLICATIONS,
+    SET_APPLICATION,
+    SET_FOCUSED,
+    REMOVE_FOCUSED
+} from "../types";
 
 const initialState = {
     applications: null,
-    application: null
+    application: null,
+    focused: null
 };
 
 const applicationReducer = (state = initialState, action) => {
@@ -16,6 +22,10 @@ const applicationReducer = (state = initialState, action) => {
                     app => app.id === action.payload
                 )
             };
+        case SET_FOCUSED:
+            return { ...state, focused: action.payload };
+        case REMOVE_FOCUSED:
+            return { ...state, focused: null };
         default:
             return state;
     }
