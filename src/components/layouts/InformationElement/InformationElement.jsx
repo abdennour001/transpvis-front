@@ -1,4 +1,5 @@
 import { React, useEffect, useRef, useState } from "react";
+import { connect } from "react-redux";
 
 import Card from "../Card";
 import Tag from "../Tag";
@@ -6,8 +7,15 @@ import "./_informationelement.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { colors } from "../../../utils/colors";
+import { getStakeholders } from "../../../redux/actions/stakeholderActions";
 
-const InformationElement = ({ data }) => {
+const InformationElement = ({
+    informationElement,
+    stakeholders,
+    informationElements,
+    relationships
+}) => {
     const afterRef = useRef(null);
     const [toggle, setToggle] = useState({
         related: false,
@@ -31,6 +39,32 @@ const InformationElement = ({ data }) => {
         });
     };
 
+    const getRelatedInformationElements = () => {
+        return informationElement.information_elements.map(ie => {
+            return informationElements.find(ie_ => {
+                return ie_.id === ie;
+            });
+        });
+    };
+
+    const getRelatedStakeholders = type => {
+        return relationships
+            .filter(r => {
+                return (
+                    r.information_element === informationElement.id &&
+                    r.type === type
+                );
+            })
+            .map(r => {
+                return r.stakeholder;
+            })
+            .map(s => {
+                return stakeholders.find(s_ => {
+                    return s_.id === s;
+                });
+            });
+    };
+
     return (
         <div className="detail__card">
             <div className="detail__title">
@@ -40,14 +74,14 @@ const InformationElement = ({ data }) => {
                         lineHeight: "2rem"
                     }}
                 >
-                    Collection of personal information
+                    {informationElement.name}
                 </h2>
                 <span
                     style={{
                         paddingBottom: "3px"
                     }}
                 >
-                    01
+                    {informationElement.label}
                 </span>
             </div>
             <div className="detail__info">
@@ -55,10 +89,20 @@ const InformationElement = ({ data }) => {
                     <p ref={afterRef}>Information Element</p>
                 </div>
                 <p className="detail__description">
-                    We created this introduction notebook to guide you through
-                    your first steps in exploring and visualizing data with
-                    Observable. It’s all yours to edit, tinker with, and return
-                    to as needed.
+                    {informationElement.description ? (
+                        informationElement.description
+                    ) : (
+                        <span
+                            className="d-flex align-items-start justify-content-center text-muted"
+                            style={{
+                                margin: "14px 0",
+                                fontSize: "14px",
+                                width: "100%"
+                            }}
+                        >
+                            No description provided
+                        </span>
+                    )}
                 </p>
                 <div className="detail__other">
                     <div
@@ -88,7 +132,12 @@ const InformationElement = ({ data }) => {
                                 >
                                     Related Information Elements
                                 </h4>
-                                <Tag content="3" color="#3d4659" />
+                                <Tag
+                                    content={
+                                        getRelatedInformationElements().length
+                                    }
+                                    color="#3d4659"
+                                />
                             </div>
                             <FontAwesomeIcon
                                 icon={faChevronDown}
@@ -107,17 +156,28 @@ const InformationElement = ({ data }) => {
                                 (toggle.related ? "" : "-collapsed")
                             }
                         >
-                            <Card
-                                label="02"
-                                name="Purpose for using my own personal information in amazon company"
-                                color="#FB5012"
-                            />
-                            <Card label="03" name="Cookies" color="#FFDA0A" />
-                            <Card
-                                label="04"
-                                name="Sharing of personal information"
-                                color="#FB5012"
-                            />
+                            {getRelatedInformationElements().length !== 0 ? (
+                                getRelatedInformationElements().map(ie => {
+                                    return (
+                                        <Card
+                                            key={ie.id}
+                                            label={ie.label}
+                                            name={ie.name}
+                                            color={colors[ie.type]}
+                                        />
+                                    );
+                                })
+                            ) : (
+                                <span
+                                    className="d-flex align-items-start justify-content-center text-muted"
+                                    style={{
+                                        margin: "30px 0",
+                                        fontSize: "14px"
+                                    }}
+                                >
+                                    No information elements
+                                </span>
+                            )}
                         </div>
                     </div>
                     <div
@@ -147,7 +207,13 @@ const InformationElement = ({ data }) => {
                                 >
                                     Information Element Provider
                                 </h4>
-                                <Tag content="1" color="#3d4659" />{" "}
+                                <Tag
+                                    content={
+                                        getRelatedStakeholders("production")
+                                            .length
+                                    }
+                                    color="#3d4659"
+                                />{" "}
                             </div>
                             <FontAwesomeIcon
                                 icon={faChevronDown}
@@ -166,11 +232,27 @@ const InformationElement = ({ data }) => {
                                 (toggle.provider ? "" : "-collapsed")
                             }
                         >
-                            <Card
-                                label="02"
-                                name="Amazon web services team"
-                                color="#4A6FA5"
-                            />
+                            {getRelatedStakeholders("production").length !==
+                            0 ? (
+                                getRelatedStakeholders("production").map(s => (
+                                    <Card
+                                        key={s.id}
+                                        label={s.label}
+                                        name={s.name}
+                                        color={colors["stakeholder"]}
+                                    />
+                                ))
+                            ) : (
+                                <span
+                                    className="d-flex align-items-start justify-content-center text-muted"
+                                    style={{
+                                        margin: "30px 0",
+                                        fontSize: "14px"
+                                    }}
+                                >
+                                    No information elements
+                                </span>
+                            )}
                         </div>
                     </div>
                     <div
@@ -200,7 +282,13 @@ const InformationElement = ({ data }) => {
                                 >
                                     Receiving Stakeholders
                                 </h4>
-                                <Tag content="1" color="#3d4659" />
+                                <Tag
+                                    content={
+                                        getRelatedStakeholders("obligatory")
+                                            .length
+                                    }
+                                    color="#3d4659"
+                                />
                             </div>
                             <FontAwesomeIcon
                                 icon={faChevronDown}
@@ -219,7 +307,27 @@ const InformationElement = ({ data }) => {
                                 (toggle.receive ? "" : "-collapsed")
                             }
                         >
-                            <Card label="01" name="Customers" color="#4A6FA5" />
+                            {getRelatedStakeholders("obligatory").length !==
+                            0 ? (
+                                getRelatedStakeholders("obligatory").map(s => (
+                                    <Card
+                                        key={s.id}
+                                        label={s.label}
+                                        name={s.name}
+                                        color={colors["stakeholder"]}
+                                    />
+                                ))
+                            ) : (
+                                <span
+                                    className="d-flex align-items-start justify-content-center text-muted"
+                                    style={{
+                                        margin: "30px 0",
+                                        fontSize: "14px"
+                                    }}
+                                >
+                                    No information elements
+                                </span>
+                            )}
                         </div>
                     </div>
                     <div
@@ -249,7 +357,13 @@ const InformationElement = ({ data }) => {
                                 >
                                     Requesting Stakeholders
                                 </h4>
-                                <Tag content="0" color="#3d4659" />
+                                <Tag
+                                    content={
+                                        getRelatedStakeholders("optional")
+                                            .length
+                                    }
+                                    color="#3d4659"
+                                />
                             </div>
                             <FontAwesomeIcon
                                 icon={faChevronDown}
@@ -269,15 +383,26 @@ const InformationElement = ({ data }) => {
                                 (toggle.request ? "" : "-collapsed")
                             }
                         >
-                            <span
-                                className="d-flex align-items-start justify-content-center text-muted"
-                                style={{
-                                    margin: "30px 0",
-                                    fontSize: "14px"
-                                }}
-                            >
-                                No information elements
-                            </span>
+                            {getRelatedStakeholders("optional").length !== 0 ? (
+                                getRelatedStakeholders("optional").map(s => (
+                                    <Card
+                                        key={s.id}
+                                        label={s.label}
+                                        name={s.name}
+                                        color={colors["stakeholder"]}
+                                    />
+                                ))
+                            ) : (
+                                <span
+                                    className="d-flex align-items-start justify-content-center text-muted"
+                                    style={{
+                                        margin: "30px 0",
+                                        fontSize: "14px"
+                                    }}
+                                >
+                                    No information elements
+                                </span>
+                            )}
                         </div>
                     </div>
                     <div
@@ -307,7 +432,12 @@ const InformationElement = ({ data }) => {
                                 >
                                     Restricted Stakeholders
                                 </h4>
-                                <Tag content="0" color="#3d4659" />
+                                <Tag
+                                    content={getRelatedStakeholders(
+                                        "restricted"
+                                    ).length}
+                                    color="#3d4659"
+                                />
                             </div>
                             <FontAwesomeIcon
                                 icon={faChevronDown}
@@ -327,15 +457,27 @@ const InformationElement = ({ data }) => {
                                 (toggle.restricted ? "" : "-collapsed")
                             }
                         >
-                            <span
-                                className="d-flex align-items-start justify-content-center text-muted"
-                                style={{
-                                    margin: "30px 0",
-                                    fontSize: "14px"
-                                }}
-                            >
-                                No information elements
-                            </span>
+                            {getRelatedStakeholders("restricted").length !==
+                            0 ? (
+                                getRelatedStakeholders("restricted").map(s => (
+                                    <Card
+                                        key={s.id}
+                                        label={s.label}
+                                        name={s.name}
+                                        color={colors["stakeholder"]}
+                                    />
+                                ))
+                            ) : (
+                                <span
+                                    className="d-flex align-items-start justify-content-center text-muted"
+                                    style={{
+                                        margin: "30px 0",
+                                        fontSize: "14px"
+                                    }}
+                                >
+                                    No information elements
+                                </span>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -344,4 +486,11 @@ const InformationElement = ({ data }) => {
     );
 };
 
-export default InformationElement;
+const mapSateToProps = state => ({
+    informationElement: state.application.focused,
+    stakeholders: state.stakeholder.stakeholders,
+    informationElements: state.informationElement.informationElements,
+    relationships: state.relationship.relations
+});
+
+export default connect(mapSateToProps)(InformationElement);

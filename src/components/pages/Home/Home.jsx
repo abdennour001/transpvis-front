@@ -4,6 +4,13 @@ import { connect } from "react-redux";
 // Actions
 import { getStakeholders } from "../../../redux/actions/stakeholderActions";
 import { getInformationElements } from "../../../redux/actions/informationElementsActions";
+import { getRelationships } from "../../../redux/actions/relationsActions";
+import {
+    getApplications,
+    setApplication,
+    setFocused,
+    removeFocused
+} from "../../../redux/actions/applicationActions";
 
 import Header from "../../layouts/Header";
 import Card from "../../layouts/Card";
@@ -20,12 +27,21 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import "./_home.scss";
+import { colors } from "../../../utils/colors";
 
 const Home = ({
-    informationElements,
-    loading,
+    application,
+    stakeholder,
+    informationElement,
+    relationship,
+
     getStakeholders,
-    getInformationElements
+    getInformationElements,
+    getRelationships,
+    getApplications,
+    setApplication,
+    setFocused,
+    removeFocused
 }) => {
     const [expanded, setExpanded] = useState(true);
     const handleToggleViz = () => {
@@ -33,13 +49,28 @@ const Home = ({
     };
 
     useEffect(() => {
-        getInformationElements({ application: 1 });
+        const selectedApp = 1;
+        getApplications().then(() => {
+            setApplication(selectedApp);
+        });
+        getStakeholders({ application: selectedApp });
+        getInformationElements({ application: selectedApp });
+        getRelationships({ stakeholder__application: selectedApp });
     }, []);
 
-    useEffect(() => {
-        if (!loading && informationElements && informationElements.length)
-            console.log(informationElements);
-    }, [loading]);
+    const handleCardClick = (event, element) => {
+        event.preventDefault();
+        if (!application.focused) {
+            setFocused(element);
+        } else {
+            if (application.focused === element) {
+                removeFocused(element);
+            } else {
+                setFocused(element);
+            }
+        }
+    };
+
     return (
         <>
             <div className="home">
@@ -99,23 +130,34 @@ const Home = ({
                                     >
                                         Stakeholders
                                     </h3>
-                                    <Tag content="3" color="#3d4659" />
+                                    <Tag
+                                        content={
+                                            stakeholder.stakeholders &&
+                                            stakeholder.stakeholders.length
+                                        }
+                                        color="#3d4659"
+                                    />
                                 </div>
-                                <Card
-                                    label="01"
-                                    name="Customers"
-                                    color="#4A6FA5"
-                                />
-                                <Card
-                                    label="02"
-                                    name="Amazon web services team"
-                                    color="#4A6FA5"
-                                />
-                                <Card
-                                    label="03"
-                                    name="3rd party services"
-                                    color="#4A6FA5"
-                                />
+                                {stakeholder.loading ? (
+                                    <div>loading...</div>
+                                ) : !stakeholder.stakeholders ||
+                                  !stakeholder.stakeholders.length ? (
+                                    <div>Empty...</div>
+                                ) : (
+                                    <>
+                                        {stakeholder.stakeholders.map(s => (
+                                            <Card
+                                                key={s.id}
+                                                label={s.label}
+                                                name={s.name}
+                                                color="#4A6FA5"
+                                                onClick={e =>
+                                                    handleCardClick(e, s)
+                                                }
+                                            />
+                                        ))}
+                                    </>
+                                )}
                                 <br />
                                 <div
                                     className="d-flex"
@@ -129,38 +171,38 @@ const Home = ({
                                     >
                                         Information elements
                                     </h3>
-                                    <Tag content="6" color="#3d4659" />
+                                    <Tag
+                                        content={
+                                            informationElement.informationElements &&
+                                            informationElement
+                                                .informationElements.length
+                                        }
+                                        color="#3d4659"
+                                    />
                                 </div>
-                                <Card
-                                    label="01"
-                                    name="Collection of personal information"
-                                    color="#61C9A8"
-                                />
-                                <Card
-                                    label="02"
-                                    name="Purpose for using my own personal information in amazon company"
-                                    color="#FB5012"
-                                />
-                                <Card
-                                    label="03"
-                                    name="Cookies"
-                                    color="#FFDA0A"
-                                />
-                                <Card
-                                    label="04"
-                                    name="Sharing of personal information"
-                                    color="#FB5012"
-                                />
-                                <Card
-                                    label="05"
-                                    name="Location of personal information"
-                                    color="#61C9A8"
-                                />
-                                <Card
-                                    label="06"
-                                    name="Security of personal information"
-                                    color="#FB5012"
-                                />
+                                {informationElement.loading ? (
+                                    <div>loading...</div>
+                                ) : !informationElement.informationElements ||
+                                  !informationElement.informationElements
+                                      .length ? (
+                                    <div>Empty...</div>
+                                ) : (
+                                    <>
+                                        {informationElement.informationElements.map(
+                                            ie => (
+                                                <Card
+                                                    key={ie.id}
+                                                    label={ie.label}
+                                                    name={ie.name}
+                                                    color={colors[ie.type]}
+                                                    onClick={e =>
+                                                        handleCardClick(e, ie)
+                                                    }
+                                                />
+                                            )
+                                        )}
+                                    </>
+                                )}
                             </div>
                             <div className="home__middle">
                                 <div
@@ -195,7 +237,7 @@ const Home = ({
                                     (expanded ? "" : "-expanded")
                                 }
                             >
-                                <Detail type={"information_element"} />
+                                <Detail />
                             </div>
                         </div>
                     </div>
@@ -206,11 +248,18 @@ const Home = ({
 };
 
 const mapSateToProps = state => ({
-    informationElements: state.informationElement.informationElements,
-    loading: state.informationElement.loading
+    application: state.application,
+    stakeholder: state.stakeholder,
+    informationElement: state.informationElement,
+    relationship: state.relationship
 });
 
 export default connect(mapSateToProps, {
     getStakeholders,
-    getInformationElements
+    getInformationElements,
+    getRelationships,
+    getApplications,
+    setApplication,
+    setFocused,
+    removeFocused
 })(Home);

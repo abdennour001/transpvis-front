@@ -1,4 +1,5 @@
 import { React, useState } from "react";
+import { connect } from "react-redux";
 
 import "./_control.scss";
 
@@ -6,7 +7,7 @@ import Tag from "../Tag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
 
-const Control = () => {
+const Control = ({ application, stakeholder, informationElement }) => {
     let [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -18,7 +19,7 @@ const Control = () => {
             <div className={"control " + (isOpen ? "" : "control-collapsed")}>
                 <div className="control__header">
                     <div className="control__left">
-                        <h2>Amazon Web Services</h2>
+                        <h2>{application?.name}</h2>
                     </div>
                     <div className="control__right">
                         {/* <FontAwesomeIcon
@@ -36,7 +37,13 @@ const Control = () => {
                             >
                                 Stakeholders
                             </p>
-                            <Tag content="3" color="#3d4659" />
+                            <Tag
+                                content={
+                                    stakeholder.stakeholders &&
+                                    stakeholder.stakeholders.length
+                                }
+                                color="#3d4659"
+                            />
                         </div>
                         <div className="control__info">
                             <p
@@ -47,7 +54,16 @@ const Control = () => {
                             >
                                 Policy
                             </p>
-                            <Tag content="2" color="#3d4659" />
+                            <Tag
+                                content={
+                                    informationElement.informationElements?.filter(
+                                        i => {
+                                            return i.type === "policy";
+                                        }
+                                    ).length
+                                }
+                                color="#3d4659"
+                            />
                         </div>
                         <div className="control__info">
                             <p
@@ -58,7 +74,16 @@ const Control = () => {
                             >
                                 Process
                             </p>
-                            <Tag content="3" color="#3d4659" />
+                            <Tag
+                                content={
+                                    informationElement.informationElements?.filter(
+                                        i => {
+                                            return i.type === "process";
+                                        }
+                                    ).length
+                                }
+                                color="#3d4659"
+                            />
                         </div>
                         <div className="control__info">
                             <p
@@ -69,7 +94,16 @@ const Control = () => {
                             >
                                 Data
                             </p>
-                            <Tag content="4" color="#3d4659" />
+                            <Tag
+                                content={
+                                    informationElement.informationElements?.filter(
+                                        i => {
+                                            return i.type === "data";
+                                        }
+                                    ).length
+                                }
+                                color="#3d4659"
+                            />
                         </div>
                     </div>
                 </div>
@@ -83,7 +117,11 @@ const Control = () => {
                         <p>✏️ Control here ...</p>
                     </div>
 
-                    <div className="control__toggle" onClick={handleToggle} title="Toggle menu">
+                    <div
+                        className="control__toggle"
+                        onClick={handleToggle}
+                        title="Toggle menu"
+                    >
                         <FontAwesomeIcon icon={faChevronUp} size="sm" />
                         <FontAwesomeIcon icon={faChevronDown} size="sm" />
                     </div>
@@ -93,4 +131,10 @@ const Control = () => {
     );
 };
 
-export default Control;
+const mapSateToProps = state => ({
+    application: state.application.application,
+    stakeholder: state.stakeholder,
+    informationElement: state.informationElement
+});
+
+export default connect(mapSateToProps)(Control);
