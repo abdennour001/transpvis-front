@@ -56,3 +56,13 @@ a {
 .text-muted {
     opacity: 50%;
 }
+
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner {
+    animation: spinner 1.5s linear infinite;
+}

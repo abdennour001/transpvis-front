@@ -10,9 +10,15 @@ const Detail = ({ focusedElement }) => {
         <>
             <div className="detail">
                 {!focusedElement ? (
-                    <>
-                        <p>Nothing</p>
-                    </>
+                    <div
+                        className="detail__card"
+                        style={{ height: "200px", lineHeight: "2rem", fontSize: "16px", textAlign: "center" }}
+                    >
+                        <p className="text-muted">
+                            Please select a stakeholder or an information
+                            element
+                        </p>
+                    </div>
                 ) : focusedElement.label.includes("S") ? (
                     <>
                         <Stakeholder />

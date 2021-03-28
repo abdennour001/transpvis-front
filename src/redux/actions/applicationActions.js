@@ -4,13 +4,15 @@ import {
     GET_APPLICATIONS,
     SET_APPLICATION,
     SET_FOCUSED,
-    REMOVE_FOCUSED
+    REMOVE_FOCUSED,
+    TOGGLE_LOADING_APPLICATION
 } from "../types";
 import { environment } from "../../utils/environment";
 
 // Get applications
 export const getApplications = (params = {}) => async dispatch => {
     try {
+        dispatch({ type: TOGGLE_LOADING_APPLICATION });
         const url = environment.apiEndpoint;
         const res = await axios.get(url + "applications/", {
             params: { ...params }
@@ -21,6 +23,7 @@ export const getApplications = (params = {}) => async dispatch => {
             payload: res.data
         });
     } catch (error) {
+        dispatch({ type: TOGGLE_LOADING_APPLICATION });
         console.error("Error get application: ", error);
     }
 };
