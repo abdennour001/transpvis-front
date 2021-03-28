@@ -2,9 +2,9 @@ import React from "react";
 
 import "./_card.scss";
 
-const Card = ({ label, name, color }) => {
+const Card = ({ label, name, color, onClick }) => {
     return (
-        <div className="card">
+        <div className="card" onClick={onClick}>
             <span
                 className="card__indicator"
                 style={{ background: color }}

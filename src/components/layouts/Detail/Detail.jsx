@@ -1,22 +1,25 @@
 import { React } from "react";
+import { connect } from "react-redux";
 
 import Stakeholder from "../Stakeholder";
 import InformationElement from "../InformationElement";
 import "./_detail.scss";
 
-const Detail = ({ type, data }) => {
+const Detail = ({ focusedElement }) => {
     return (
         <>
             <div className="detail">
-                {type === "stakeholder" && (
+                {!focusedElement ? (
                     <>
-                        <Stakeholder data={data} />
+                        <p>Nothing</p>
                     </>
-                )}
-
-                {type === "information_element" && (
+                ) : focusedElement.label.includes("S") ? (
                     <>
-                        <InformationElement data={data} />
+                        <Stakeholder />
+                    </>
+                ) : (
+                    <>
+                        <InformationElement />
                     </>
                 )}
             </div>
@@ -24,4 +27,8 @@ const Detail = ({ type, data }) => {
     );
 };
 
-export default Detail;
+const mapSateToProps = state => ({
+    focusedElement: state.application.focused
+});
+
+export default connect(mapSateToProps)(Detail);
