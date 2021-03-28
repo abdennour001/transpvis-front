@@ -39,9 +39,21 @@ const Stakeholder = ({
     };
 
     const getRelatedInformationElements = type => {
-        return relationships.filter(r => {
-            return r.stakeholder === stakeholder.id && r.type === type;
-        });
+        return relationships
+            .filter(r => {
+                return r.stakeholder === stakeholder.id && r.type === type;
+            })
+            .map(r => {
+                return r.information_element;
+            })
+            .map(ie => {
+                return informationElements.find(ie_ => {
+                    return ie_.id === ie;
+                });
+            })
+            .sort((a, b) => {
+                return a.label > b.label ? 1 : -1;
+            });
     };
 
     return (
@@ -139,26 +151,16 @@ const Stakeholder = ({
                         >
                             {getRelatedInformationElements("production")
                                 .length !== 0 ? (
-                                getRelatedInformationElements("production").map(
-                                    r => {
-                                        let ie = informationElements.find(
-                                            ie => {
-                                                return (
-                                                    ie.id ===
-                                                    r.information_element
-                                                );
-                                            }
-                                        );
-                                        return (
-                                            <Card
-                                                key={r.id}
-                                                label={ie.label}
-                                                name={ie.name}
-                                                color={colors[ie.type]}
-                                            />
-                                        );
-                                    }
-                                )
+                                getRelatedInformationElements(
+                                    "production"
+                                ).map(ie => (
+                                    <Card
+                                        key={ie.id}
+                                        label={ie.label}
+                                        name={ie.name}
+                                        color={colors[ie.type]}
+                                    />
+                                ))
                             ) : (
                                 <span
                                     className="d-flex align-items-start justify-content-center text-muted"
@@ -227,26 +229,16 @@ const Stakeholder = ({
                         >
                             {getRelatedInformationElements("obligatory")
                                 .length !== 0 ? (
-                                getRelatedInformationElements("obligatory").map(
-                                    r => {
-                                        let ie = informationElements.find(
-                                            ie => {
-                                                return (
-                                                    ie.id ===
-                                                    r.information_element
-                                                );
-                                            }
-                                        );
-                                        return (
-                                            <Card
-                                                key={r.id}
-                                                label={ie.label}
-                                                name={ie.name}
-                                                color={colors[ie.type]}
-                                            />
-                                        );
-                                    }
-                                )
+                                getRelatedInformationElements(
+                                    "obligatory"
+                                ).map(ie => (
+                                    <Card
+                                        key={ie.id}
+                                        label={ie.label}
+                                        name={ie.name}
+                                        color={colors[ie.type]}
+                                    />
+                                ))
                             ) : (
                                 <span
                                     className="d-flex align-items-start justify-content-center text-muted"
@@ -315,26 +307,16 @@ const Stakeholder = ({
                         >
                             {getRelatedInformationElements("optional")
                                 .length !== 0 ? (
-                                getRelatedInformationElements("optional").map(
-                                    r => {
-                                        let ie = informationElements.find(
-                                            ie => {
-                                                return (
-                                                    ie.id ===
-                                                    r.information_element
-                                                );
-                                            }
-                                        );
-                                        return (
-                                            <Card
-                                                key={r.id}
-                                                label={ie.label}
-                                                name={ie.name}
-                                                color={colors[ie.type]}
-                                            />
-                                        );
-                                    }
-                                )
+                                getRelatedInformationElements(
+                                    "optional"
+                                ).map(ie => (
+                                    <Card
+                                        key={ie.id}
+                                        label={ie.label}
+                                        name={ie.name}
+                                        color={colors[ie.type]}
+                                    />
+                                ))
                             ) : (
                                 <span
                                     className="d-flex align-items-start justify-content-center text-muted"
@@ -404,26 +386,16 @@ const Stakeholder = ({
                         >
                             {getRelatedInformationElements("restricted")
                                 .length !== 0 ? (
-                                getRelatedInformationElements("restricted").map(
-                                    r => {
-                                        let ie = informationElements.find(
-                                            ie => {
-                                                return (
-                                                    ie.id ===
-                                                    r.information_element
-                                                );
-                                            }
-                                        );
-                                        return (
-                                            <Card
-                                                key={r.id}
-                                                label={ie.label}
-                                                name={ie.name}
-                                                color={colors[ie.type]}
-                                            />
-                                        );
-                                    }
-                                )
+                                getRelatedInformationElements(
+                                    "restricted"
+                                ).map(ie => (
+                                    <Card
+                                        key={ie.id}
+                                        label={ie.label}
+                                        name={ie.name}
+                                        color={colors[ie.type]}
+                                    />
+                                ))
                             ) : (
                                 <span
                                     className="d-flex align-items-start justify-content-center text-muted"
@@ -491,26 +463,16 @@ const Stakeholder = ({
                         >
                             {getRelatedInformationElements("undecided")
                                 .length !== 0 ? (
-                                getRelatedInformationElements("undecided").map(
-                                    r => {
-                                        let ie = informationElements.find(
-                                            ie => {
-                                                return (
-                                                    ie.id ===
-                                                    r.information_element
-                                                );
-                                            }
-                                        );
-                                        return (
-                                            <Card
-                                                key={r.id}
-                                                label={ie.label}
-                                                name={ie.name}
-                                                color={colors[ie.type]}
-                                            />
-                                        );
-                                    }
-                                )
+                                getRelatedInformationElements(
+                                    "undecided"
+                                ).map(ie => (
+                                    <Card
+                                        key={ie.id}
+                                        label={ie.label}
+                                        name={ie.name}
+                                        color={colors[ie.type]}
+                                    />
+                                ))
                             ) : (
                                 <span
                                     className="d-flex align-items-start justify-content-center text-muted"
@@ -522,15 +484,6 @@ const Stakeholder = ({
                                     No information elements
                                 </span>
                             )}
-                            {/* <span
-                                className="d-flex align-items-start justify-content-center text-muted"
-                                style={{
-                                    margin: "30px 0",
-                                    fontSize: "14px"
-                                }}
-                            >
-                                No information elements
-                            </span> */}
                         </div>
                     </div>
                 </div>
