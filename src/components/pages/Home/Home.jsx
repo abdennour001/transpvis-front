@@ -1,5 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { connect } from "react-redux";
+import Skeleton from "react-loading-skeleton";
 
 // Actions
 import { getStakeholders } from "../../../redux/actions/stakeholderActions";
@@ -130,16 +131,23 @@ const Home = ({
                                     >
                                         Stakeholders
                                     </h3>
-                                    <Tag
-                                        content={
-                                            stakeholder.stakeholders &&
-                                            stakeholder.stakeholders.length
-                                        }
-                                        color="#3d4659"
-                                    />
+                                    {stakeholder.loading ? (
+                                        <Tag isLoading={true} />
+                                    ) : (
+                                        <Tag
+                                            content={
+                                                stakeholder.stakeholders?.length
+                                            }
+                                            color="#3d4659"
+                                        />
+                                    )}
                                 </div>
                                 {stakeholder.loading ? (
-                                    <div>loading...</div>
+                                    <>
+                                        <Card isLoading={true} />
+                                        <Card isLoading={true} />
+                                        <Card isLoading={true} />
+                                    </>
                                 ) : !stakeholder.stakeholders ||
                                   !stakeholder.stakeholders.length ? (
                                     <div>Empty...</div>
@@ -171,17 +179,25 @@ const Home = ({
                                     >
                                         Information elements
                                     </h3>
-                                    <Tag
-                                        content={
-                                            informationElement.informationElements &&
-                                            informationElement
-                                                .informationElements.length
-                                        }
-                                        color="#3d4659"
-                                    />
+                                    {informationElement.loading ? (
+                                        <Tag isLoading={true} />
+                                    ) : (
+                                        <Tag
+                                            content={
+                                                informationElement
+                                                    .informationElements?.length
+                                            }
+                                            color="#3d4659"
+                                        />
+                                    )}
                                 </div>
                                 {informationElement.loading ? (
-                                    <div>loading...</div>
+                                    <>
+                                        <Card isLoading={true} />
+                                        <Card isLoading={true} />
+                                        <Card isLoading={true} />
+                                        <Card isLoading={true} />
+                                    </>
                                 ) : !informationElement.informationElements ||
                                   !informationElement.informationElements
                                       .length ? (

@@ -1,11 +1,16 @@
 import { React, useState } from "react";
 import { connect } from "react-redux";
+import Skeleton from "react-loading-skeleton";
 
 import "./_control.scss";
 
 import Tag from "../Tag";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import {
+    faChevronDown,
+    faChevronUp,
+    faSpinner
+} from "@fortawesome/free-solid-svg-icons";
 
 const Control = ({ application, stakeholder, informationElement }) => {
     let [isOpen, setIsOpen] = useState(false);
@@ -14,12 +19,24 @@ const Control = ({ application, stakeholder, informationElement }) => {
         setIsOpen(!isOpen);
     };
 
+    if (application.loading) {
+        return (
+            <div className="control control-collapsed">
+                <FontAwesomeIcon className="spinner" icon={faSpinner} size="lg" />
+            </div>
+        );
+    }
+
     return (
         <>
             <div className={"control " + (isOpen ? "" : "control-collapsed")}>
                 <div className="control__header">
                     <div className="control__left">
-                        <h2>{application?.name}</h2>
+                        {application.loading ? (
+                            <h2>{application.application?.name}</h2>
+                        ) : (
+                            <h2>{application.application?.name}</h2>
+                        )}
                     </div>
                     <div className="control__right">
                         {/* <FontAwesomeIcon
@@ -132,7 +149,7 @@ const Control = ({ application, stakeholder, informationElement }) => {
 };
 
 const mapSateToProps = state => ({
-    application: state.application.application,
+    application: state.application,
     stakeholder: state.stakeholder,
     informationElement: state.informationElement
 });

@@ -8,7 +8,6 @@ import "./_informationelement.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
-import { getStakeholders } from "../../../redux/actions/stakeholderActions";
 
 const InformationElement = ({
     informationElement,
