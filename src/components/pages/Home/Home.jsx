@@ -29,6 +29,7 @@ import {
 
 import "./_home.scss";
 import { colors } from "../../../utils/colors";
+import Visualization from "../../layouts/Visualization/Visualization";
 
 const Home = ({
     application,
@@ -245,7 +246,7 @@ const Home = ({
                                         className="icon"
                                     /> */}
                                 </div>
-                                <p>🤙 Main visualisation</p>
+                                <Visualization />
                             </div>
                             <div
                                 className={
