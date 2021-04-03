@@ -30,6 +30,8 @@
         grid-template-columns: 2.4fr 6fr 2.8fr;
         justify-items: start;
         padding: 16px 32px;
+        // padding-left: 16px;
+        // padding-bottom: 0px;
 
         &-expanded {
             display: grid;
@@ -42,19 +44,20 @@
     &__left {
         width: 100%;
         max-width: 330px;
-        // height: 82vh;
+        // height: calc(100vh - 150px);
         // overflow-y: scroll;
         // scroll-behavior: smooth;
+        // padding: 0 14px;
     }
 
     &__right {
         width: 100%;
         opacity: 100%;
-        transition: all .5s ease;
+        transition: all 0.5s ease;
 
         &-expanded {
             opacity: 0%;
-            transition: all .5s ease;
+            transition: all 0.5s ease;
             height: 0;
             overflow: hidden;
         }
