@@ -12,9 +12,17 @@ const Detail = ({ focusedElement }) => {
                 {!focusedElement ? (
                     <div
                         className="detail__card"
-                        style={{ height: "200px", lineHeight: "2rem", fontSize: "16px", textAlign: "center" }}
+                        style={{
+                            height: "150px",
+                            lineHeight: "2rem",
+                            fontSize: "16px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center",
+                            justifyContent: "center"
+                        }}
                     >
-                        <p className="text-muted">
+                        <p className="text-muted" style={{textAlign: "center"}}>
                             Please select a stakeholder or an information
                             element
                         </p>
