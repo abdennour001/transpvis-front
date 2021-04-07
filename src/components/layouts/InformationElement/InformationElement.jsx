@@ -27,9 +27,9 @@ const InformationElement = ({
     useEffect(() => {
         afterRef?.current?.setAttribute(
             "style",
-            "--tooltip-type-color: #61C9A8;"
+            `--tooltip-type-color: ${colors[informationElement.type]};`
         );
-    }, []);
+    }, [informationElement.type]);
 
     const handleToggle = toggleName => {
         setToggle({
