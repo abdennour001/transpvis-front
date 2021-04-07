@@ -8,7 +8,6 @@ import "./_informationelement.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
-import { getStakeholders } from "../../../redux/actions/stakeholderActions";
 
 const InformationElement = ({
     informationElement,
@@ -28,9 +27,9 @@ const InformationElement = ({
     useEffect(() => {
         afterRef?.current?.setAttribute(
             "style",
-            "--tooltip-type-color: #61C9A8;"
+            `--tooltip-type-color: ${colors[informationElement.type]};`
         );
-    }, []);
+    }, [informationElement.type]);
 
     const handleToggle = toggleName => {
         setToggle({
@@ -40,11 +39,15 @@ const InformationElement = ({
     };
 
     const getRelatedInformationElements = () => {
-        return informationElement.information_elements.map(ie => {
-            return informationElements.find(ie_ => {
-                return ie_.id === ie;
+        return informationElement.information_elements
+            .map(ie => {
+                return informationElements.find(ie_ => {
+                    return ie_.id === ie;
+                });
+            })
+            .sort((a, b) => {
+                return a.label > b.label ? 1 : -1;
             });
-        });
     };
 
     const getRelatedStakeholders = type => {
@@ -62,6 +65,9 @@ const InformationElement = ({
                 return stakeholders.find(s_ => {
                     return s_.id === s;
                 });
+            })
+            .sort((a, b) => {
+                return a.label > b.label ? 1 : -1;
             });
     };
 
@@ -433,9 +439,10 @@ const InformationElement = ({
                                     Restricted Stakeholders
                                 </h4>
                                 <Tag
-                                    content={getRelatedStakeholders(
-                                        "restricted"
-                                    ).length}
+                                    content={
+                                        getRelatedStakeholders("restricted")
+                                            .length
+                                    }
                                     color="#3d4659"
                                 />
                             </div>
