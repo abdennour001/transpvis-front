@@ -28,7 +28,6 @@ function bilink(root) {
 }
 
 const data_ = ({ nodes, links }) => {
-    console.log(nodes, links);
     const groupById = new Map();
     const nodeById = new Map(nodes.map(node => [node.label, node]));
 
@@ -37,7 +36,7 @@ const data_ = ({ nodes, links }) => {
         if (!group) {
             groupById.set(
                 node.group,
-                (group = { id: node.group, children: [] })
+                (group = { label: node.group, children: [] })
             );
         }
         group.children.push(node);
@@ -54,13 +53,14 @@ const data_ = ({ nodes, links }) => {
 export const chart = (svg, { nodes, links }) => {
     console.log(svg);
     const data = data_({ nodes, links });
+    console.log(data);
 
     var colorStakeholder = "#4A6FA5";
     var colorData = "#FFDA0A";
     var colorProcess = "#61C9A8";
     var colorPolicy = "#FB5012";
 
-    const nodeById = new Map(nodes.map(node => [node.id, node]));
+    const nodeById = new Map(nodes.map(node => [node.label, node]));
 
     const root = tree(
         bilink(
@@ -69,7 +69,7 @@ export const chart = (svg, { nodes, links }) => {
                 .sort(
                     (a, b) =>
                         d3.ascending(a.height, b.height) ||
-                        d3.ascending(a.data.id, b.data.id)
+                        d3.ascending(a.data.label, b.data.label)
                 )
         )
     );
@@ -80,7 +80,7 @@ export const chart = (svg, { nodes, links }) => {
     //     .create("svg")
     //     .attr("viewBox", [-width / 2, -width / 2, width, width]);
 
-    svg.attr("viewBox", [-width / 2, -width / 2, width, width]);
+    svg.attr("viewBox", [(-width / 2) + 30, -width / 2, width, width]);
 
     // const arc = d3.arc()
     //             .innerRadius(radius)
@@ -117,16 +117,16 @@ export const chart = (svg, { nodes, links }) => {
         .attr("d", d => arc(d))
         .attr("fill", d =>
             eval(
-                `color${d.data.data.id.charAt(0).toUpperCase() +
-                    d.data.data.id.slice(1)}`
+                `color${d.data.data.label.charAt(0).toUpperCase() +
+                    d.data.data.label.slice(1)}`
             )
         )
         .style("opacity", ".2");
 
     const node = svg
         .append("g")
-        .attr("font-family", "sans-serif")
-        .attr("font-size", 14)
+        .attr("font-size", 16)
+        .attr("fill", "#3D4758")
         .selectAll("g")
         .data(root.leaves())
         .join("g")
@@ -140,14 +140,16 @@ export const chart = (svg, { nodes, links }) => {
         .attr("x", d => (d.x < Math.PI ? 15 : -15))
         .attr("text-anchor", d => (d.x < Math.PI ? "start" : "end"))
         .attr("transform", d => (d.x >= Math.PI ? "rotate(180)" : null))
-        .attr("fill", d =>
-            eval(
-                `color${d.data.group.charAt(0).toUpperCase() +
-                    d.data.group.slice(1)}`
-            )
-        )
+        // .attr("fill", d =>
+        //     eval(
+        //         `color${d.data.group.charAt(0).toUpperCase() +
+        //             d.data.group.slice(1)}`
+        //     )
+        // )
+        // .attr("fill", colornone
+        // )
         .style("cursor", "pointer")
-        .text(d => nodeById.get(d.data.id).name)
+        .text(d => nodeById.get(d.data.label).name)
         //for eadh node,
         .each(function(d) {
             d.text = this;
@@ -161,7 +163,7 @@ export const chart = (svg, { nodes, links }) => {
                 .append("title")
                 .text(
                     d =>
-                        `${nodeById.get(d.data.id).name} ${
+                        `${nodeById.get(d.data.label).name} ${
                             d.outgoing.length
                         } outgoing ${d.incoming.length} incoming`
                 )
