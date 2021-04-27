@@ -4,8 +4,13 @@ import { Link } from "react-router-dom";
 import "./_dropdown.scss";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog } from "@fortawesome/free-solid-svg-icons";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import {
+    faCaretDown,
+    faInfoCircle,
+    faCog,
+    faSignOutAlt,
+    faLayerGroup
+} from "@fortawesome/free-solid-svg-icons";
 
 const Dropdown = () => {
     const refDropdown = useRef(null);
@@ -33,16 +38,20 @@ const Dropdown = () => {
             </summary>
             <div className="dropdown__menu">
                 <div className="dropdown__item">
+                    <FontAwesomeIcon icon={faLayerGroup} fixedWidth size="md" />
                     <Link to="/">Your applications</Link>
                 </div>
                 <div className="dropdown__devider"></div>
                 <div className="dropdown__item">
+                    <FontAwesomeIcon icon={faInfoCircle} fixedWidth size="md" />
                     <Link to="/">Help</Link>
                 </div>
                 <div className="dropdown__item">
+                    <FontAwesomeIcon icon={faCog} fixedWidth size="md" />
                     <Link to="/">Settings</Link>
                 </div>
                 <div className="dropdown__item">
+                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth size="md" />
                     <Link to="/">Sign out</Link>
                 </div>
             </div>
