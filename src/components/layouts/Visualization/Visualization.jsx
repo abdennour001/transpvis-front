@@ -5,6 +5,7 @@ import "./_visualization.scss";
 import { chart } from "../../../utils/d3";
 
 import { select } from "d3";
+export const d3 = require("d3");
 
 const Visualization = ({
     application,
@@ -94,6 +95,11 @@ const Visualization = ({
         ) {
             const data = getVizData();
             drawViz(data);
+        }
+
+        return () => {
+            const svg = select(svgRef.current);
+            svg.selectAll("*").remove();
         }
     }, [
         stakeholder.stakeholders,

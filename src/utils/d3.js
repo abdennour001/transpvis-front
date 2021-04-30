@@ -1,6 +1,7 @@
 export const d3 = require("d3");
 
-const tree = d3.cluster().size([2 * Math.PI, 300]);
+const radius = 300
+const tree = d3.cluster().size([2 * Math.PI, radius]);
 
 const line = d3
     .lineRadial()
@@ -8,7 +9,6 @@ const line = d3
     .radius(d => d.y)
     .angle(d => d.x);
 
-const radius = 340 / 2;
 const width = 1100;
 const colornone = "#ccc";
 
@@ -50,8 +50,24 @@ const data_ = ({ nodes, links }) => {
     return { children: [...groupById.values()] };
 };
 
+const findStartAngle = children => {
+    var min = children[0].x;
+    children.forEach(function(d) {
+        if (d.x < min) min = d.x;
+    });
+    return min - 0.3;
+};
+
+const findEndAngle = children => {
+    var max = children[0].x;
+    children.forEach(function(d) {
+        if (d.x > max) max = d.x;
+    });
+    return max + 0.3;
+};
+
 export const chart = (svg, { nodes, links }) => {
-    console.log(svg);
+    // console.log(svg);
     const data = data_({ nodes, links });
     console.log(data);
 
@@ -80,45 +96,31 @@ export const chart = (svg, { nodes, links }) => {
     //     .create("svg")
     //     .attr("viewBox", [-width / 2, -width / 2, width, width]);
 
-    svg.attr("viewBox", [(-width / 2) + 30, -width / 2, width, width]);
+    svg.attr("viewBox", [-width / 2 + 30, -width / 2, width, width]);
 
-    // const arc = d3.arc()
-    //             .innerRadius(radius)
-    //             .outerRadius(radius - 180)
-    //             .startAngle(0)
-    //             .cornerRadius(15)
-    //            .endAngle(Math.PI);
-
+    // 🏛
+    const arcWidth = 10
     const arc = d3
         .arc()
-        .innerRadius(radius + 125)
-        .outerRadius(radius + 147)
+        .innerRadius(radius+6 - arcWidth)
+        .outerRadius(radius+6+ arcWidth)
+        .startAngle(d => findStartAngle(d.children))
+        .endAngle(d => findEndAngle(d.children))
         .cornerRadius(5);
-    // .startAngle(d => 0)
-    // .endAngle(d => Math.PI / 4);
-
-    const pie = d3
-        .pie()
-        .value(d => d.leaves().length)
-        .padAngle(0.1);
-    // 🥧
-
-    // console.log(pie(root.descendants().filter(d => d.height === 1)))
 
     //arc drawing
     const arcDraw = svg
         .append("g")
-        .attr("transform", d => `rotate(-115)`)
         .selectAll("g")
-        .data(pie(root.descendants().filter(d => d.height === 1)))
+        .data(root.descendants().filter(d => d.height === 1))
         .join("g")
-        // .attr("transform", d => `rotate(${d.data.x * -20 / Math.PI - 90})`)
         .append("path")
         .attr("d", d => arc(d))
+        // .attr("transform", d => (d.endAngle <= Math.PI ? ("rotate(-2)") : "rotate(4)"))
         .attr("fill", d =>
             eval(
-                `color${d.data.data.label.charAt(0).toUpperCase() +
-                    d.data.data.label.slice(1)}`
+                `color${d.data.label.charAt(0).toUpperCase() +
+                    d.data.label.slice(1)}`
             )
         )
         .style("opacity", ".2");
