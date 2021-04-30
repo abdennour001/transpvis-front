@@ -1,7 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { connect } from "react-redux";
 
 import "./_visualization.scss";
+import { chart } from "../../../utils/d3";
+
+import { select } from "d3";
+export const d3 = require("d3");
 
 const Visualization = ({
     application,
@@ -9,6 +13,14 @@ const Visualization = ({
     informationElement,
     relationship
 }) => {
+    const svgRef = useRef(null);
+
+    const drawViz = ({ nodes, links }) => {
+        const svg = select(svgRef.current);
+
+        chart(svg, { nodes, links });
+    };
+
     const getVizData = () => {
         let data = {};
         data.nodes = [];
@@ -72,7 +84,7 @@ const Visualization = ({
                 });
             }
         });
-        console.log(data);
+        return data;
     };
 
     useEffect(() => {
@@ -81,7 +93,13 @@ const Visualization = ({
             informationElement.informationElements &&
             relationship.relations
         ) {
-            getVizData();
+            const data = getVizData();
+            drawViz(data);
+        }
+
+        return () => {
+            const svg = select(svgRef.current);
+            svg.selectAll("*").remove();
         }
     }, [
         stakeholder.stakeholders,
@@ -89,7 +107,8 @@ const Visualization = ({
         relationship.relations
     ]);
 
-    return <div>Hello 👋, I am a Visualization component.</div>;
+    // return <div>Hello 👋, I am a Visualization component.</div>;
+    return <svg ref={svgRef}></svg>;
 };
 
 const mapSateToProps = state => ({
