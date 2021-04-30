@@ -51,7 +51,7 @@ const Home = ({
     };
 
     useEffect(() => {
-        const selectedApp = 1;
+        const selectedApp = 2;
         getApplications().then(() => {
             setApplication(selectedApp);
         });
