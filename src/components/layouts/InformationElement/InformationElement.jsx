@@ -13,7 +13,8 @@ const InformationElement = ({
     informationElement,
     stakeholders,
     informationElements,
-    relationships
+    relationships,
+    help
 }) => {
     const afterRef = useRef(null);
     const [toggle, setToggle] = useState({
@@ -135,8 +136,16 @@ const InformationElement = ({
                                         maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("related")}
+                                    className={help ? "tip" : ""}
                                 >
                                     Related Information Elements
+                                    {help && (
+                                        <span className="help__text">
+                                            Other <b>Information elements</b>{" "}
+                                            that uses this specific information
+                                            element in their process.
+                                        </span>
+                                    )}
                                 </h4>
                                 <Tag
                                     content={
@@ -210,8 +219,15 @@ const InformationElement = ({
                                         maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("provider")}
+                                    className={help ? "tip" : ""}
                                 >
                                     Information Element Provider
+                                    {help && (
+                                        <span className="help__text">
+                                            The <b>stakeholder</b> that provides
+                                            this information element.
+                                        </span>
+                                    )}
                                 </h4>
                                 <Tag
                                     content={
@@ -285,8 +301,18 @@ const InformationElement = ({
                                         maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("receive")}
+                                    className={help ? "tip" : ""}
                                 >
                                     Receiving Stakeholders
+                                    {help && (
+                                        <span className="help__text">
+                                            The <b>stakeholders</b> that
+                                            receives this information element
+                                            based on coercive information
+                                            provision, or legal information
+                                            requests.
+                                        </span>
+                                    )}
                                 </h4>
                                 <Tag
                                     content={
@@ -360,8 +386,18 @@ const InformationElement = ({
                                         maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("request")}
+                                    className={help ? "tip" : ""}
                                 >
                                     Requesting Stakeholders
+                                    {help && (
+                                        <span className="help__text">
+                                            The <b>stakeholders</b> that
+                                            receives this information element as
+                                            a result of voluntary information
+                                            provision or personal information
+                                            demands.
+                                        </span>
+                                    )}
                                 </h4>
                                 <Tag
                                     content={
@@ -435,8 +471,17 @@ const InformationElement = ({
                                         maxWidth: "350px"
                                     }}
                                     onClick={() => handleToggle("restricted")}
+                                    className={help ? "tip" : ""}
                                 >
                                     Restricted Stakeholders
+                                    {help && (
+                                        <span className="help__text">
+                                            <b>The stakeholders</b> that this
+                                            information element is hidden from
+                                            them, and they don't have rights to
+                                            see or ispect it.
+                                        </span>
+                                    )}
                                 </h4>
                                 <Tag
                                     content={
@@ -497,7 +542,8 @@ const mapSateToProps = state => ({
     informationElement: state.application.focused,
     stakeholders: state.stakeholder.stakeholders,
     informationElements: state.informationElement.informationElements,
-    relationships: state.relationship.relations
+    relationships: state.relationship.relations,
+    help: state.help.help
 });
 
 export default connect(mapSateToProps)(InformationElement);

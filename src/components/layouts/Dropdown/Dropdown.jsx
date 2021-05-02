@@ -1,4 +1,5 @@
 import { React, useEffect, useRef } from "react";
+import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 
 import "./_dropdown.scss";
@@ -12,7 +13,9 @@ import {
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";
 
-const Dropdown = () => {
+import { toggleHelp } from "../../../redux/actions/helpActions";
+
+const Dropdown = ({help, toggleHelp}) => {
     const refDropdown = useRef(null);
 
     const toggleDropdown = event => {
@@ -30,6 +33,10 @@ const Dropdown = () => {
         });
     }, []);
 
+    const startHelp = (e) => {
+        toggleHelp();
+    }
+
     return (
         <details className="dropdown" ref={refDropdown}>
             <summary className="dropdown__toggle" onClick={toggleDropdown}>
@@ -42,9 +49,9 @@ const Dropdown = () => {
                     <Link to="/">Your applications</Link>
                 </div>
                 <div className="dropdown__devider"></div>
-                <div className="dropdown__item">
+                <div className="dropdown__item" onClick={(e) => startHelp(e)}>
                     <FontAwesomeIcon icon={faInfoCircle} fixedWidth size="md" />
-                    <Link to="/">Help</Link>
+                    <a href="#" to="/">Help</a>
                 </div>
                 <div className="dropdown__item">
                     <FontAwesomeIcon icon={faCog} fixedWidth size="md" />
@@ -59,4 +66,11 @@ const Dropdown = () => {
     );
 };
 
-export default Dropdown;
+
+const mapSateToProps = state => ({
+    help: state.help.help,
+});
+
+export default connect(mapSateToProps, {
+    toggleHelp
+})(Dropdown);

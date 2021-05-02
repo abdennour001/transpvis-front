@@ -13,6 +13,7 @@
 .home {
     height: 100%;
     background-color: $gray-100;
+    position: relative;
 
     &__content {
         display: flex;
@@ -36,7 +37,9 @@
         &-expanded {
             display: grid;
             justify-items: start;
-            padding: 16px 32px;
+            padding: 0 32px;
+            padding-bottom: 16px;
+            padding-left: 16px;
             grid-template-columns: 1.7fr 6fr;
         }
     }
@@ -45,8 +48,8 @@
         width: 100%;
         max-width: 330px;
         height: calc(100vh - 150px);
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow-x: auto;
+        overflow-y: scroll;
         scroll-behavior: smooth;
         padding: 0 14px;
         padding-top: 16px;
@@ -113,7 +116,7 @@
             box-shadow: 0 1px 8px rgba(109, 117, 141, 0.1);
             cursor: pointer;
             transition: all 0.1s ease-in;
-        margin-top: 16px;
+            margin-top: 16px;
 
             &:hover {
                 color: white;
@@ -167,4 +170,65 @@
     margin: 8px 0;
     border-radius: 20px;
     border-top: 4px solid;
+}
+
+.home__help {
+    position: absolute;
+    top: 35px;
+    left: calc(50% - 75px);
+    z-index: 1000;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    // opacity: 60%;
+
+    background-color: $text;
+    color: white;
+    border-radius: 50px;
+    width: 150px;
+    text-align: center;
+    box-shadow: 0 1px 14px rgba(109, 117, 141, 0.8);
+    cursor: pointer;
+
+    z-index: 100000000;
+
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+
+    &:hover {
+        opacity: 100%;
+        background-color: darken($text, 4);
+        box-shadow: 0 4px 18px rgba(109, 117, 141, 0.67);
+    }
+}
+
+@keyframes fromTop {
+    0% {
+        transform: translateY(-100px);
+    }
+    50% {
+        transform: translateY(16px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.fromTop {
+    animation: fromTop 0.5s ease;
+}
+
+@keyframes fromBottom {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(16px);
+    }
+    100% {
+        transform: translateY(-100px);
+    }
+}
+
+.fromBottom {
+    animation: fromBottom 0.5s ease;
 }

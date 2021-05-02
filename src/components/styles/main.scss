@@ -67,3 +67,44 @@ a {
 .spinner {
     animation: spinner 1.5s linear infinite;
 }
+
+.tip {
+    &:hover {
+        position: relative;
+        cursor: help !important;
+    }
+
+    span.help__text {
+        display: none;
+        font-size: 14px;
+        font-weight: 500;
+        text-transform: none;
+        line-height: 1.5rem;
+        box-shadow: 0 1px 15px rgba(109, 117, 141, 0.7);
+    }
+
+    &:hover span.help__text {
+        padding: 10px 15px 10px 15px;
+        display: inline-block;
+        background: $text;
+        color: white;
+        left: 0px;
+        margin: 10px;
+        width: 250px;
+        position: absolute;
+        top: 25px;
+        text-decoration: none;
+        border-radius: 12px;
+        z-index: 9999;
+        animation: tipFromTop 0.04s linear;
+    }
+}
+
+@keyframes tipFromTop {
+    from {
+        top: 5px;
+    }
+    to {
+        top: 25px;
+    }
+}

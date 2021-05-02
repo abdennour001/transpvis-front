@@ -12,7 +12,7 @@ import {
     faSpinner
 } from "@fortawesome/free-solid-svg-icons";
 
-const Control = ({ application, stakeholder, informationElement }) => {
+const Control = ({ application, stakeholder, informationElement, help }) => {
     let [isOpen, setIsOpen] = useState(false);
 
     const handleToggle = () => {
@@ -22,7 +22,11 @@ const Control = ({ application, stakeholder, informationElement }) => {
     if (application.loading) {
         return (
             <div className="control control-collapsed">
-                <FontAwesomeIcon className="spinner" icon={faSpinner} size="lg" />
+                <FontAwesomeIcon
+                    className="spinner"
+                    icon={faSpinner}
+                    size="lg"
+                />
             </div>
         );
     }
@@ -51,8 +55,25 @@ const Control = ({ application, stakeholder, informationElement }) => {
                                     margin: "0",
                                     marginTop: "-1px"
                                 }}
+                                className={help ? "tip" : ""}
                             >
                                 Stakeholders
+                                {help && (
+                                    <span className="help__text">
+                                        <b>Stakeholders</b> are the people that
+                                        use the service or the software,
+                                        departements, organisations, etc., which
+                                        are involved in the information exchange
+                                        process, providing, receiving, or
+                                        requesting transparency. We can group
+                                        stakeholders by one entity, for example
+                                        User or IT Department. However, the
+                                        exchanged information within an
+                                        information exchange system may concern
+                                        all stakeholders within that system, or
+                                        it may concern the public audience.
+                                    </span>
+                                )}
                             </p>
                             <Tag
                                 content={
@@ -68,8 +89,25 @@ const Control = ({ application, stakeholder, informationElement }) => {
                                     margin: "0",
                                     marginTop: "-1px"
                                 }}
+                                className={help ? "tip" : ""}
                             >
                                 Policy
+                                {help && (
+                                    <span className="help__text">
+                                        <b>Policy transparency</b> every
+                                        question whose answer provides goals,
+                                        intentions, policies and decision making
+                                        is a policy transparency question.
+                                        “Why?” is the main question here, i.e.,
+                                        why certain action is performed or for
+                                        what reason this action is performed in
+                                        the context of transparency. For
+                                        example, in a hosting service platform,
+                                        policy transparency reveals why
+                                        encryption is needed in servers, or why
+                                        I have a limited storage capacity.
+                                    </span>
+                                )}
                             </p>
                             <Tag
                                 content={
@@ -88,8 +126,25 @@ const Control = ({ application, stakeholder, informationElement }) => {
                                     margin: "0",
                                     marginTop: "-1px"
                                 }}
+                                className={help ? "tip" : ""}
                             >
                                 Process
+                                {help && (
+                                    <span className="help__text">
+                                        <b>Process transparency</b> every
+                                        question whose answer provides
+                                        procedures, processes, behaviours and
+                                        interactions is a process transparency
+                                        question. “How?” is the main question
+                                        here, i.e., how something is performed
+                                        or done in the context of transparency.
+                                        For example in a hosting service
+                                        platform, process transparency reveals
+                                        how data is encrypted in the servers,
+                                        and how servers are immune from cyber
+                                        attacks.
+                                    </span>
+                                )}
                             </p>
                             <Tag
                                 content={
@@ -108,8 +163,25 @@ const Control = ({ application, stakeholder, informationElement }) => {
                                     margin: "0",
                                     marginTop: "-1px"
                                 }}
+                                className={help ? "tip" : ""}
                             >
                                 Data
+                                {help && (
+                                    <span className="help__text">
+                                        <b>Data transparency</b> every question
+                                        whose answer provides data, content or
+                                        information is a data transparency
+                                        question. “What? When? Where? Who?”
+                                        These questions primarily answer what
+                                        information is needed and who are the
+                                        stakeholders in the context of
+                                        transparency. For example, in a hosting
+                                        service platform, data transparency
+                                        reveals the server's performances to the
+                                        client for each plan, and the price of
+                                        each plan.
+                                    </span>
+                                )}
                             </p>
                             <Tag
                                 content={
@@ -151,7 +223,8 @@ const Control = ({ application, stakeholder, informationElement }) => {
 const mapSateToProps = state => ({
     application: state.application,
     stakeholder: state.stakeholder,
-    informationElement: state.informationElement
+    informationElement: state.informationElement,
+    help: state.help.help
 });
 
 export default connect(mapSateToProps)(Control);
