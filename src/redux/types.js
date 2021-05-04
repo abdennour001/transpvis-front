@@ -13,3 +13,6 @@ export const GET_RELATIONS = "GET_RELATIONS";
 export const TOGGLE_LOADING_RELATIONS = "TOGGLE_LOADING_RELATIONS";
 
 export const TOGGLE_HELP = "TOGGLE_HELP";
+
+export const SET_JSON_DATA = "SET_JSON_DATA";
+export const SET_ROOT = "SET_ROOT";

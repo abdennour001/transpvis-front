@@ -1,6 +1,4 @@
-import {
-    TOGGLE_HELP
-} from "../types";
+import { TOGGLE_HELP } from "../types";
 
 const initialState = {
     help: false

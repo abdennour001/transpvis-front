@@ -31,6 +31,13 @@ import {
 import "./_home.scss";
 import { colors } from "../../../utils/colors";
 import Visualization from "../../layouts/Visualization/Visualization";
+import {
+    overed,
+    outed,
+    clicked,
+    setPrimaryAnimation,
+    unsetPrimaryAnimation
+} from "../../../utils/d3";
 
 const Home = ({
     application,
@@ -38,6 +45,7 @@ const Home = ({
     informationElement,
     relationship,
     help,
+    viz,
 
     getStakeholders,
     getInformationElements,
@@ -55,7 +63,7 @@ const Home = ({
     };
 
     useEffect(() => {
-        const selectedApp = 2;
+        const selectedApp = 1;
         getApplications().then(() => {
             setApplication(selectedApp);
         });
@@ -67,11 +75,38 @@ const Home = ({
     const handleCardClick = (event, element) => {
         event.preventDefault();
         if (!application.focused) {
+            setPrimaryAnimation(
+                event,
+                viz.root
+                    .leaves()
+                    .find(node => node.data.label === element.label)
+            );
             setFocused(element);
         } else {
             if (application.focused === element) {
+                unsetPrimaryAnimation(
+                    event,
+                    viz.root
+                        .leaves()
+                        .find(node => node.data.label === element.label)
+                );
                 removeFocused(element);
             } else {
+                unsetPrimaryAnimation(
+                    event,
+                    viz.root
+                        .leaves()
+                        .find(
+                            node =>
+                                node.data.label === application.focused.label
+                        )
+                );
+                setPrimaryAnimation(
+                    event,
+                    viz.root
+                        .leaves()
+                        .find(node => node.data.label === element.label)
+                );
                 setFocused(element);
             }
         }
@@ -123,9 +158,175 @@ const Home = ({
                                             className="home__navcolor"
                                             style={{ borderColor: "#4A6FA5" }}
                                         ></div>
-                                        <span className={help ? "tip" : ""}>
+                                        <span
+                                            className={help ? "tip" : ""}
+                                            data-tip="1"
+                                        >
                                             Stakeholders
                                             {help && (
+                                                <div className="tooltip__wrapper">
+                                                    <span className="help__text">
+                                                        <b>Stakeholders</b> are
+                                                        the people that use the
+                                                        service or the software,
+                                                        departements,
+                                                        organisations, etc.,
+                                                        which are involved in
+                                                        the information exchange
+                                                        process, providing,
+                                                        receiving, or requesting
+                                                        transparency. We can
+                                                        group stakeholders by
+                                                        one entity, for example
+                                                        User or IT Department.
+                                                        However, the exchanged
+                                                        information within an
+                                                        information exchange
+                                                        system may concern all
+                                                        stakeholders within that
+                                                        system, or it may
+                                                        concern the public
+                                                        audience.
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className="home__navinfo">
+                                        <div
+                                            className="home__navcolor"
+                                            style={{ borderColor: "#FB5012" }}
+                                        ></div>
+                                        <span
+                                            className={help ? "tip" : ""}
+                                            data-tip="1"
+                                        >
+                                            Policy
+                                            {help && (
+                                                <div className="tooltip__wrapper">
+                                                    <span className="help__text">
+                                                        <b>
+                                                            Policy transparency
+                                                        </b>{" "}
+                                                        every question whose
+                                                        answer provides goals,
+                                                        intentions, policies and
+                                                        decision making is a
+                                                        policy transparency
+                                                        question. “Why?” is the
+                                                        main question here,
+                                                        i.e., why certain action
+                                                        is performed or for what
+                                                        reason this action is
+                                                        performed in the context
+                                                        of transparency. For
+                                                        example, in a hosting
+                                                        service platform, policy
+                                                        transparency reveals why
+                                                        encryption is needed in
+                                                        servers, or why I have a
+                                                        limited storage
+                                                        capacity.
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className="home__navinfo">
+                                        <div
+                                            className="home__navcolor"
+                                            style={{ borderColor: "#61C9A8" }}
+                                        ></div>
+                                        <span
+                                            className={help ? "tip" : ""}
+                                            data-tip="1"
+                                        >
+                                            Process
+                                            {help && (
+                                                <div className="tooltip__wrapper">
+                                                    <span className="help__text">
+                                                        <b>
+                                                            Process transparency
+                                                        </b>{" "}
+                                                        every question whose
+                                                        answer provides
+                                                        procedures, processes,
+                                                        behaviours and
+                                                        interactions is a
+                                                        process transparency
+                                                        question. “How?” is the
+                                                        main question here,
+                                                        i.e., how something is
+                                                        performed or done in the
+                                                        context of transparency.
+                                                        For example in a hosting
+                                                        service platform,
+                                                        process transparency
+                                                        reveals how data is
+                                                        encrypted in the
+                                                        servers, and how servers
+                                                        are immune from cyber
+                                                        attacks.
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </span>
+                                    </div>
+                                    <div className="home__navinfo">
+                                        <div
+                                            className="home__navcolor"
+                                            style={{ borderColor: "#FFDA0A" }}
+                                        ></div>
+                                        <span
+                                            className={help ? "tip" : ""}
+                                            data-tip="1"
+                                        >
+                                            Data
+                                            {help && (
+                                                <div className="tooltip__wrapper">
+                                                    <span className="help__text">
+                                                        <b>Data transparency</b>{" "}
+                                                        every question whose
+                                                        answer provides data,
+                                                        content or information
+                                                        is a data transparency
+                                                        question. “What? When?
+                                                        Where? Who?” These
+                                                        questions primarily
+                                                        answer what information
+                                                        is needed and who are
+                                                        the stakeholders in the
+                                                        context of transparency.
+                                                        For example, in a
+                                                        hosting service
+                                                        platform, data
+                                                        transparency reveals the
+                                                        server's performances to
+                                                        the client for each
+                                                        plan, and the price of
+                                                        each plan.
+                                                    </span>
+                                                </div>
+                                            )}
+                                        </span>
+                                    </div>
+                                </div>
+                                <br />
+                                <div
+                                    className="d-flex"
+                                    style={{ marginBottom: "20px" }}
+                                >
+                                    <h3
+                                        style={{
+                                            margin: "0",
+                                            marginTop: "-1px"
+                                        }}
+                                        className={help ? "tip" : ""}
+                                        data-tip="1"
+                                    >
+                                        Stakeholders
+                                        {help && (
+                                            <div className="tooltip__wrapper">
                                                 <span className="help__text">
                                                     <b>Stakeholders</b> are the
                                                     people that use the service
@@ -146,131 +347,7 @@ const Home = ({
                                                     system, or it may concern
                                                     the public audience.
                                                 </span>
-                                            )}
-                                        </span>
-                                    </div>
-                                    <div className="home__navinfo">
-                                        <div
-                                            className="home__navcolor"
-                                            style={{ borderColor: "#FB5012" }}
-                                        ></div>
-                                        <span className={help ? "tip" : ""}>
-                                            Policy
-                                            {help && (
-                                                <span className="help__text">
-                                                    <b>Policy transparency</b>{" "}
-                                                    every question whose answer
-                                                    provides goals, intentions,
-                                                    policies and decision making
-                                                    is a policy transparency
-                                                    question. “Why?” is the main
-                                                    question here, i.e., why
-                                                    certain action is performed
-                                                    or for what reason this
-                                                    action is performed in the
-                                                    context of transparency. For
-                                                    example, in a hosting
-                                                    service platform, policy
-                                                    transparency reveals why
-                                                    encryption is needed in
-                                                    servers, or why I have a
-                                                    limited storage capacity.
-                                                </span>
-                                            )}
-                                        </span>
-                                    </div>
-                                    <div className="home__navinfo">
-                                        <div
-                                            className="home__navcolor"
-                                            style={{ borderColor: "#61C9A8" }}
-                                        ></div>
-                                        <span className={help ? "tip" : ""}>
-                                            Process
-                                            {help && (
-                                                <span className="help__text">
-                                                    <b>Process transparency</b>{" "}
-                                                    every question whose answer
-                                                    provides procedures,
-                                                    processes, behaviours and
-                                                    interactions is a process
-                                                    transparency question.
-                                                    “How?” is the main question
-                                                    here, i.e., how something is
-                                                    performed or done in the
-                                                    context of transparency. For
-                                                    example in a hosting service
-                                                    platform, process
-                                                    transparency reveals how
-                                                    data is encrypted in the
-                                                    servers, and how servers are
-                                                    immune from cyber attacks.
-                                                </span>
-                                            )}
-                                        </span>
-                                    </div>
-                                    <div className="home__navinfo">
-                                        <div
-                                            className="home__navcolor"
-                                            style={{ borderColor: "#FFDA0A" }}
-                                        ></div>
-                                        <span className={help ? "tip" : ""}>
-                                            Data
-                                            {help && (
-                                                <span className="help__text">
-                                                    <b>Data transparency</b>{" "}
-                                                    every question whose answer
-                                                    provides data, content or
-                                                    information is a data
-                                                    transparency question.
-                                                    “What? When? Where? Who?”
-                                                    These questions primarily
-                                                    answer what information is
-                                                    needed and who are the
-                                                    stakeholders in the context
-                                                    of transparency. For
-                                                    example, in a hosting
-                                                    service platform, data
-                                                    transparency reveals the
-                                                    server's performances to the
-                                                    client for each plan, and
-                                                    the price of each plan.
-                                                </span>
-                                            )}
-                                        </span>
-                                    </div>
-                                </div>
-                                <br />
-                                <div
-                                    className="d-flex"
-                                    style={{ marginBottom: "20px" }}
-                                >
-                                    <h3
-                                        style={{
-                                            margin: "0",
-                                            marginTop: "-1px"
-                                        }}
-                                        className={help ? "tip" : ""}
-                                    >
-                                        Stakeholders
-                                        {help && (
-                                            <span className="help__text">
-                                                <b>Stakeholders</b> are the
-                                                people that use the service or
-                                                the software, departements,
-                                                organisations, etc., which are
-                                                involved in the information
-                                                exchange process, providing,
-                                                receiving, or requesting
-                                                transparency. We can group
-                                                stakeholders by one entity, for
-                                                example User or IT Department.
-                                                However, the exchanged
-                                                information within an
-                                                information exchange system may
-                                                concern all stakeholders within
-                                                that system, or it may concern
-                                                the public audience.
-                                            </span>
+                                            </div>
                                         )}
                                     </h3>
                                     {stakeholder.loading ? (
@@ -319,29 +396,36 @@ const Home = ({
                                             marginTop: "-1px"
                                         }}
                                         className={help ? "tip" : ""}
+                                        data-tip="1"
                                     >
                                         Information elements
                                         {help && (
-                                            <span className="help__text">
-                                                <b>Information elements</b> are
-                                                pieces of information exchanged
-                                                amongst stakeholders. IPs or
-                                                information providers are
-                                                responsible for form and present
-                                                the information to the IRs or
-                                                information receivers. The way
-                                                the <b>information elements</b>{" "}
-                                                are formed and presented to
-                                                others is affected by
-                                                stakeholders’ transparency
-                                                requirements. There are three
-                                                different types of information
-                                                elements, related to their
-                                                transparency meaningfulness.
-                                                These types are as follows:{" "}
-                                                <b>data</b> type, <b>process</b>{" "}
-                                                type, or <b>policy</b> type.
-                                            </span>
+                                            <div className="tooltip__wrapper">
+                                                <span className="help__text">
+                                                    <b>Information elements</b>{" "}
+                                                    are pieces of information
+                                                    exchanged amongst
+                                                    stakeholders. IPs or
+                                                    information providers are
+                                                    responsible for form and
+                                                    present the information to
+                                                    the IRs or information
+                                                    receivers. The way the{" "}
+                                                    <b>information elements</b>{" "}
+                                                    are formed and presented to
+                                                    others is affected by
+                                                    stakeholders’ transparency
+                                                    requirements. There are
+                                                    three different types of
+                                                    information elements,
+                                                    related to their
+                                                    transparency meaningfulness.
+                                                    These types are as follows:{" "}
+                                                    <b>data</b> type,{" "}
+                                                    <b>process</b> type, or{" "}
+                                                    <b>policy</b> type.
+                                                </span>
+                                            </div>
                                         )}
                                     </h3>
                                     {informationElement.loading ? (
@@ -433,7 +517,8 @@ const mapSateToProps = state => ({
     stakeholder: state.stakeholder,
     informationElement: state.informationElement,
     relationship: state.relationship,
-    help: state.help.help
+    help: state.help.help,
+    viz: state.viz
 });
 
 export default connect(mapSateToProps, {

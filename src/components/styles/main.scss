@@ -9,6 +9,7 @@ body {
     margin: 0;
     height: 100vh;
     overflow-y: hidden;
+    position: relative;
 }
 
 .app {
@@ -70,8 +71,17 @@ a {
 
 .tip {
     &:hover {
-        position: relative;
         cursor: help !important;
+    }
+
+    &:hover .tooltip__wrapper {
+        padding-top: 25px;
+        display: inline-block;
+        margin: 10px;
+        width: 250px;
+        position: absolute;
+        z-index: 9999;
+        animation: tipFromTop 0.3s linear;
     }
 
     span.help__text {
@@ -81,30 +91,23 @@ a {
         text-transform: none;
         line-height: 1.5rem;
         box-shadow: 0 1px 15px rgba(109, 117, 141, 0.7);
+        border-radius: 12px;
+        color: white;
+        background: $text;
+        padding: 10px 15px 10px 15px;
+        text-decoration: none;
     }
 
     &:hover span.help__text {
-        padding: 10px 15px 10px 15px;
         display: inline-block;
-        background: $text;
-        color: white;
-        left: 0px;
-        margin: 10px;
-        width: 250px;
-        position: absolute;
-        top: 25px;
-        text-decoration: none;
-        border-radius: 12px;
-        z-index: 9999;
-        animation: tipFromTop 0.04s linear;
     }
 }
 
 @keyframes tipFromTop {
     from {
-        top: 5px;
+        opacity: 0;
     }
     to {
-        top: 25px;
+        opacity: 1;
     }
 }

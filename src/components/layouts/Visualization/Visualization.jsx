@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 
 import "./_visualization.scss";
 import { chart } from "../../../utils/d3";
+import { setJsonData } from "../../../redux/actions/vizActions";
 
 import { select } from "d3";
 export const d3 = require("d3");
@@ -11,7 +12,9 @@ const Visualization = ({
     application,
     stakeholder,
     informationElement,
-    relationship
+    relationship,
+    jsonData,
+    setJsonData
 }) => {
     const svgRef = useRef(null);
 
@@ -84,6 +87,7 @@ const Visualization = ({
                 });
             }
         });
+        setJsonData(data);
         return data;
     };
 
@@ -100,7 +104,7 @@ const Visualization = ({
         return () => {
             const svg = select(svgRef.current);
             svg.selectAll("*").remove();
-        }
+        };
     }, [
         stakeholder.stakeholders,
         informationElement.informationElements,
@@ -108,14 +112,16 @@ const Visualization = ({
     ]);
 
     // return <div>Hello 👋, I am a Visualization component.</div>;
-    return <svg ref={svgRef}></svg>;
+    return <svg style={{ marginTop: "-40px" }} ref={svgRef}></svg>;
 };
 
 const mapSateToProps = state => ({
     application: state.application,
     stakeholder: state.stakeholder,
     informationElement: state.informationElement,
-    relationship: state.relationship
+    relationship: state.relationship,
+    jsonData: state.viz.jsonData,
+    root: state.viz.root
 });
 
-export default connect(mapSateToProps)(Visualization);
+export default connect(mapSateToProps, { setJsonData })(Visualization);

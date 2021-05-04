@@ -56,23 +56,28 @@ const Control = ({ application, stakeholder, informationElement, help }) => {
                                     marginTop: "-1px"
                                 }}
                                 className={help ? "tip" : ""}
+                                data-tip="0"
                             >
                                 Stakeholders
                                 {help && (
-                                    <span className="help__text">
-                                        <b>Stakeholders</b> are the people that
-                                        use the service or the software,
-                                        departements, organisations, etc., which
-                                        are involved in the information exchange
-                                        process, providing, receiving, or
-                                        requesting transparency. We can group
-                                        stakeholders by one entity, for example
-                                        User or IT Department. However, the
-                                        exchanged information within an
-                                        information exchange system may concern
-                                        all stakeholders within that system, or
-                                        it may concern the public audience.
-                                    </span>
+                                    <div className="tooltip__wrapper">
+                                        <span className="help__text">
+                                            <b>Stakeholders</b> are the people
+                                            that use the service or the
+                                            software, departements,
+                                            organisations, etc., which are
+                                            involved in the information exchange
+                                            process, providing, receiving, or
+                                            requesting transparency. We can
+                                            group stakeholders by one entity,
+                                            for example User or IT Department.
+                                            However, the exchanged information
+                                            within an information exchange
+                                            system may concern all stakeholders
+                                            within that system, or it may
+                                            concern the public audience.
+                                        </span>
+                                    </div>
                                 )}
                             </p>
                             <Tag
@@ -90,23 +95,28 @@ const Control = ({ application, stakeholder, informationElement, help }) => {
                                     marginTop: "-1px"
                                 }}
                                 className={help ? "tip" : ""}
+                                data-tip="0"
                             >
                                 Policy
                                 {help && (
-                                    <span className="help__text">
-                                        <b>Policy transparency</b> every
-                                        question whose answer provides goals,
-                                        intentions, policies and decision making
-                                        is a policy transparency question.
-                                        “Why?” is the main question here, i.e.,
-                                        why certain action is performed or for
-                                        what reason this action is performed in
-                                        the context of transparency. For
-                                        example, in a hosting service platform,
-                                        policy transparency reveals why
-                                        encryption is needed in servers, or why
-                                        I have a limited storage capacity.
-                                    </span>
+                                    <div className="tooltip__wrapper">
+                                        <span className="help__text">
+                                            <b>Policy transparency</b> every
+                                            question whose answer provides
+                                            goals, intentions, policies and
+                                            decision making is a policy
+                                            transparency question. “Why?” is the
+                                            main question here, i.e., why
+                                            certain action is performed or for
+                                            what reason this action is performed
+                                            in the context of transparency. For
+                                            example, in a hosting service
+                                            platform, policy transparency
+                                            reveals why encryption is needed in
+                                            servers, or why I have a limited
+                                            storage capacity.
+                                        </span>
+                                    </div>
                                 )}
                             </p>
                             <Tag
@@ -127,23 +137,27 @@ const Control = ({ application, stakeholder, informationElement, help }) => {
                                     marginTop: "-1px"
                                 }}
                                 className={help ? "tip" : ""}
+                                data-tip="0"
                             >
                                 Process
                                 {help && (
-                                    <span className="help__text">
-                                        <b>Process transparency</b> every
-                                        question whose answer provides
-                                        procedures, processes, behaviours and
-                                        interactions is a process transparency
-                                        question. “How?” is the main question
-                                        here, i.e., how something is performed
-                                        or done in the context of transparency.
-                                        For example in a hosting service
-                                        platform, process transparency reveals
-                                        how data is encrypted in the servers,
-                                        and how servers are immune from cyber
-                                        attacks.
-                                    </span>
+                                    <div className="tooltip__wrapper">
+                                        <span className="help__text">
+                                            <b>Process transparency</b> every
+                                            question whose answer provides
+                                            procedures, processes, behaviours
+                                            and interactions is a process
+                                            transparency question. “How?” is the
+                                            main question here, i.e., how
+                                            something is performed or done in
+                                            the context of transparency. For
+                                            example in a hosting service
+                                            platform, process transparency
+                                            reveals how data is encrypted in the
+                                            servers, and how servers are immune
+                                            from cyber attacks.
+                                        </span>
+                                    </div>
                                 )}
                             </p>
                             <Tag
@@ -164,23 +178,27 @@ const Control = ({ application, stakeholder, informationElement, help }) => {
                                     marginTop: "-1px"
                                 }}
                                 className={help ? "tip" : ""}
+                                data-tip="0"
                             >
                                 Data
                                 {help && (
-                                    <span className="help__text">
-                                        <b>Data transparency</b> every question
-                                        whose answer provides data, content or
-                                        information is a data transparency
-                                        question. “What? When? Where? Who?”
-                                        These questions primarily answer what
-                                        information is needed and who are the
-                                        stakeholders in the context of
-                                        transparency. For example, in a hosting
-                                        service platform, data transparency
-                                        reveals the server's performances to the
-                                        client for each plan, and the price of
-                                        each plan.
-                                    </span>
+                                    <div className="tooltip__wrapper">
+                                        <span className="help__text">
+                                            <b>Data transparency</b> every
+                                            question whose answer provides data,
+                                            content or information is a data
+                                            transparency question. “What? When?
+                                            Where? Who?” These questions
+                                            primarily answer what information is
+                                            needed and who are the stakeholders
+                                            in the context of transparency. For
+                                            example, in a hosting service
+                                            platform, data transparency reveals
+                                            the server's performances to the
+                                            client for each plan, and the price
+                                            of each plan.
+                                        </span>
+                                    </div>
                                 )}
                             </p>
                             <Tag

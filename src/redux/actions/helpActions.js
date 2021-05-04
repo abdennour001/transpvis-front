@@ -1,5 +1,6 @@
 
 import { TOGGLE_HELP } from "../types";
+import { handleTipPosition } from "../../utils/app.utils";
 
 // toggle help
 export const toggleHelp = () => async dispatch => {
@@ -8,5 +9,8 @@ export const toggleHelp = () => async dispatch => {
     } else {
         document.getElementsByTagName("body")[0].style.cursor = "auto"
     }
+    document.querySelectorAll("[data-tip]").forEach((element) => {
+        element.removeEventListener("mouseenter", handleTipPosition);
+    });
     dispatch({ type: TOGGLE_HELP });
 };

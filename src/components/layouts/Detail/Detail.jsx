@@ -1,11 +1,20 @@
-import { React } from "react";
+import { React, useEffect } from "react";
 import { connect } from "react-redux";
 
 import Stakeholder from "../Stakeholder";
 import InformationElement from "../InformationElement";
 import "./_detail.scss";
+import { handleTipPosition } from "../../../utils/app.utils";
 
-const Detail = ({ focusedElement }) => {
+const Detail = ({ focusedElement, help }) => {
+    useEffect(() => {
+        if (help) {
+            document.querySelectorAll("[data-tip]").forEach(element => {
+                element.removeEventListener("mouseenter", handleTipPosition);
+                element.addEventListener("mouseenter", handleTipPosition);
+            });
+        }
+    });
     return (
         <>
             <div className="detail">
@@ -22,7 +31,10 @@ const Detail = ({ focusedElement }) => {
                             justifyContent: "center"
                         }}
                     >
-                        <p className="text-muted" style={{textAlign: "center"}}>
+                        <p
+                            className="text-muted"
+                            style={{ textAlign: "center" }}
+                        >
                             Please select a stakeholder or an information
                             element
                         </p>
@@ -42,7 +54,8 @@ const Detail = ({ focusedElement }) => {
 };
 
 const mapSateToProps = state => ({
-    focusedElement: state.application.focused
+    focusedElement: state.application.focused,
+    help: state.help.help
 });
 
 export default connect(mapSateToProps)(Detail);

@@ -1,6 +1,11 @@
+import store from "../redux/store";
+import { setRoot } from "../redux/actions/vizActions";
+import { setFocused, removeFocused } from "../redux/actions/applicationActions";
+import { SET_FOCUSED, REMOVE_FOCUSED } from "../redux/types";
+
 export const d3 = require("d3");
 
-const radius = 300
+const radius = 300;
 const tree = d3.cluster().size([2 * Math.PI, radius]);
 
 const line = d3
@@ -11,6 +16,11 @@ const line = d3
 
 const width = 1100;
 const colornone = "#ccc";
+
+var colorStakeholder = "#4A6FA5";
+var colorData = "#FFDA0A";
+var colorProcess = "#61C9A8";
+var colorPolicy = "#FB5012";
 
 function bilink(root) {
     const map = new Map(root.leaves().map(d => [d.data.label, d]));
@@ -66,15 +76,174 @@ const findEndAngle = children => {
     return max + 0.3;
 };
 
-export const chart = (svg, { nodes, links }) => {
-    // console.log(svg);
-    const data = data_({ nodes, links });
-    console.log(data);
+export function setPrimaryAnimation(event, d) {
+    d3.select(d.text).attr("font-weight", "bold");
+    d3.selectAll(d.incoming.map(d => d.path))
+        .data(d.incoming.map(d => d[0]))
+        .attr("stroke", t =>
+            eval(
+                `color${t.data.group.charAt(0).toUpperCase() +
+                    t.data.group.slice(1)}`
+            )
+        )
+        .attr("stroke-width", 1.5)
+        .raise();
+    d3.selectAll(d.outgoing.map(d => d.path))
+        .attr(
+            "stroke",
+            eval(
+                `color${d.data.group.charAt(0).toUpperCase() +
+                    d.data.group.slice(1)}`
+            )
+        )
+        .attr("stroke-width", 1.5)
+        .raise();
+    d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("font-weight", "bold");
+    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", "bold");
+}
 
-    var colorStakeholder = "#4A6FA5";
-    var colorData = "#FFDA0A";
-    var colorProcess = "#61C9A8";
-    var colorPolicy = "#FB5012";
+export function unsetPrimaryAnimation(event, d) {
+    d3.select(d.text).attr("font-weight", "normal");
+    d3.selectAll(d.incoming.map(d => d.path))
+        .attr("stroke", null)
+        .attr("stroke-width", 1);
+    d3.selectAll(d.incoming.map(([d]) => d.text))
+        .attr("fill", null)
+        .attr("font-weight", null);
+    d3.selectAll(d.outgoing.map(d => d.path))
+        .attr("stroke", null)
+        .attr("stroke-width", 1);
+    d3.selectAll(d.outgoing.map(([, d]) => d.text))
+        .attr("fill", null)
+        .attr("font-weight", null);
+    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", null);
+}
+
+// Primary animation (onClick)
+export function clicked(event, d) {
+    let element = {};
+    if (d.data.group === "stakeholder") {
+        element = store
+            .getState()
+            .stakeholder.stakeholders.find(
+                element => element.label === d.data.label
+            );
+    } else {
+        element = store
+            .getState()
+            .informationElement.informationElements.find(
+                element => element.label === d.data.label
+            );
+    }
+    if (!store.getState().application.focused) {
+        setPrimaryAnimation(event, d);
+        store.dispatch({
+            type: SET_FOCUSED,
+            payload: element
+        });
+    } else {
+        if (store.getState().application.focused === element) {
+            unsetPrimaryAnimation(event, d);
+            store.dispatch({
+                type: REMOVE_FOCUSED
+            });
+        } else {
+            unsetPrimaryAnimation(
+                event,
+                store
+                    .getState()
+                    .viz.root.leaves()
+                    .find(
+                        node =>
+                            node.data.label ===
+                            store.getState().application.focused.label
+                    )
+            );
+            setPrimaryAnimation(event, d);
+            store.dispatch({
+                type: SET_FOCUSED,
+                payload: element
+            });
+        }
+    }
+}
+
+//change link style based on the event(mouseover) Secondary animation
+export function overed(event, d) {
+    return null;
+    // link.style("mix-blend-mode", null);
+    d3.select(d.text).attr("font-weight", "bold");
+    d3.selectAll(d.incoming.map(d => d.path))
+        .data(d.incoming.map(d => d[0]))
+        .attr("stroke", t =>
+            eval(
+                `color${t.data.group.charAt(0).toUpperCase() +
+                    t.data.group.slice(1)}`
+            )
+        )
+        .attr("stroke-width", 1.5)
+        .raise();
+    // d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", colorin).attr("font-weight", "bold");
+
+    // d3.selectAll(d.incoming.map(([d]) => d.text)).data(d.incoming).attr("fill", eval(`color${d.data.group.charAt(0).toUpperCase() + d.data.group.slice(1)}`)).attr("font-weight", "bold");
+
+    // d3.selectAll(d.incoming.map(([d]) => d.circle)).style("fill", colorin);
+    // d.incoming.filter(d => d.path === path)[0]
+    d3.selectAll(d.outgoing.map(d => d.path))
+        .attr(
+            "stroke",
+            eval(
+                `color${d.data.group.charAt(0).toUpperCase() +
+                    d.data.group.slice(1)}`
+            )
+        )
+        .attr("stroke-width", 1.5)
+        .raise();
+    d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("font-weight", "bold");
+    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", "bold");
+    // d3.selectAll(d.outgoing.map(([, d]) => d.circle)).style("fill", colorout);
+}
+
+//in outed state, made everything reseted
+export function outed(event, d) {
+    return null;
+    // link.style("mix-blend-mode", "darken");
+    d3.select(d.text).attr("font-weight", "normal");
+    d3.selectAll(d.incoming.map(d => d.path))
+        .attr("stroke", null)
+        .attr("stroke-width", 1);
+    d3.selectAll(d.incoming.map(([d]) => d.text))
+        .attr("fill", null)
+        .attr("font-weight", null);
+    // d3.selectAll(d.incoming.map(([d]) => d.circle)).style("fill", null);
+    d3.selectAll(d.outgoing.map(d => d.path))
+        .attr("stroke", null)
+        .attr("stroke-width", 1);
+    d3.selectAll(d.outgoing.map(([, d]) => d.text))
+        .attr("fill", null)
+        .attr("font-weight", null);
+    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", null);
+    // d3.selectAll(d.outgoing.map(([, d]) => d.circle)).style("fill", null);
+}
+
+const handleRotateText = d => {
+    if (d.x >= Math.PI) {
+        if (d.x > Math.PI && d.x < (3 * Math.PI) / 2 - 0.5) {
+            return "rotate(-180)";
+        } else {
+            return "rotate(-180)";
+        }
+    } else {
+        if (d.x > Math.PI / 2 + 0.5 && d.x < (3 * Math.PI) / 2) {
+            return null;
+        } else {
+            return null;
+        }
+    }
+};
+
+export const chart = (svg, { nodes, links }) => {
+    const data = data_({ nodes, links });
 
     const nodeById = new Map(nodes.map(node => [node.label, node]));
 
@@ -89,21 +258,15 @@ export const chart = (svg, { nodes, links }) => {
                 )
         )
     );
-
-    // console.log(root.descendants().filter(d => d.height == 1));
-
-    // const svg = d3
-    //     .create("svg")
-    //     .attr("viewBox", [-width / 2, -width / 2, width, width]);
-
+    setRoot(root, store.dispatch);
     svg.attr("viewBox", [-width / 2 + 30, -width / 2, width, width]);
 
     // 🏛
-    const arcWidth = 10
+    const arcWidth = 10;
     const arc = d3
         .arc()
-        .innerRadius(radius+6 - arcWidth)
-        .outerRadius(radius+6+ arcWidth)
+        .innerRadius(radius + 6 - arcWidth)
+        .outerRadius(radius + 6 + arcWidth)
         .startAngle(d => findStartAngle(d.children))
         .endAngle(d => findEndAngle(d.children))
         .cornerRadius(5);
@@ -141,7 +304,7 @@ export const chart = (svg, { nodes, links }) => {
         .attr("dx", d => (d.x >= Math.PI ? "-1em" : "1em"))
         .attr("x", d => (d.x < Math.PI ? 15 : -15))
         .attr("text-anchor", d => (d.x < Math.PI ? "start" : "end"))
-        .attr("transform", d => (d.x >= Math.PI ? "rotate(180)" : null))
+        .attr("transform", d => handleRotateText(d))
         // .attr("fill", d =>
         //     eval(
         //         `color${d.data.group.charAt(0).toUpperCase() +
@@ -158,8 +321,8 @@ export const chart = (svg, { nodes, links }) => {
         })
         //overed is the behaviour when we have a mouseover on one of the elements(nodes)
         .on("mouseover", overed)
-
         .on("mouseout", outed)
+        .on("click", clicked)
         .call(text =>
             text
                 .append("title")
@@ -209,63 +372,8 @@ export const chart = (svg, { nodes, links }) => {
         )
         .each(function(d) {
             d.circle = this;
-        });
-
-    //change link style based on the event(mouseover mouseouted
-    function overed(event, d) {
-        link.style("mix-blend-mode", null);
-        d3.select(this).attr("font-weight", "bold");
-        d3.selectAll(d.incoming.map(d => d.path))
-            .data(d.incoming.map(d => d[0]))
-            .attr("stroke", t =>
-                eval(
-                    `color${t.data.group.charAt(0).toUpperCase() +
-                        t.data.group.slice(1)}`
-                )
-            )
-            .attr("stroke-width", 1.5)
-            .raise();
-        // d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", colorin).attr("font-weight", "bold");
-
-        // d3.selectAll(d.incoming.map(([d]) => d.text)).data(d.incoming).attr("fill", eval(`color${d.data.group.charAt(0).toUpperCase() + d.data.group.slice(1)}`)).attr("font-weight", "bold");
-
-        // d3.selectAll(d.incoming.map(([d]) => d.circle)).style("fill", colorin);
-        // d.incoming.filter(d => d.path === path)[0]
-        d3.selectAll(d.outgoing.map(d => d.path))
-            .attr(
-                "stroke",
-                eval(
-                    `color${d.data.group.charAt(0).toUpperCase() +
-                        d.data.group.slice(1)}`
-                )
-            )
-            .attr("stroke-width", 1.5)
-            .raise();
-        d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr(
-            "font-weight",
-            "bold"
-        );
-        // d3.selectAll(d.outgoing.map(([, d]) => d.circle)).style("fill", colorout);
-    }
-    //in outed state, made everything reseted
-    function outed(event, d) {
-        link.style("mix-blend-mode", "darken");
-        d3.select(this).attr("font-weight", null);
-        d3.selectAll(d.incoming.map(d => d.path))
-            .attr("stroke", null)
-            .attr("stroke-width", 1);
-        d3.selectAll(d.incoming.map(([d]) => d.text))
-            .attr("fill", null)
-            .attr("font-weight", null);
-        // d3.selectAll(d.incoming.map(([d]) => d.circle)).style("fill", null);
-        d3.selectAll(d.outgoing.map(d => d.path))
-            .attr("stroke", null)
-            .attr("stroke-width", 1);
-        d3.selectAll(d.outgoing.map(([, d]) => d.text))
-            .attr("fill", null)
-            .attr("font-weight", null);
-        // d3.selectAll(d.outgoing.map(([, d]) => d.circle)).style("fill", null);
-    }
-
+        })
+        .style("cursor", "pointer")
+        .on("click", clicked);
     return svg.node();
 };

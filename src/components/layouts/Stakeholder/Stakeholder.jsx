@@ -121,16 +121,19 @@ const Stakeholder = ({
                                         maxWidth: "350px"
                                     }}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                     onClick={() => handleToggle("production")}
                                 >
                                     Produced Information elements
                                     {help && (
-                                        <span className="help__text">
-                                            <b>Production relationship </b>{" "}
-                                            means that the stakeholder produces
-                                            the information element for other
-                                            stakeholders.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                <b>Production relationship </b>{" "}
+                                                means that the stakeholder
+                                                produces the information element
+                                                for other stakeholders.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -209,17 +212,20 @@ const Stakeholder = ({
                                     }}
                                     onClick={() => handleToggle("obligatory")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Obligatory Information elements
                                     {help && (
-                                        <span className="help__text">
-                                            <b>Obligation relationship</b>{" "}
-                                            denotes that the stakeholder
-                                            provides the information element
-                                            based on mandatory supply or
-                                            requests the information element
-                                            based on legal demands.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                <b>Obligation relationship</b>{" "}
+                                                denotes that the stakeholder
+                                                provides the information element
+                                                based on mandatory supply or
+                                                requests the information element
+                                                based on legal demands.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -298,17 +304,21 @@ const Stakeholder = ({
                                     }}
                                     onClick={() => handleToggle("optional")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Optional Information elements
                                     {help && (
-                                        <span className="help__text">
-                                            <b> Optionality relationship</b>{" "}
-                                            denotes that the information element
-                                            was provided by the stakeholder
-                                            based on voluntary supply or
-                                            requests the information element
-                                            based on personal demands.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                <b> Optionality relationship</b>{" "}
+                                                denotes that the information
+                                                element was provided by the
+                                                stakeholder based on voluntary
+                                                supply or requests the
+                                                information element based on
+                                                personal demands.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -387,15 +397,20 @@ const Stakeholder = ({
                                     }}
                                     onClick={() => handleToggle("restricted")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Restricted Information elements
                                     {help && (
-                                        <span className="help__text">
-                                            <b>The Restriction relationship</b>{" "}
-                                            denotes that the information element
-                                            should not be available to the
-                                            stakeholder.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                <b>
+                                                    The Restriction relationship
+                                                </b>{" "}
+                                                denotes that the information
+                                                element should not be available
+                                                to the stakeholder.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -473,18 +488,22 @@ const Stakeholder = ({
                                     }}
                                     onClick={() => handleToggle("undecided")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Undecided Information elements
                                     {help && (
-                                        <span className="help__text">
-                                            <b>
-                                                The undecidedness relationship
-                                            </b>{" "}
-                                            denotes that the relationship
-                                            between the stakeholder and the
-                                            information element is not decided
-                                            yet.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                <b>
+                                                    The undecidedness
+                                                    relationship
+                                                </b>{" "}
+                                                denotes that the relationship
+                                                between the stakeholder and the
+                                                information element is not
+                                                decided yet.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag

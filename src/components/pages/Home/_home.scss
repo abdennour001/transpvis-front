@@ -13,7 +13,11 @@
 .home {
     height: 100%;
     background-color: $gray-100;
-    position: relative;
+    background-image: url("../../../assets/background.png");
+    background-repeat: space;
+    background-size: 410px;
+    background-position: left center;
+    // position: relative;
 
     &__content {
         display: flex;
@@ -97,6 +101,7 @@
         width: 100%;
         position: relative;
         padding-top: 16px;
+        overflow: hidden;
     }
 
     &__expand {
@@ -147,7 +152,7 @@
     margin-bottom: 20px;
     padding: 16px;
     max-width: 330px;
-    position: relative;
+    // position: relative;
 }
 
 .home__navinfo {

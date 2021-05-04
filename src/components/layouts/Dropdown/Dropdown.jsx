@@ -14,8 +14,9 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { toggleHelp } from "../../../redux/actions/helpActions";
+import { handleTipPosition } from "../../../utils/app.utils";
 
-const Dropdown = ({help, toggleHelp}) => {
+const Dropdown = ({ help, toggleHelp }) => {
     const refDropdown = useRef(null);
 
     const toggleDropdown = event => {
@@ -33,9 +34,13 @@ const Dropdown = ({help, toggleHelp}) => {
         });
     }, []);
 
-    const startHelp = (e) => {
+    const startHelp = e => {
         toggleHelp();
-    }
+        document.querySelectorAll("[data-tip]").forEach((element) => {
+            element.removeEventListener("mouseenter", handleTipPosition);
+            element.addEventListener("mouseenter", handleTipPosition);
+        });
+    };
 
     return (
         <details className="dropdown" ref={refDropdown}>
@@ -49,9 +54,11 @@ const Dropdown = ({help, toggleHelp}) => {
                     <Link to="/">Your applications</Link>
                 </div>
                 <div className="dropdown__devider"></div>
-                <div className="dropdown__item" onClick={(e) => startHelp(e)}>
+                <div className="dropdown__item" onClick={e => startHelp(e)}>
                     <FontAwesomeIcon icon={faInfoCircle} fixedWidth size="md" />
-                    <a href="#" to="/">Help</a>
+                    <a href="#" to="/">
+                        Help
+                    </a>
                 </div>
                 <div className="dropdown__item">
                     <FontAwesomeIcon icon={faCog} fixedWidth size="md" />
@@ -66,9 +73,8 @@ const Dropdown = ({help, toggleHelp}) => {
     );
 };
 
-
 const mapSateToProps = state => ({
-    help: state.help.help,
+    help: state.help.help
 });
 
 export default connect(mapSateToProps, {

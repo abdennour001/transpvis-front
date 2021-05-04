@@ -137,14 +137,18 @@ const InformationElement = ({
                                     }}
                                     onClick={() => handleToggle("related")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Related Information Elements
                                     {help && (
-                                        <span className="help__text">
-                                            Other <b>Information elements</b>{" "}
-                                            that uses this specific information
-                                            element in their process.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                Other{" "}
+                                                <b>Information elements</b> that
+                                                uses this specific information
+                                                element in their process.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -220,13 +224,17 @@ const InformationElement = ({
                                     }}
                                     onClick={() => handleToggle("provider")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Information Element Provider
                                     {help && (
-                                        <span className="help__text">
-                                            The <b>stakeholder</b> that provides
-                                            this information element.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                The <b>stakeholder</b> that
+                                                provides this information
+                                                element.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -302,16 +310,19 @@ const InformationElement = ({
                                     }}
                                     onClick={() => handleToggle("receive")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Receiving Stakeholders
                                     {help && (
-                                        <span className="help__text">
-                                            The <b>stakeholders</b> that
-                                            receives this information element
-                                            based on coercive information
-                                            provision, or legal information
-                                            requests.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                The <b>stakeholders</b> that
+                                                receives this information
+                                                element based on coercive
+                                                information provision, or legal
+                                                information requests.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -387,16 +398,19 @@ const InformationElement = ({
                                     }}
                                     onClick={() => handleToggle("request")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Requesting Stakeholders
                                     {help && (
-                                        <span className="help__text">
-                                            The <b>stakeholders</b> that
-                                            receives this information element as
-                                            a result of voluntary information
-                                            provision or personal information
-                                            demands.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                The <b>stakeholders</b> that
+                                                receives this information
+                                                element as a result of voluntary
+                                                information provision or
+                                                personal information demands.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
@@ -472,15 +486,18 @@ const InformationElement = ({
                                     }}
                                     onClick={() => handleToggle("restricted")}
                                     className={help ? "tip" : ""}
+                                    data-tip="1"
                                 >
                                     Restricted Stakeholders
                                     {help && (
-                                        <span className="help__text">
-                                            <b>The stakeholders</b> that this
-                                            information element is hidden from
-                                            them, and they don't have rights to
-                                            see or ispect it.
-                                        </span>
+                                        <div className="tooltip__wrapper">
+                                            <span className="help__text">
+                                                <b>The stakeholders</b> that
+                                                this information element is
+                                                hidden from them, and they don't
+                                                have rights to see or ispect it.
+                                            </span>
+                                        </div>
                                     )}
                                 </h4>
                                 <Tag
