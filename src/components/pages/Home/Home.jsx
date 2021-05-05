@@ -63,7 +63,7 @@ const Home = ({
     };
 
     useEffect(() => {
-        const selectedApp = 1;
+        const selectedApp = 2;
         getApplications().then(() => {
             setApplication(selectedApp);
         });
@@ -101,12 +101,14 @@ const Home = ({
                                 node.data.label === application.focused.label
                         )
                 );
-                setPrimaryAnimation(
-                    event,
-                    viz.root
-                        .leaves()
-                        .find(node => node.data.label === element.label)
-                );
+                setTimeout(() => {
+                    setPrimaryAnimation(
+                        event,
+                        viz.root
+                            .leaves()
+                            .find(node => node.data.label === element.label)
+                    );
+                }, 400);
                 setFocused(element);
             }
         }

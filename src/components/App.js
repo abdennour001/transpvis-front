@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 
 // pages
-// import Splash from "./pages/Splash";
+import Splash from "./pages/Splash";
 import Home from "./pages/Home";
 
 // Redux store
@@ -13,8 +13,8 @@ function App() {
     return (
         <Router>
             <Provider store={store}>
-                {/* <Splash /> */}
-                <Home />
+                <Splash />
+                {/* <Home /> */}
                 <div className="app"></div>
             </Provider>
         </Router>

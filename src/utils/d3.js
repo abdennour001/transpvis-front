@@ -5,7 +5,7 @@ import { SET_FOCUSED, REMOVE_FOCUSED } from "../redux/types";
 
 export const d3 = require("d3");
 
-const radius = 300;
+const radius = 250;
 const tree = d3.cluster().size([2 * Math.PI, radius]);
 
 const line = d3
@@ -77,7 +77,12 @@ const findEndAngle = children => {
 };
 
 export function setPrimaryAnimation(event, d) {
-    d3.select(d.text).attr("font-weight", "bold");
+    const text = d3.select(d.text);
+    text.attr("font-weight", "bold");
+    text.transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("font-size", 16.5);
     d3.selectAll(d.incoming.map(d => d.path))
         .data(d.incoming.map(d => d[0]))
         .attr("stroke", t =>
@@ -87,7 +92,12 @@ export function setPrimaryAnimation(event, d) {
             )
         )
         .attr("stroke-width", 1.5)
-        .raise();
+        .attr("stroke-dasharray", 1500 + " " + 1500)
+        .attr("stroke-dashoffset", 1500)
+        .transition()
+        .duration(1500)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
     d3.selectAll(d.outgoing.map(d => d.path))
         .attr(
             "stroke",
@@ -97,26 +107,147 @@ export function setPrimaryAnimation(event, d) {
             )
         )
         .attr("stroke-width", 1.5)
-        .raise();
-    d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("font-weight", "bold");
-    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", "bold");
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", 1500 + " " + 1500)
+        .attr("stroke-dashoffset", 1500)
+        .transition()
+        .duration(1500)
+        .ease(d3.easeLinear)
+        .attr("stroke-dashoffset", 0);
+    const textsOutgoing = d3.selectAll(d.outgoing.map(([, d]) => d.text));
+    textsOutgoing.attr("font-weight", "bold");
+    textsOutgoing
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("font-size", 16.5);
+    const textsIncoming = d3.selectAll(d.incoming.map(d => d[0].text));
+    textsIncoming.attr("font-weight", "bold");
+    textsIncoming
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("font-size", 16.5);
+
+    const root = store.getState().viz.root;
+    d3.selectAll(
+        root
+            .leaves()
+            .filter(node => node.data.label !== d.data.label)
+            .filter(node => !d.outgoing.map(d => d[1]).includes(node))
+            .filter(node => !d.incoming.map(d => d[0]).includes(node))
+            .map(node => node.text)
+    )
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", ".3");
+    d3.selectAll(
+        root
+            .leaves()
+            .map(node =>
+                node.incoming
+                    .map(n => n.path)
+                    .concat(node.incoming.map(n => n.path))
+            )
+            .flat()
+            .filter(
+                path =>
+                    !d.incoming.map(d => d.path).includes(path) &&
+                    !d.outgoing.map(d => d.path).includes(path)
+            )
+    )
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", ".3");
+
+    d3.select(d.circle)
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("r", 10); // set the radius
+    d3.selectAll(d.outgoing.map(d => d[1].circle))
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("r", 10); // set the radius
+    d3.selectAll(d.incoming.map(d => d[0].circle))
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("r", 10); // set the radius
 }
 
 export function unsetPrimaryAnimation(event, d) {
     d3.select(d.text).attr("font-weight", "normal");
+
     d3.selectAll(d.incoming.map(d => d.path))
         .attr("stroke", null)
         .attr("stroke-width", 1);
+
     d3.selectAll(d.incoming.map(([d]) => d.text))
         .attr("fill", null)
         .attr("font-weight", null);
     d3.selectAll(d.outgoing.map(d => d.path))
         .attr("stroke", null)
         .attr("stroke-width", 1);
+
     d3.selectAll(d.outgoing.map(([, d]) => d.text))
         .attr("fill", null)
         .attr("font-weight", null);
-    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", null);
+    d3.selectAll(d.incoming.map(d => d[0].text)).attr("font-weight", "normal");
+
+    const root = store.getState().viz.root;
+    const texts = d3.selectAll(root.leaves().map(node => node.text));
+    texts
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("font-size", 16);
+    texts
+        .transition()
+        .delay(200)
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", 1);
+
+    d3.selectAll(
+        root
+            .leaves()
+            .map(node => node.incoming.map(n => n.path))
+            .flat()
+    )
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", "1");
+    d3.selectAll(
+        root
+            .leaves()
+            .map(node => node.outgoing.map(n => n.path))
+            .flat()
+    )
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", "1");
+
+    d3.select(d.circle)
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("r", 8); // set the radius
+    d3.selectAll(d.outgoing.map(d => d[1].circle))
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("r", 8); // set the radius
+    d3.selectAll(d.incoming.map(d => d[0].circle))
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .attr("r", 8); // set the radius
 }
 
 // Primary animation (onClick)
@@ -159,7 +290,9 @@ export function clicked(event, d) {
                             store.getState().application.focused.label
                     )
             );
-            setPrimaryAnimation(event, d);
+            setTimeout(() => {
+                setPrimaryAnimation(event, d);
+            }, 400);
             store.dispatch({
                 type: SET_FOCUSED,
                 payload: element
@@ -290,7 +423,6 @@ export const chart = (svg, { nodes, links }) => {
 
     const node = svg
         .append("g")
-        .attr("font-size", 16)
         .attr("fill", "#3D4758")
         .selectAll("g")
         .data(root.leaves())
@@ -300,6 +432,7 @@ export const chart = (svg, { nodes, links }) => {
             d => `rotate(${(d.x * 180) / Math.PI - 90}) translate(${d.y},0)`
         )
         .append("text")
+        .attr("font-size", 16)
         .attr("dy", "0.31em")
         .attr("dx", d => (d.x >= Math.PI ? "-1em" : "1em"))
         .attr("x", d => (d.x < Math.PI ? 15 : -15))
@@ -314,6 +447,7 @@ export const chart = (svg, { nodes, links }) => {
         // .attr("fill", colornone
         // )
         .style("cursor", "pointer")
+        .style("user-select", "none")
         .text(d => nodeById.get(d.data.label).name)
         //for eadh node,
         .each(function(d) {
@@ -324,14 +458,7 @@ export const chart = (svg, { nodes, links }) => {
         .on("mouseout", outed)
         .on("click", clicked)
         .call(text =>
-            text
-                .append("title")
-                .text(
-                    d =>
-                        `${nodeById.get(d.data.label).name} ${
-                            d.outgoing.length
-                        } outgoing ${d.incoming.length} incoming`
-                )
+            text.append("title").text(d => `${nodeById.get(d.data.label).name}`)
         );
 
     //link drawing
