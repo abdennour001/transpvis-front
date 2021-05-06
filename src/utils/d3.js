@@ -83,6 +83,13 @@ export function setPrimaryAnimation(event, d) {
         .duration(200)
         .ease(d3.easeLinear)
         .attr("font-size", 16.5);
+    text.style(
+        "fill",
+        eval(
+            `color${d.data.group.charAt(0).toUpperCase() +
+                d.data.group.slice(1)}`
+        )
+    );
     d3.selectAll(d.incoming.map(d => d.path))
         .data(d.incoming.map(d => d[0]))
         .attr("stroke", t =>
@@ -162,6 +169,20 @@ export function setPrimaryAnimation(event, d) {
         .ease(d3.easeLinear)
         .style("opacity", ".3");
 
+    d3.selectAll(
+        root
+            .leaves()
+            .filter(node => node.data.label !== d.data.label)
+            .filter(node => !d.outgoing.map(d => d[1]).includes(node))
+            .filter(node => !d.incoming.map(d => d[0]).includes(node))
+            .map(node => node.circle)
+    )
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", ".5")
+        .attr("r", 6); // set the radius
+
     d3.select(d.circle)
         .transition()
         .duration(200)
@@ -181,6 +202,7 @@ export function setPrimaryAnimation(event, d) {
 
 export function unsetPrimaryAnimation(event, d) {
     d3.select(d.text).attr("font-weight", "normal");
+    d3.select(d.text).style("fill", "#3D4758");
 
     d3.selectAll(d.incoming.map(d => d.path))
         .attr("stroke", null)
@@ -232,6 +254,20 @@ export function unsetPrimaryAnimation(event, d) {
         .duration(200)
         .ease(d3.easeLinear)
         .style("opacity", "1");
+
+    d3.selectAll(
+        root
+            .leaves()
+            .filter(node => node.data.label !== d.data.label)
+            .filter(node => !d.outgoing.map(d => d[1]).includes(node))
+            .filter(node => !d.incoming.map(d => d[0]).includes(node))
+            .map(node => node.circle)
+    )
+        .transition()
+        .duration(200)
+        .ease(d3.easeLinear)
+        .style("opacity", "1")
+        .attr("r", 8); // set the radius
 
     d3.select(d.circle)
         .transition()
