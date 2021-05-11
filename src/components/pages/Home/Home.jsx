@@ -63,7 +63,7 @@ const Home = ({
     };
 
     useEffect(() => {
-        const selectedApp = 2;
+        const selectedApp = 1;
         getApplications().then(() => {
             setApplication(selectedApp);
         });
