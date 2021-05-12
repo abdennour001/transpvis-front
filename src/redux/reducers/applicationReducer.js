@@ -3,7 +3,10 @@ import {
     SET_APPLICATION,
     SET_FOCUSED,
     REMOVE_FOCUSED,
-    TOGGLE_LOADING_APPLICATION
+    TOGGLE_LOADING_APPLICATION,
+    CREATE_APPLICATION,
+    UPDATE_APPLICATION,
+    DELETE_APPLICATION
 } from "../types";
 
 const initialState = {
@@ -30,6 +33,29 @@ const applicationReducer = (state = initialState, action) => {
             return { ...state, focused: null };
         case TOGGLE_LOADING_APPLICATION:
             return { ...state, loading: !state.loading };
+        case CREATE_APPLICATION:
+            return {
+                ...state,
+                loading: false,
+                applications: [...applications, action.payload]
+            };
+        case UPDATE_APPLICATION:
+            return {
+                ...state,
+                loading: false,
+                applications: [
+                    ...applications.filter(app => app.id !== action.payload.id),
+                    action.payload
+                ]
+            };
+        case DELETE_APPLICATION:
+            return {
+                ...state,
+                loading: false,
+                applications: applications.filter(
+                    app => app.id !== action.payload.id
+                )
+            };
         default:
             return state;
     }
