@@ -19,7 +19,7 @@ const relationshipReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                relations: [...relations, action.payload]
+                relations: [...state.relations, action.payload]
             };
         default:
             return state;

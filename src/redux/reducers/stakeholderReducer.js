@@ -21,14 +21,16 @@ const stakeholderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                stakeholders: [...stakeholders, action.payload]
+                stakeholders: [...state.stakeholders, action.payload]
             };
         case UPDATE_STAKEHOLDER:
             return {
                 ...state,
                 loading: false,
                 stakeholders: [
-                    ...stakeholders.filter(s => s.id !== action.payload.id),
+                    ...state.stakeholders.filter(
+                        s => s.id !== action.payload.id
+                    ),
                     action.payload
                 ]
             };
@@ -36,7 +38,7 @@ const stakeholderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                stakeholders: stakeholders.filter(
+                stakeholders: state.stakeholders.filter(
                     s => s.id !== action.payload.id
                 )
             };

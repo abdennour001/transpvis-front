@@ -10,7 +10,7 @@ export const handleTipPosition = event => {
         tipWrapper.style.right = "auto";
         tipWrapper.style.transform = `translate(${elementRect.x}px, 0)`;
 
-        if (event.target.getAttribute("data-tip") == "0") {
+        if (event.target.getAttribute("data-tip") === "0") {
             tipWrapper.style.top = `${30}px`;
         }
 

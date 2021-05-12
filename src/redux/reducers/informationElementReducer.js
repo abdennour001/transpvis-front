@@ -1,7 +1,10 @@
 import {
     GET_INFORMATION_ELEMENTS,
     TOGGLE_LOADING_INFORMATION_ELEMENTS,
-    CREATE_INFORMATION_ELEMENT
+    CREATE_INFORMATION_ELEMENT,
+    ADD_INFORMATION_ELEMENT_ASSOCIATION,
+    DELETE_INFORMATION_ELEMENT,
+    UPDATE_INFORMATION_ELEMENT
 } from "../types";
 
 const initialState = {
@@ -23,14 +26,17 @@ const informationElementReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                informationElements: [...informationElements, action.payload]
+                informationElements: [
+                    ...state.informationElements,
+                    action.payload
+                ]
             };
         case UPDATE_INFORMATION_ELEMENT:
             return {
                 ...state,
                 loading: false,
                 informationElements: [
-                    ...informationElements.filter(
+                    ...state.informationElements.filter(
                         s => s.id !== action.payload.id
                     ),
                     action.payload
@@ -40,12 +46,12 @@ const informationElementReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                informationElements: informationElements.filter(
+                informationElements: state.informationElements.filter(
                     e => e.id !== action.payload.id
                 )
             };
         case ADD_INFORMATION_ELEMENT_ASSOCIATION:
-            let newSource = informationElements.find(
+            let newSource = state.informationElements.find(
                 e => e.id !== action.payload.source
             );
             newSource.information_elements.concat(action.payload.target);
@@ -53,7 +59,7 @@ const informationElementReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 informationElements: [
-                    ...informationElements.filter(
+                    ...state.informationElements.filter(
                         e => e.id !== action.payload.source
                     ),
                     newSource

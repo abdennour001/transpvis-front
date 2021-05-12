@@ -50,7 +50,7 @@ export const createApplication = formData => async dispatch => {
 };
 
 // Update an application
-export const createApplication = appId => formData => async dispatch => {
+export const updateApplication = appId => formData => async dispatch => {
     const config = {
         headers: {
             "Content-Type": "application/json"
@@ -72,7 +72,7 @@ export const createApplication = appId => formData => async dispatch => {
 };
 
 // Delete an application
-export const createApplication = appId => async dispatch => {
+export const deleteApplication = appId => async dispatch => {
     const config = {
         headers: {
             "Content-Type": "application/json"

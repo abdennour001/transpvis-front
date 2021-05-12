@@ -37,14 +37,16 @@ const applicationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                applications: [...applications, action.payload]
+                applications: [...state.applications, action.payload]
             };
         case UPDATE_APPLICATION:
             return {
                 ...state,
                 loading: false,
                 applications: [
-                    ...applications.filter(app => app.id !== action.payload.id),
+                    ...state.applications.filter(
+                        app => app.id !== action.payload.id
+                    ),
                     action.payload
                 ]
             };
@@ -52,7 +54,7 @@ const applicationReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                applications: applications.filter(
+                applications: state.applications.filter(
                     app => app.id !== action.payload.id
                 )
             };
