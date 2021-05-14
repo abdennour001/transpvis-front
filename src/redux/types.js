@@ -29,3 +29,6 @@ export const TOGGLE_HELP = "TOGGLE_HELP";
 
 export const SET_JSON_DATA = "SET_JSON_DATA";
 export const SET_ROOT = "SET_ROOT";
+
+export const UPDATE_CONFIG = "UPDATE_CONFIG";
+export const RESET_CONFIG = "RESET_CONFIG";

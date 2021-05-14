@@ -13,8 +13,8 @@ function App() {
     return (
         <Router>
             <Provider store={store}>
-                <Splash />
-                {/* <Home /> */}
+                {/* <Splash /> */}
+                <Home />
                 <div className="app"></div>
             </Provider>
         </Router>
