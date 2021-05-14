@@ -14,7 +14,10 @@ import {
 
 import Slider from "../Slider";
 
-import { updateConfig } from "../../../redux/actions/configActions";
+import {
+    updateConfig,
+    resetConfig
+} from "../../../redux/actions/configActions";
 
 const Control = ({
     application,
@@ -23,7 +26,8 @@ const Control = ({
     help,
     config,
 
-    updateConfig
+    updateConfig,
+    resetConfig
 }) => {
     let [isOpen, setIsOpen] = useState(false);
 
@@ -338,7 +342,7 @@ const Control = ({
                                 </span>
                             </div>
                             <Slider
-                                min={1}
+                                min={0}
                                 max={3}
                                 value={config.textOffset}
                                 step={0.25}
@@ -405,6 +409,16 @@ const Control = ({
                                 </div>
                             </div>
                         </div>
+                        <div className="control__container-last">
+                            <span
+                                className="control__button"
+                                onClick={() => {
+                                    resetConfig();
+                                }}
+                            >
+                                Reset
+                            </span>
+                        </div>
                     </div>
 
                     <div
@@ -429,4 +443,4 @@ const mapSateToProps = state => ({
     config: state.config
 });
 
-export default connect(mapSateToProps, { updateConfig })(Control);
+export default connect(mapSateToProps, { updateConfig, resetConfig })(Control);

@@ -360,6 +360,12 @@ export const chart = (svg, { nodes, links }) => {
     };
 
     const findStartAngle = children => {
+        if (children[0].x > children[children.length - 1].x) {
+            return config.extent >= 300
+                ? children[children.length - 1].x + 2 * Math.PI + 0.3
+                : children[children.length - 1].x + 2 * Math.PI - 0.1;
+        }
+
         var min = children[0].x;
         children.forEach(function(d) {
             if (d.x < min) min = d.x;
@@ -368,6 +374,12 @@ export const chart = (svg, { nodes, links }) => {
     };
 
     const findEndAngle = children => {
+        if (children[0].x > children[children.length - 1].x) {
+            return config.extent >= 300
+                ? children[0].x - 0.3
+                : children[0].x - 0.1;
+        }
+
         var max = children[0].x;
         children.forEach(function(d) {
             if (d.x > max) max = d.x;
@@ -375,11 +387,27 @@ export const chart = (svg, { nodes, links }) => {
         return config.extent >= 300 ? max + 0.3 : max + 0.1;
     };
 
+    const rotateViz = (deg, root) => {
+        root.x += degrees_to_radians(deg) % (2 * Math.PI);
+        root.x %= 2 * Math.PI;
+        root.children.map(element => {
+            element.x += degrees_to_radians(deg);
+            element.x %= 2 * Math.PI;
+            element.children.map(node => {
+                node.x += degrees_to_radians(deg) % (2 * Math.PI);
+                node.x %= 2 * Math.PI;
+                return node;
+            });
+            return element;
+        });
+        return root;
+    };
+
     const data = data_({ nodes, links });
 
     const nodeById = new Map(nodes.map(node => [node.label, node]));
 
-    const root = tree(
+    let root = tree(
         bilink(
             d3
                 .hierarchy(data)
@@ -390,6 +418,7 @@ export const chart = (svg, { nodes, links }) => {
                 )
         )
     );
+    root = rotateViz(config.rotate, root);
     setRoot(root, store.dispatch);
     svg.attr("viewBox", [-width / 2 + 30, -width / 2, width, width]);
 
@@ -411,7 +440,6 @@ export const chart = (svg, { nodes, links }) => {
         .join("g")
         .append("path")
         .attr("d", d => arc(d))
-        // .attr("transform", d => (d.endAngle <= Math.PI ? ("rotate(-2)") : "rotate(4)"))
         .attr("fill", d =>
             eval(
                 `color${d.data.label.charAt(0).toUpperCase() +

@@ -6,3 +6,9 @@ export const updateConfig = newConfig => async dispatch => {
         payload: newConfig
     });
 };
+
+export const resetConfig = () => async dispatch => {
+    dispatch({
+        type: RESET_CONFIG
+    });
+};

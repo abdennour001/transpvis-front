@@ -7,7 +7,7 @@ const initialState = {
     rotate: 0,
     textSize: 16,
     textOffset: 1,
-    textMode: "label"
+    textMode: "name"
 };
 
 const relationshipReducer = (state = initialState, action) => {
