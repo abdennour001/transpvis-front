@@ -111,3 +111,66 @@ a {
         opacity: 1;
     }
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    &-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    &-label {
+        font-size: 16px;
+        // font-weight: 500;
+    }
+
+    &-control {
+        width: 100%;
+        margin-bottom: 10px;
+        height: 40px;
+        border: 1px solid lightgray;
+        font-size: 15px;
+        padding: 0 10px;
+        border-radius: 12px;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: 0;
+            border-color: lighten($stakeholder, 10);
+            box-shadow: 0 0 10px lighten($stakeholder, 25);
+        }
+    }
+
+    &-submit {
+        margin-top: 10px;
+        padding: 5px;
+        border: none;
+        background-color: $stakeholder;
+        color: white;
+        cursor: pointer;
+        height: 35px;
+        font-size: 14px;
+        border-radius: 12px;
+        box-shadow: 0 1px 12px rgba(109, 117, 141, 0.8);
+
+        -webkit-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+
+        &:hover {
+            background-color: darken($stakeholder, 4);
+            box-shadow: 0 4px 14px rgba(109, 117, 141, 0.67);
+        }
+
+        &:focus {
+            outline: 0;
+            border-color: lighten($stakeholder, 10);
+            box-shadow: 0 0 10px lighten($stakeholder, 25);
+        }
+    }
+}
