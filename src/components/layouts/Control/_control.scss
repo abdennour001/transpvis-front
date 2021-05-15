@@ -59,10 +59,12 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
-        padding-bottom: 38px;
+        padding-bottom: 22px;
         padding-left: 58px;
+        padding-top: 18px;
         // padding-right: 58px;
         position: absolute;
+        border-top: 1px solid $gray-300;
         bottom: 0;
         opacity: 1;
         // padding: 32px 0;
@@ -187,7 +189,7 @@
     align-items: center;
     justify-content: space-between;
     gap: 8px;
-    margin-bottom: -1px;
+    margin-bottom: 1px;
     margin-top: 7px;
 }
 

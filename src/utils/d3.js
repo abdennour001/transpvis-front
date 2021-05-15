@@ -363,7 +363,7 @@ export const chart = (svg, { nodes, links }) => {
         if (children[0].x > children[children.length - 1].x) {
             return config.extent >= 300
                 ? children[children.length - 1].x + 2 * Math.PI + 0.3
-                : children[children.length - 1].x + 2 * Math.PI - 0.1;
+                : children[children.length - 1].x + 2 * Math.PI + 0.1;
         }
 
         var min = children[0].x;
@@ -469,14 +469,6 @@ export const chart = (svg, { nodes, links }) => {
         .attr("x", d => (d.x < Math.PI ? 15 : -15))
         .attr("text-anchor", d => (d.x < Math.PI ? "start" : "end"))
         .attr("transform", d => handleRotateText(d))
-        // .attr("fill", d =>
-        //     eval(
-        //         `color${d.data.group.charAt(0).toUpperCase() +
-        //             d.data.group.slice(1)}`
-        //     )
-        // )
-        // .attr("fill", colornone
-        // )
         .style("cursor", "pointer")
         .style("user-select", "none")
         .text(d => nodeById.get(d.data.label)[config.textMode])
@@ -533,5 +525,29 @@ export const chart = (svg, { nodes, links }) => {
         })
         .style("cursor", "pointer")
         .on("click", clicked);
+
+    // circle
+    //     .transition()
+    //     .duration(200)
+    //     .ease(d3.easeLinear)
+    //     .attr("r", d => 8); // set the radius
+
+    // check if there is a selected element
+    if (store.getState().application.focused !== null) {
+        setTimeout(() => {
+            setPrimaryAnimation(
+                null,
+                store
+                    .getState()
+                    .viz.root.leaves()
+                    .find(
+                        node =>
+                            node.data.label ===
+                            store.getState().application.focused.label
+                    )
+            );
+        }, 300);
+    }
+
     return svg.node();
 };
