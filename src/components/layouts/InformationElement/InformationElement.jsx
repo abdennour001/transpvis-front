@@ -175,6 +175,10 @@ const InformationElement = ({
                                 (toggle.related ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new related information element"}
+                                addNew={true}
+                            />
                             {getRelatedInformationElements().length !== 0 ? (
                                 getRelatedInformationElements().map(ie => {
                                     return (
@@ -262,6 +266,10 @@ const InformationElement = ({
                                 (toggle.provider ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new provider stakeholder"}
+                                addNew={true}
+                            />
                             {getRelatedStakeholders("production").length !==
                             0 ? (
                                 getRelatedStakeholders("production").map(s => (
@@ -350,6 +358,10 @@ const InformationElement = ({
                                 (toggle.receive ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new recieving stakeholder"}
+                                addNew={true}
+                            />
                             {getRelatedStakeholders("obligatory").length !==
                             0 ? (
                                 getRelatedStakeholders("obligatory").map(s => (
@@ -439,6 +451,10 @@ const InformationElement = ({
                                 (toggle.request ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new requesting stakeholder"}
+                                addNew={true}
+                            />
                             {getRelatedStakeholders("optional").length !== 0 ? (
                                 getRelatedStakeholders("optional").map(s => (
                                     <Card
@@ -526,6 +542,10 @@ const InformationElement = ({
                                 (toggle.restricted ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new restricted stakeholder"}
+                                addNew={true}
+                            />
                             {getRelatedStakeholders("restricted").length !==
                             0 ? (
                                 getRelatedStakeholders("restricted").map(s => (

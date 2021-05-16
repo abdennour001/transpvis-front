@@ -162,6 +162,10 @@ const Stakeholder = ({
                                 (toggle.production ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new production relationship"}
+                                addNew={true}
+                            />
                             {getRelatedInformationElements("production")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
@@ -254,6 +258,10 @@ const Stakeholder = ({
                                 (toggle.obligatory ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new obligatory relationship"}
+                                addNew={true}
+                            />
                             {getRelatedInformationElements("obligatory")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
@@ -347,6 +355,10 @@ const Stakeholder = ({
                                 (toggle.optional ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new optional relationship"}
+                                addNew={true}
+                            />
                             {getRelatedInformationElements("optional")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
@@ -440,6 +452,10 @@ const Stakeholder = ({
                                 (toggle.restricted ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new restricted relationship"}
+                                addNew={true}
+                            />
                             {getRelatedInformationElements("restricted")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
@@ -533,6 +549,10 @@ const Stakeholder = ({
                                 (toggle.undecided ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new undecided relationship"}
+                                addNew={true}
+                            />
                             {getRelatedInformationElements("undecided")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(

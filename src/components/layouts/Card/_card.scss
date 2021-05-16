@@ -26,6 +26,32 @@
         box-shadow: 0 1px 12px rgba(109, 117, 141, 0.27);
     }
 
+    &__icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 50px;
+
+        svg {
+            opacity: 0.3;
+            font-size: 18px;
+            -webkit-transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
+
+            -webkit-transition: transform 0.15s ease-in-out;
+            transition: transform 0.15s ease-in-out;
+        }
+    }
+
+    &:hover .card__icon > svg {
+        opacity: 0.9;
+    }
+
+    &:active .card__icon > svg {
+        transform: scale(0.9);
+    }
+
     &-focused {
         &-stakeholder {
             border: 1px solid lighten($stakeholder, 15);
@@ -33,7 +59,7 @@
         }
         &-data {
             border: 1px solid lighten($data, 15);
-            background: lighten($data,47);
+            background: lighten($data, 47);
         }
         &-process {
             border: 1px solid lighten($process, 15);
@@ -77,5 +103,36 @@
         line-height: 1.5rem;
         font-weight: normal;
         margin: 0;
+    }
+
+    &__menu {
+        position: absolute;
+        right: 14px;
+        top: 11px;
+        -webkit-transition: transform 0.2s ease-in-out;
+        transition: transform 0.2s ease-in-out;
+
+        svg {
+            opacity: 0;
+            font-size: 18px;
+            -webkit-transition: all 0.4s ease-in-out;
+            transition: all 0.4s ease-in-out;
+
+            -webkit-transition: transform 0.1s ease-in-out;
+            transition: transform 0.1s ease-in-out;
+        }
+
+        &:hover {
+            transform: scale(1.1);
+        }
+
+        &:active svg {
+            transform: scale(1.1);
+            color: darken($text, 10);
+        }
+    }
+
+    &:hover .card__menu > svg {
+        opacity: 0.9;
     }
 }

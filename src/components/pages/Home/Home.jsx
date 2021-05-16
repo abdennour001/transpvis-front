@@ -363,6 +363,11 @@ const Home = ({
                                         />
                                     )}
                                 </div>
+                                <Card
+                                    addNew={true}
+                                    title={"add new stakeholder"}
+                                />
+
                                 {stakeholder.loading ? (
                                     <>
                                         <Card isLoading={true} />
@@ -442,6 +447,11 @@ const Home = ({
                                         />
                                     )}
                                 </div>
+                                <Card
+                                    title={"add new information element"}
+                                    addNew={true}
+                                />
+
                                 {informationElement.loading ? (
                                     <>
                                         <Card isLoading={true} />

@@ -10,8 +10,11 @@ import Register from "./pages/Register";
 
 // Redux store
 import store from "../redux/store";
+import setAuthToken from "../utils/setAuthToken";
 
 function App() {
+    setAuthToken("ee69594f98481738e89d2dab15ed582176a683cd");
+
     return (
         <Router>
             <Provider store={store}>

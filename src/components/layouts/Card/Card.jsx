@@ -1,10 +1,36 @@
 import React from "react";
 import { connect } from "react-redux";
 import Skeleton from "react-loading-skeleton";
+import { faPlus, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./_card.scss";
 
-const Card = ({ label, name, color, onClick, isLoading, focused }) => {
+const Card = ({
+    label,
+    name,
+    color,
+    onClick,
+    isLoading,
+    focused,
+    addNew,
+    title
+}) => {
+    const handleMenuClick = event => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
+
+    if (addNew) {
+        return (
+            <div className="card" title={title}>
+                <div className="card__icon">
+                    <FontAwesomeIcon icon={faPlus} size="lg" />
+                </div>
+            </div>
+        );
+    }
+
     if (isLoading) {
         return (
             <div className="card">
@@ -49,6 +75,9 @@ const Card = ({ label, name, color, onClick, isLoading, focused }) => {
                 <div className="card__content">
                     <h4 className="card__name">{name}</h4>
                 </div>
+            </div>
+            <div className="card__menu" onClick={e => handleMenuClick(e)}>
+                <FontAwesomeIcon icon={faEllipsisH} size="sm" />
             </div>
         </div>
     );
