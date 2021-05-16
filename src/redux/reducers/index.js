@@ -6,6 +6,7 @@ import relationshipReducer from "./relationshipReducer";
 import applicationReducer from "./applicationReducer";
 import helpReducer from "./helpReducer";
 import vizReducer from "./vizReducer";
+import authReducer from "./authReducer";
 
 export default combineReducers({
     stakeholder: stakeholderReducer,
@@ -13,5 +14,6 @@ export default combineReducers({
     relationship: relationshipReducer,
     application: applicationReducer,
     help: helpReducer,
-    viz: vizReducer
+    viz: vizReducer,
+    auth: authReducer
 });
