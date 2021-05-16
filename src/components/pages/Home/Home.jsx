@@ -19,6 +19,7 @@ import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
 import Detail from "../../layouts/Detail";
+import Modal from "../../layouts/Modal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -39,6 +40,13 @@ import {
     unsetPrimaryAnimation
 } from "../../../utils/d3";
 
+import { toggleModal } from "../../../redux/actions/modalActions";
+import StakeholderForm from "../../forms/StakeholderForm";
+import InformationElementForm from "../../forms/InformationElementForm/InformationElementForm";
+import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
+import InformationElementAssociationForm from "../../forms/InformationElementAssociationForm/InformationElementAssociationForm";
+import StakeholderInformationElementRelationshipForm from "../../forms/StakeholderInformationElementRelationshipForm/StakeholderInformationElementRelationshipForm";
+
 const Home = ({
     application,
     stakeholder,
@@ -46,6 +54,7 @@ const Home = ({
     relationship,
     help,
     viz,
+    type,
 
     getStakeholders,
     getInformationElements,
@@ -54,7 +63,8 @@ const Home = ({
     setApplication,
     setFocused,
     removeFocused,
-    toggleHelp
+    toggleHelp,
+    toggleModal
 }) => {
     const [expanded, setExpanded] = useState(true);
     const [endingHelp, setEndingHelp] = useState(false);
@@ -122,8 +132,30 @@ const Home = ({
         }, 500);
     };
 
+    const renderForm = () => {
+        switch (type) {
+            case "stakeholder":
+                return <StakeholderForm />;
+            case "information-element":
+                return <InformationElementForm />;
+            case "application":
+                return <ApplicationForm />;
+            case "ie-association":
+                return <InformationElementAssociationForm />;
+            case "stakeholder-information-element-relationship":
+                return <StakeholderInformationElementRelationshipForm />;
+            default:
+                break;
+        }
+    };
+
+    const handleMenuClick = (e, type) => {
+        toggleModal(type);
+    };
+
     return (
         <>
+            <Modal>{renderForm()}</Modal>
             <div className="home">
                 {(help || endingHelp) && (
                     <>
@@ -366,6 +398,9 @@ const Home = ({
                                 <Card
                                     addNew={true}
                                     title={"add new stakeholder"}
+                                    onClick={e => {
+                                        handleMenuClick(e, "stakeholder");
+                                    }}
                                 />
 
                                 {stakeholder.loading ? (
@@ -450,6 +485,12 @@ const Home = ({
                                 <Card
                                     title={"add new information element"}
                                     addNew={true}
+                                    onClick={e => {
+                                        handleMenuClick(
+                                            e,
+                                            "information-element"
+                                        );
+                                    }}
                                 />
 
                                 {informationElement.loading ? (
@@ -530,7 +571,8 @@ const mapSateToProps = state => ({
     informationElement: state.informationElement,
     relationship: state.relationship,
     help: state.help.help,
-    viz: state.viz
+    viz: state.viz,
+    type: state.modal.type
 });
 
 export default connect(mapSateToProps, {
@@ -541,5 +583,6 @@ export default connect(mapSateToProps, {
     setApplication,
     setFocused,
     removeFocused,
-    toggleHelp
+    toggleHelp,
+    toggleModal
 })(Home);

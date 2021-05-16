@@ -32,7 +32,9 @@ export const TOGGLE_HELP = "TOGGLE_HELP";
 export const SET_JSON_DATA = "SET_JSON_DATA";
 export const SET_ROOT = "SET_ROOT";
 
-export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
-export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
-export const LOGOUT = 'LOGOUT';
-export const TOGGLE_LOADING_AUTH = 'TOGGLE_LOADING_AUTH';
+export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGOUT = "LOGOUT";
+export const TOGGLE_LOADING_AUTH = "TOGGLE_LOADING_AUTH";
+
+export const TOGGLE_MODAL = "TOGGLE_MODAL";

@@ -7,6 +7,7 @@ import applicationReducer from "./applicationReducer";
 import helpReducer from "./helpReducer";
 import vizReducer from "./vizReducer";
 import authReducer from "./authReducer";
+import modalReducer from "./modalReducer";
 
 export default combineReducers({
     stakeholder: stakeholderReducer,
@@ -15,5 +16,6 @@ export default combineReducers({
     application: applicationReducer,
     help: helpReducer,
     viz: vizReducer,
-    auth: authReducer
+    auth: authReducer,
+    modal: modalReducer
 });

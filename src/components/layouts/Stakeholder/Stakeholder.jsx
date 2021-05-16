@@ -8,13 +8,15 @@ import "../Detail/_detail.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
+import { toggleModal } from "../../../redux/actions/modalActions";
 
 const Stakeholder = ({
     stakeholder,
     stakeholders,
     informationElements,
     relationships,
-    help
+    help,
+    toggleModal
 }) => {
     const afterRef = useRef(null);
     const [toggle, setToggle] = useState({
@@ -37,6 +39,10 @@ const Stakeholder = ({
             ...toggle,
             [toggleName]: !toggle[toggleName]
         });
+    };
+
+    const handleMenuClick = (e, type, relation) => {
+        toggleModal(type, relation);
     };
 
     const getRelatedInformationElements = type => {
@@ -163,8 +169,15 @@ const Stakeholder = ({
                             }
                         >
                             <Card
-                                title={"add new production relationship"}
+                                title={"Add new produced Information element"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "production"
+                                    );
+                                }}
                             />
                             {getRelatedInformationElements("production")
                                 .length !== 0 ? (
@@ -261,6 +274,13 @@ const Stakeholder = ({
                             <Card
                                 title={"add new obligatory relationship"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "obligatory"
+                                    );
+                                }}
                             />
                             {getRelatedInformationElements("obligatory")
                                 .length !== 0 ? (
@@ -358,6 +378,13 @@ const Stakeholder = ({
                             <Card
                                 title={"add new optional relationship"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "optional"
+                                    );
+                                }}
                             />
                             {getRelatedInformationElements("optional")
                                 .length !== 0 ? (
@@ -455,6 +482,13 @@ const Stakeholder = ({
                             <Card
                                 title={"add new restricted relationship"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "restricted"
+                                    );
+                                }}
                             />
                             {getRelatedInformationElements("restricted")
                                 .length !== 0 ? (
@@ -552,6 +586,13 @@ const Stakeholder = ({
                             <Card
                                 title={"add new undecided relationship"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "undecided"
+                                    );
+                                }}
                             />
                             {getRelatedInformationElements("undecided")
                                 .length !== 0 ? (
@@ -592,4 +633,4 @@ const mapSateToProps = state => ({
     help: state.help.help
 });
 
-export default connect(mapSateToProps)(Stakeholder);
+export default connect(mapSateToProps, { toggleModal })(Stakeholder);

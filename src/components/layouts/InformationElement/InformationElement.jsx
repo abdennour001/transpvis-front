@@ -8,13 +8,15 @@ import "./_informationelement.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
+import { toggleModal } from "../../../redux/actions/modalActions";
 
 const InformationElement = ({
     informationElement,
     stakeholders,
     informationElements,
     relationships,
-    help
+    help,
+    toggleModal
 }) => {
     const afterRef = useRef(null);
     const [toggle, setToggle] = useState({
@@ -37,6 +39,10 @@ const InformationElement = ({
             ...toggle,
             [toggleName]: !toggle[toggleName]
         });
+    };
+
+    const handleMenuClick = (e, type, relation) => {
+        toggleModal(type, relation);
     };
 
     const getRelatedInformationElements = () => {
@@ -178,6 +184,9 @@ const InformationElement = ({
                             <Card
                                 title={"add new related information element"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(e, "ie-association");
+                                }}
                             />
                             {getRelatedInformationElements().length !== 0 ? (
                                 getRelatedInformationElements().map(ie => {
@@ -267,8 +276,15 @@ const InformationElement = ({
                             }
                         >
                             <Card
-                                title={"add new provider stakeholder"}
+                                title={"add new providing stakeholder"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "production"
+                                    );
+                                }}
                             />
                             {getRelatedStakeholders("production").length !==
                             0 ? (
@@ -361,6 +377,13 @@ const InformationElement = ({
                             <Card
                                 title={"add new recieving stakeholder"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "obligatory"
+                                    );
+                                }}
                             />
                             {getRelatedStakeholders("obligatory").length !==
                             0 ? (
@@ -454,6 +477,13 @@ const InformationElement = ({
                             <Card
                                 title={"add new requesting stakeholder"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "optional"
+                                    );
+                                }}
                             />
                             {getRelatedStakeholders("optional").length !== 0 ? (
                                 getRelatedStakeholders("optional").map(s => (
@@ -545,6 +575,13 @@ const InformationElement = ({
                             <Card
                                 title={"add new restricted stakeholder"}
                                 addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "restricted"
+                                    );
+                                }}
                             />
                             {getRelatedStakeholders("restricted").length !==
                             0 ? (
@@ -583,4 +620,4 @@ const mapSateToProps = state => ({
     help: state.help.help
 });
 
-export default connect(mapSateToProps)(InformationElement);
+export default connect(mapSateToProps, { toggleModal })(InformationElement);

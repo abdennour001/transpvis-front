@@ -23,7 +23,7 @@ const Card = ({
 
     if (addNew) {
         return (
-            <div className="card" title={title}>
+            <div className="card" title={title} onClick={onClick}>
                 <div className="card__icon">
                     <FontAwesomeIcon icon={faPlus} size="lg" />
                 </div>
