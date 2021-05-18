@@ -11,6 +11,7 @@ import {
     DELETE_APPLICATION
 } from "../types";
 import { environment } from "../../utils/environment";
+import { toggleModal } from "../actions/modalActions";
 
 // Get applications
 export const getApplications = (params = {}) => async dispatch => {

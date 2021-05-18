@@ -93,9 +93,9 @@ const Visualization = ({
 
     useEffect(() => {
         if (
-            stakeholder.stakeholders &&
-            informationElement.informationElements &&
-            relationship.relations
+            !stakeholder.loading &&
+            !informationElement.loading &&
+            !relationship.loading
         ) {
             const data = getVizData();
             drawViz(data);
@@ -111,7 +111,6 @@ const Visualization = ({
         relationship.relations
     ]);
 
-    // return <div>Hello 👋, I am a Visualization component.</div>;
     return <svg style={{ marginTop: "-40px" }} ref={svgRef}></svg>;
 };
 

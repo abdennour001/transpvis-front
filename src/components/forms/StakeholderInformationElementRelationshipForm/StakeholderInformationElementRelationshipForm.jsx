@@ -1,14 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import "./_stakeholderinformationelementrelationshipform.scss";
+
+import { toggleModal } from "../../../redux/actions/modalActions";
+import { addStakeholderInformationElementRelation } from "../../../redux/actions/relationsActions";
 
 const StakeholderInformationElementRelationshipForm = ({
     focused,
     relation,
     informationElements,
-    stakeholders
+    stakeholders,
+    toggleModal,
+    addStakeholderInformationElementRelation
 }) => {
+    const [ie, setIe] = useState(informationElements[0]?.id);
+    const [stakeholder, setStakeholder] = useState(stakeholders[0]?.id);
+
     const renderTitle = type => {
         if (type === "s") {
             switch (relation) {
@@ -40,8 +48,28 @@ const StakeholderInformationElementRelationshipForm = ({
             }
         }
     };
+    const handleSubmit = e => {
+        e.preventDefault();
+        if (focused?.label.includes("S")) {
+            addStakeholderInformationElementRelation({
+                type: relation,
+                information_element: ie,
+                stakeholder: focused.id,
+                s: true
+            });
+        } else {
+            addStakeholderInformationElementRelation({
+                type: relation,
+                information_element: focused.id,
+                stakeholder: stakeholder,
+                s: false
+            });
+        }
+
+        toggleModal();
+    };
     return (
-        <form className="form-modal">
+        <form className="form-modal" onSubmit={handleSubmit}>
             {focused?.label.includes("S") ? (
                 <>
                     <h3>{renderTitle("ie")}</h3>
@@ -49,9 +77,17 @@ const StakeholderInformationElementRelationshipForm = ({
                         <span className="form-label-req">
                             Information element*
                         </span>
-                        <select className="form-control">
+                        <select
+                            value={ie}
+                            onChange={e => {
+                                setIe(e.target.value);
+                            }}
+                            className="form-control"
+                        >
                             {informationElements.map(ie => (
-                                <option value={ie.id}>{ie.name}</option>
+                                <option key={ie.id} value={ie.id}>
+                                    {ie.name}
+                                </option>
                             ))}
                         </select>
                         <span className="form-tip">
@@ -67,9 +103,17 @@ const StakeholderInformationElementRelationshipForm = ({
                     <h3>{renderTitle("s")}</h3>
                     <div className="form-group">
                         <span className="form-label-req">Stakeholder*</span>
-                        <select className="form-control">
+                        <select
+                            value={stakeholder}
+                            onChange={e => {
+                                setStakeholder(e.target.value);
+                            }}
+                            className="form-control"
+                        >
                             {stakeholders.map(s => (
-                                <option value={s.id}>{s.name}</option>
+                                <option key={s.id} value={s.id}>
+                                    {s.name}
+                                </option>
                             ))}
                         </select>
                         <span className="form-tip">
@@ -95,6 +139,7 @@ const mapStateToProps = state => ({
     stakeholders: state.stakeholder.stakeholders
 });
 
-export default connect(mapStateToProps)(
-    StakeholderInformationElementRelationshipForm
-);
+export default connect(mapStateToProps, {
+    toggleModal,
+    addStakeholderInformationElementRelation
+})(StakeholderInformationElementRelationshipForm);

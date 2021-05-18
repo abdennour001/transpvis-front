@@ -1,14 +1,58 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+
 import "./_splash.scss";
 import logo from "../../../assets/logo.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Header from "../../layouts/Header";
-<img className="header__img" src={logo} alt="" />;
+import { toggleModal } from "../../../redux/actions/modalActions";
+import {
+    setApplication,
+    getApplications
+} from "../../../redux/actions/applicationActions";
+import { getStakeholders } from "../../../redux/actions/stakeholderActions";
+import { getInformationElements } from "../../../redux/actions/informationElementsActions";
+import { getRelationships } from "../../../redux/actions/relationsActions";
+import ApplicationForm from "../../forms/ApplicationForm";
+import Modal from "../../layouts/Modal";
 
-export default function Splash() {
+const Splash = ({
+    applications,
+    toggleModal,
+    setApplication,
+    getApplications,
+    getStakeholders,
+    getInformationElements,
+    getRelationships
+}) => {
+    const history = useHistory();
+
+    useEffect(() => {
+        getApplications();
+    }, []);
+
+    const handleMenuClick = e => {
+        toggleModal();
+    };
+
+    const handleAppClick = (e, app) => {
+        e.preventDefault();
+        setApplication(app);
+        getStakeholders({ application: app });
+        getInformationElements({ application: app });
+        getRelationships({ stakeholder__application: app }).then(() => {
+            history.push("/");
+        });
+    };
+
     return (
         <>
+            <Modal>
+                <ApplicationForm />
+            </Modal>
+
             <Header></Header>
             <div className="splash">
                 <div className="splash__container">
@@ -17,38 +61,42 @@ export default function Splash() {
                         <div
                             className="splash__app"
                             title="Add new application"
+                            onClick={e => {
+                                handleMenuClick(e);
+                            }}
                         >
                             <p>
                                 <FontAwesomeIcon icon={faPlus} size="lg" />
                             </p>
                         </div>
-                        <div className="splash__app" title="AWS">
-                            <h4>Amazon Web Services</h4>
-                            {/* <div className="app__details">
-                                <div className="app__detail">
-                                    <span>Stakeholders</span>
-                                    <span>5</span>
-                                </div>
-                                <div className="app__detail">
-                                    <span>Data</span>
-                                    <span>5</span>
-                                </div>
-                                <div className="app__detail">
-                                    <span>Process</span>
-                                    <span>5</span>
-                                </div>
-                                <div className="app__detail">
-                                    <span>Policy</span>
-                                    <span>5</span>
-                                </div>
-                            </div> */}
-                        </div>
-                        <div className="splash__app" title="Whatsapp">
-                            <h4>Facebook Whatsapp</h4>
-                        </div>
+                        {applications?.map(app => (
+                            <div
+                                className="splash__app"
+                                title={app.name}
+                                onClick={e => {
+                                    handleAppClick(e, app.id);
+                                }}
+                                key={app.id}
+                            >
+                                <h4>{app.name}</h4>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
         </>
     );
-}
+};
+
+const mapSateToProps = state => ({
+    applications: state.application.applications
+});
+
+export default connect(mapSateToProps, {
+    toggleModal,
+    setApplication,
+    getApplications,
+    getStakeholders,
+    getInformationElements,
+    getRelationships
+})(Splash);

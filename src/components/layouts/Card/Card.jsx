@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./_card.scss";
 
 const Card = ({
+    id,
     label,
     name,
     color,
@@ -51,6 +52,7 @@ const Card = ({
 
     return (
         <div
+            id={id}
             className={
                 "card " +
                 (focused?.label === label

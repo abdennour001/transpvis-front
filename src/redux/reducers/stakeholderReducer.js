@@ -21,7 +21,7 @@ const stakeholderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                stakeholders: [...state.stakeholders, action.payload]
+                stakeholders: [action.payload, ...state.stakeholders]
             };
         case UPDATE_STAKEHOLDER:
             return {

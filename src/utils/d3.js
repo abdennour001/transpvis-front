@@ -538,5 +538,23 @@ export const chart = (svg, { nodes, links }) => {
         })
         .style("cursor", "pointer")
         .on("click", clicked);
+
+    // check if there is a selected element
+    if (store.getState().application.focused !== null) {
+        setTimeout(() => {
+            setPrimaryAnimation(
+                null,
+                store
+                    .getState()
+                    .viz.root.leaves()
+                    .find(
+                        node =>
+                            node.data.label ===
+                            store.getState().application.focused.label
+                    )
+            );
+        }, 300);
+    }
+
     return svg.node();
 };

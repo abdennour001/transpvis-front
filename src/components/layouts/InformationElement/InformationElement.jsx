@@ -192,6 +192,7 @@ const InformationElement = ({
                                 getRelatedInformationElements().map(ie => {
                                     return (
                                         <Card
+                                            id={`card-association-${ie.id}`}
                                             key={ie.id}
                                             label={ie.label}
                                             name={ie.name}
@@ -290,6 +291,7 @@ const InformationElement = ({
                             0 ? (
                                 getRelatedStakeholders("production").map(s => (
                                     <Card
+                                        id={`card-relation-production-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -389,6 +391,7 @@ const InformationElement = ({
                             0 ? (
                                 getRelatedStakeholders("obligatory").map(s => (
                                     <Card
+                                        id={`card-relation-obligatory-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -488,6 +491,7 @@ const InformationElement = ({
                             {getRelatedStakeholders("optional").length !== 0 ? (
                                 getRelatedStakeholders("optional").map(s => (
                                     <Card
+                                        id={`card-relation-optional-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -587,6 +591,7 @@ const InformationElement = ({
                             0 ? (
                                 getRelatedStakeholders("restricted").map(s => (
                                     <Card
+                                        id={`card-relation-restricted-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}

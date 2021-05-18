@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const Modal = ({ opened, toggleModal, children }) => {
     const handleOutsideClick = event => {
-        event.preventDefault();
+        // event.preventDefault();
         if (event.target === event.currentTarget) {
             toggleModal();
         }
@@ -26,7 +26,7 @@ const Modal = ({ opened, toggleModal, children }) => {
                                 toggleModal();
                             }}
                             icon={faTimes}
-                            size="md"
+                            size="x1"
                             onClick={e => {
                                 toggleModal();
                             }}

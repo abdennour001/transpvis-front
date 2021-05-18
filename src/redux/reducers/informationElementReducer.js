@@ -27,8 +27,8 @@ const informationElementReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 informationElements: [
-                    ...state.informationElements,
-                    action.payload
+                    action.payload,
+                    ...state.informationElements
                 ]
             };
         case UPDATE_INFORMATION_ELEMENT:
@@ -52,15 +52,20 @@ const informationElementReducer = (state = initialState, action) => {
             };
         case ADD_INFORMATION_ELEMENT_ASSOCIATION:
             let newSource = state.informationElements.find(
-                e => e.id !== action.payload.source
+                e => e.id === +action.payload.source
             );
-            newSource.information_elements.concat(action.payload.target);
+            console.log(newSource);
+            newSource.information_elements = newSource.information_elements.concat(
+                +action.payload.target
+            );
+            console.log(newSource);
+
             return {
                 ...state,
                 loading: false,
                 informationElements: [
                     ...state.informationElements.filter(
-                        e => e.id !== action.payload.source
+                        e => e.id !== +action.payload.source
                     ),
                     newSource
                 ]

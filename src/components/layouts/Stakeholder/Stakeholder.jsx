@@ -185,6 +185,7 @@ const Stakeholder = ({
                                     "production"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-production-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -288,6 +289,7 @@ const Stakeholder = ({
                                     "obligatory"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-obligatory-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -392,6 +394,7 @@ const Stakeholder = ({
                                     "optional"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-optional-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -496,6 +499,7 @@ const Stakeholder = ({
                                     "restricted"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-restricted-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -600,6 +604,7 @@ const Stakeholder = ({
                                     "undecided"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-undecided-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}

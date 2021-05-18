@@ -45,6 +45,9 @@ export const createInformationElement = formData => async dispatch => {
             config
         );
         dispatch({ type: CREATE_INFORMATION_ELEMENT, payload: res.data });
+        document
+            .getElementById("card-" + res.data.id)
+            .classList.add("card-highlight");
     } catch (error) {
         dispatch({ type: TOGGLE_LOADING_INFORMATION_ELEMENTS });
         console.error("Error create information element: ", error);
@@ -87,7 +90,10 @@ export const deleteInformationElement = id => async dispatch => {
 };
 
 // Add information element association
-export const addInformationElementAssociation = source => target => async dispatch => {
+export const addInformationElementAssociation = (
+    source,
+    target
+) => async dispatch => {
     const config = {
         headers: {
             "Content-Type": "application/json"
@@ -105,6 +111,9 @@ export const addInformationElementAssociation = source => target => async dispat
             type: ADD_INFORMATION_ELEMENT_ASSOCIATION,
             payload: res.data
         });
+        document
+            .getElementById("card-association-" + res.data.target)
+            .classList.add("card-highlight");
     } catch (error) {
         dispatch({ type: TOGGLE_LOADING_INFORMATION_ELEMENTS });
         console.error("Error adding information element association: ", error);

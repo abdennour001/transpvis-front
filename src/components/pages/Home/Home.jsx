@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 
 // Actions
-import { getStakeholders } from "../../../redux/actions/stakeholderActions";
-import { getInformationElements } from "../../../redux/actions/informationElementsActions";
-import { getRelationships } from "../../../redux/actions/relationsActions";
 import { toggleHelp } from "../../../redux/actions/helpActions";
 import {
     getApplications,
@@ -43,7 +40,6 @@ import {
 import { toggleModal } from "../../../redux/actions/modalActions";
 import StakeholderForm from "../../forms/StakeholderForm";
 import InformationElementForm from "../../forms/InformationElementForm/InformationElementForm";
-import ApplicationForm from "../../forms/ApplicationForm/ApplicationForm";
 import InformationElementAssociationForm from "../../forms/InformationElementAssociationForm/InformationElementAssociationForm";
 import StakeholderInformationElementRelationshipForm from "../../forms/StakeholderInformationElementRelationshipForm/StakeholderInformationElementRelationshipForm";
 
@@ -56,11 +52,6 @@ const Home = ({
     viz,
     type,
 
-    getStakeholders,
-    getInformationElements,
-    getRelationships,
-    getApplications,
-    setApplication,
     setFocused,
     removeFocused,
     toggleHelp,
@@ -72,15 +63,7 @@ const Home = ({
         setExpanded(!expanded);
     };
 
-    useEffect(() => {
-        const selectedApp = 1;
-        getApplications().then(() => {
-            setApplication(selectedApp);
-        });
-        getStakeholders({ application: selectedApp });
-        getInformationElements({ application: selectedApp });
-        getRelationships({ stakeholder__application: selectedApp });
-    }, []);
+    useEffect(() => {}, []);
 
     const handleCardClick = (event, element) => {
         event.preventDefault();
@@ -138,8 +121,6 @@ const Home = ({
                 return <StakeholderForm />;
             case "information-element":
                 return <InformationElementForm />;
-            case "application":
-                return <ApplicationForm />;
             case "ie-association":
                 return <InformationElementAssociationForm />;
             case "stakeholder-information-element-relationship":
@@ -416,6 +397,7 @@ const Home = ({
                                     <>
                                         {stakeholder.stakeholders.map(s => (
                                             <Card
+                                                id={`card-${s.id}`}
                                                 key={s.id}
                                                 label={s.label}
                                                 name={s.name}
@@ -509,6 +491,7 @@ const Home = ({
                                         {informationElement.informationElements.map(
                                             ie => (
                                                 <Card
+                                                    id={`card-${ie.id}`}
                                                     key={ie.id}
                                                     label={ie.label}
                                                     name={ie.name}
@@ -576,9 +559,6 @@ const mapSateToProps = state => ({
 });
 
 export default connect(mapSateToProps, {
-    getStakeholders,
-    getInformationElements,
-    getRelationships,
     getApplications,
     setApplication,
     setFocused,

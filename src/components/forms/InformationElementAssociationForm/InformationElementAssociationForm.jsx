@@ -1,17 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 
 import "./_informationelementassociationform.scss";
+import { toggleModal } from "../../../redux/actions/modalActions";
+import { addInformationElementAssociation } from "../../../redux/actions/informationElementsActions";
 
-const InformationElementAssociationForm = ({ informationElements }) => {
+const InformationElementAssociationForm = ({
+    focused,
+    informationElements,
+    toggleModal,
+    addInformationElementAssociation
+}) => {
+    const [ie, setIe] = useState(informationElements[0]?.id);
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        addInformationElementAssociation(focused.id, ie);
+        toggleModal();
+    };
     return (
-        <form className="form-modal">
+        <form className="form-modal" onSubmit={handleSubmit}>
             <h3>New Information element Association</h3>
             <div className="form-group">
                 <span className="form-label-req">Target*</span>
-                <select className="form-control">
+                <select
+                    className="form-control"
+                    value={ie}
+                    onChange={e => {
+                        setIe(e.target.value);
+                    }}
+                >
                     {informationElements.map(ie => (
-                        <option value={ie.id}>{ie.name}</option>
+                        <option key={ie.id} value={ie.id}>
+                            {ie.name}
+                        </option>
                     ))}
                 </select>
                 <span className="form-tip">
@@ -28,7 +50,11 @@ const InformationElementAssociationForm = ({ informationElements }) => {
 };
 
 const mapStateToProps = state => ({
+    focused: state.application.focused,
     informationElements: state.informationElement.informationElements
 });
 
-export default connect(mapStateToProps)(InformationElementAssociationForm);
+export default connect(mapStateToProps, {
+    toggleModal,
+    addInformationElementAssociation
+})(InformationElementAssociationForm);

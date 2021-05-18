@@ -1,5 +1,14 @@
 @import "../../styles/themes/_variables";
 
+@keyframes card-highlight-animation {
+    0% {
+        background: #ffff99;
+    }
+    100% {
+        background: white;
+    }
+}
+
 .card {
     display: flex;
     align-items: center;
@@ -8,7 +17,7 @@
     cursor: pointer;
     box-sizing: border-box;
     border-radius: 12px;
-    box-shadow: 0 1px 8px rgba(109, 117, 141, 0.15);
+    box-shadow: 0 1px 8px rgba(109, 117, 141, 0.2);
     margin-bottom: 20px;
     padding: 14px;
     // max-width: 330px;
@@ -21,6 +30,10 @@
     -webkit-transition: all 0.2s ease-in-out;
     transition: all 0.2s ease-in-out;
     border: 1px solid transparent;
+
+    &-highlight {
+        animation: card-highlight-animation 2s;
+    }
 
     &:hover {
         box-shadow: 0 1px 12px rgba(109, 117, 141, 0.27);

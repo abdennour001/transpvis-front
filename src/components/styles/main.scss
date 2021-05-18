@@ -288,6 +288,10 @@ a {
             box-shadow: 0 4px 14px rgba(109, 117, 141, 0.67);
         }
 
+        &:active {
+            background-color: darken($stakeholder, 15);
+        }
+
         &:focus {
             outline: 0;
             border-color: lighten($stakeholder, 10);

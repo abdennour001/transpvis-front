@@ -40,6 +40,9 @@ export const createStakeholder = formData => async dispatch => {
         const url = environment.apiEndpoint;
         const res = await axios.post(url + "stakeholders/", formData, config);
         dispatch({ type: CREATE_STAKEHOLDER, payload: res.data });
+        document
+            .getElementById("card-" + res.data.id)
+            .classList.add("card-highlight");
     } catch (error) {
         dispatch({ type: TOGGLE_LOADING_STAKEHOLDERS });
         console.error("Error create stakeholder: ", error);

@@ -36,7 +36,7 @@ const Dropdown = ({ help, toggleHelp }) => {
 
     const startHelp = e => {
         toggleHelp();
-        document.querySelectorAll("[data-tip]").forEach((element) => {
+        document.querySelectorAll("[data-tip]").forEach(element => {
             element.removeEventListener("mouseenter", handleTipPosition);
             element.addEventListener("mouseenter", handleTipPosition);
         });
@@ -49,23 +49,23 @@ const Dropdown = ({ help, toggleHelp }) => {
                 <FontAwesomeIcon icon={faCaretDown} fixedWidth size="sm" />
             </summary>
             <div className="dropdown__menu">
-                <div className="dropdown__item">
-                    <FontAwesomeIcon icon={faLayerGroup} fixedWidth size="md" />
-                    <Link to="/">Your applications</Link>
-                </div>
+                <Link className="dropdown__item" to="/dashboard">
+                    <FontAwesomeIcon icon={faLayerGroup} fixedWidth size="x1" />
+                    <span>Your applications</span>
+                </Link>
                 <div className="dropdown__devider"></div>
                 <div className="dropdown__item" onClick={e => startHelp(e)}>
-                    <FontAwesomeIcon icon={faInfoCircle} fixedWidth size="md" />
+                    <FontAwesomeIcon icon={faInfoCircle} fixedWidth size="x1" />
                     <a href="#" to="/">
                         Help
                     </a>
                 </div>
                 <div className="dropdown__item">
-                    <FontAwesomeIcon icon={faCog} fixedWidth size="md" />
+                    <FontAwesomeIcon icon={faCog} fixedWidth size="x1" />
                     <Link to="/">Settings</Link>
                 </div>
                 <div className="dropdown__item">
-                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth size="md" />
+                    <FontAwesomeIcon icon={faSignOutAlt} fixedWidth size="x1" />
                     <Link to="/">Sign out</Link>
                 </div>
             </div>
