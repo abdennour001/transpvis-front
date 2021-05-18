@@ -14,6 +14,7 @@ const Visualization = ({
     informationElement,
     relationship,
     jsonData,
+    config,
     setJsonData
 }) => {
     const svgRef = useRef(null);
@@ -108,7 +109,8 @@ const Visualization = ({
     }, [
         stakeholder.stakeholders,
         informationElement.informationElements,
-        relationship.relations
+        relationship.relations,
+        config
     ]);
 
     return <svg style={{ marginTop: "-40px" }} ref={svgRef}></svg>;
@@ -120,7 +122,8 @@ const mapSateToProps = state => ({
     informationElement: state.informationElement,
     relationship: state.relationship,
     jsonData: state.viz.jsonData,
-    root: state.viz.root
+    root: state.viz.root,
+    config: state.config
 });
 
 export default connect(mapSateToProps, { setJsonData })(Visualization);

@@ -17,12 +17,13 @@ const Login = () => {
                             Transparency <br /> Visual <br /> Analysis
                         </h1>
                         <p className="login__p">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit, sed do eiusmod tempor incididunt ut labore et
-                            dolore magna aliqua. Ut enim ad minim veniam, quis
-                            nostrud exercitation ullamco laboris nisi ut aliquip
-                            ex ea commodo consequat.
+                            The process of manipulating transparency
+                            requirements is very easy with the Transpvis
+                            platform. You can create your own applications and
+                            start simulating transparency requirements now.
                         </p>
+                        <br/>
+                        <br/>
                     </div>
                 </div>
                 <div className="login__right">

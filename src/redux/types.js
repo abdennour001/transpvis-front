@@ -38,3 +38,5 @@ export const LOGOUT = "LOGOUT";
 export const TOGGLE_LOADING_AUTH = "TOGGLE_LOADING_AUTH";
 
 export const TOGGLE_MODAL = "TOGGLE_MODAL";
+export const UPDATE_CONFIG = "UPDATE_CONFIG";
+export const RESET_CONFIG = "RESET_CONFIG";
