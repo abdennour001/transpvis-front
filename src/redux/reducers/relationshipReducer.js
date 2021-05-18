@@ -1,4 +1,8 @@
-import { GET_RELATIONS, TOGGLE_LOADING_RELATIONS } from "../types";
+import {
+    GET_RELATIONS,
+    TOGGLE_LOADING_RELATIONS,
+    ADD_STAKEHOLDER_INFORMATION_ELEMENT_RELATION
+} from "../types";
 
 const initialState = {
     relations: null,
@@ -11,6 +15,12 @@ const relationshipReducer = (state = initialState, action) => {
             return { ...state, relations: action.payload, loading: false };
         case TOGGLE_LOADING_RELATIONS:
             return { ...state, loading: !state.loading };
+        case ADD_STAKEHOLDER_INFORMATION_ELEMENT_RELATION:
+            return {
+                ...state,
+                loading: false,
+                relations: [...state.relations, action.payload]
+            };
         default:
             return state;
     }

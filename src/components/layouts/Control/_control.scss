@@ -57,17 +57,52 @@
     &__pannel {
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding-bottom: 24px;
+        justify-content: space-between;
+        width: 100%;
+        padding-bottom: 22px;
+        padding-left: 58px;
+        padding-top: 18px;
+        // padding-right: 58px;
         position: absolute;
+        border-top: 1px solid $gray-300;
         bottom: 0;
         opacity: 1;
+        // padding: 32px 0;
 
         transition: all 0.4s ease-out;
+        font-size: 14px;
 
         &-callapsed {
             opacity: 0;
         }
+    }
+
+    &__container {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        // margin-right: 50px;
+
+        &-last {
+            width: 133px;
+            margin-right: 0;
+        }
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        // padding-bottom: 14px;
+    }
+
+    &__value {
+        color: $stakeholder;
+        font-weight: bold;
+    }
+
+    &__radio {
+        background: $stakeholder;
     }
 
     &__toggle {
@@ -90,5 +125,101 @@
             color: white;
             background-color: $text;
         }
+    }
+}
+
+.radio__container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.control__radio_container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+
+    .radio {
+        height: 14px;
+        width: 14px;
+        background-color: lighten($text, 50);
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+            background-color: lighten($text, 40);
+        }
+
+        &-clicked {
+            height: 14px;
+            width: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            opacity: 0.8;
+            background-color: $stakeholder;
+            position: relative;
+
+            &:hover {
+                opacity: 1;
+            }
+            &:after {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                content: "";
+                height: 4px;
+                width: 4px;
+                background: $gray-200;
+                border-radius: 50%;
+            }
+        }
+    }
+
+    span {
+        opacity: 1;
+        font-size: 12px;
+        cursor: pointer;
+    }
+}
+
+.control_radio {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 1px;
+    margin-top: 7px;
+}
+
+.radio-span-clicked {
+    opacity: 1;
+    color: $stakeholder;
+    font-weight: bold;
+}
+
+.control__button {
+    padding: 8px 20px;
+    // opacity: 60%;
+
+    background-color: $stakeholder;
+    color: white;
+    border-radius: 50px;
+    text-align: center;
+    box-shadow: 0 1px 12px rgba(109, 117, 141, 0.3);
+    cursor: pointer;
+
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+
+    &:hover {
+        opacity: 100%;
+        background-color: darken($stakeholder, 4);
+        box-shadow: 0 4px 14px rgba(109, 117, 141, 0.5);
+    }
+
+    &:active {
+        background-color: darken($stakeholder, 10);
     }
 }

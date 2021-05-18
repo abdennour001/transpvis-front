@@ -1,4 +1,10 @@
-import { GET_STAKEHOLDERS, TOGGLE_LOADING_STAKEHOLDERS } from "../types";
+import {
+    GET_STAKEHOLDERS,
+    TOGGLE_LOADING_STAKEHOLDERS,
+    CREATE_STAKEHOLDER,
+    UPDATE_STAKEHOLDER,
+    DELETE_STAKEHOLDER
+} from "../types";
 
 const initialState = {
     stakeholders: null,
@@ -11,6 +17,31 @@ const stakeholderReducer = (state = initialState, action) => {
             return { ...state, stakeholders: action.payload, loading: false };
         case TOGGLE_LOADING_STAKEHOLDERS:
             return { ...state, loading: !state.loading };
+        case CREATE_STAKEHOLDER:
+            return {
+                ...state,
+                loading: false,
+                stakeholders: [...state.stakeholders, action.payload]
+            };
+        case UPDATE_STAKEHOLDER:
+            return {
+                ...state,
+                loading: false,
+                stakeholders: [
+                    ...state.stakeholders.filter(
+                        s => s.id !== action.payload.id
+                    ),
+                    action.payload
+                ]
+            };
+        case DELETE_STAKEHOLDER:
+            return {
+                ...state,
+                loading: false,
+                stakeholders: state.stakeholders.filter(
+                    s => s.id !== action.payload.id
+                )
+            };
         default:
             return state;
     }
