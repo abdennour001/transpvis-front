@@ -8,13 +8,15 @@ import "./_informationelement.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
+import { toggleModal } from "../../../redux/actions/modalActions";
 
 const InformationElement = ({
     informationElement,
     stakeholders,
     informationElements,
     relationships,
-    help
+    help,
+    toggleModal
 }) => {
     const afterRef = useRef(null);
     const [toggle, setToggle] = useState({
@@ -37,6 +39,10 @@ const InformationElement = ({
             ...toggle,
             [toggleName]: !toggle[toggleName]
         });
+    };
+
+    const handleMenuClick = (e, type, relation) => {
+        toggleModal(type, relation);
     };
 
     const getRelatedInformationElements = () => {
@@ -175,10 +181,18 @@ const InformationElement = ({
                                 (toggle.related ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new related information element"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(e, "ie-association");
+                                }}
+                            />
                             {getRelatedInformationElements().length !== 0 ? (
                                 getRelatedInformationElements().map(ie => {
                                     return (
                                         <Card
+                                            id={`card-association-${ie.id}`}
                                             key={ie.id}
                                             label={ie.label}
                                             name={ie.name}
@@ -262,10 +276,22 @@ const InformationElement = ({
                                 (toggle.provider ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new providing stakeholder"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "production"
+                                    );
+                                }}
+                            />
                             {getRelatedStakeholders("production").length !==
                             0 ? (
                                 getRelatedStakeholders("production").map(s => (
                                     <Card
+                                        id={`card-relation-production-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -350,10 +376,22 @@ const InformationElement = ({
                                 (toggle.receive ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new recieving stakeholder"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "obligatory"
+                                    );
+                                }}
+                            />
                             {getRelatedStakeholders("obligatory").length !==
                             0 ? (
                                 getRelatedStakeholders("obligatory").map(s => (
                                     <Card
+                                        id={`card-relation-obligatory-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -439,9 +477,21 @@ const InformationElement = ({
                                 (toggle.request ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new requesting stakeholder"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "optional"
+                                    );
+                                }}
+                            />
                             {getRelatedStakeholders("optional").length !== 0 ? (
                                 getRelatedStakeholders("optional").map(s => (
                                     <Card
+                                        id={`card-relation-optional-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -526,10 +576,22 @@ const InformationElement = ({
                                 (toggle.restricted ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new restricted stakeholder"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "restricted"
+                                    );
+                                }}
+                            />
                             {getRelatedStakeholders("restricted").length !==
                             0 ? (
                                 getRelatedStakeholders("restricted").map(s => (
                                     <Card
+                                        id={`card-relation-restricted-${s.id}`}
                                         key={s.id}
                                         label={s.label}
                                         name={s.name}
@@ -563,4 +625,4 @@ const mapSateToProps = state => ({
     help: state.help.help
 });
 
-export default connect(mapSateToProps)(InformationElement);
+export default connect(mapSateToProps, { toggleModal })(InformationElement);

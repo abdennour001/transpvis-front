@@ -3,9 +3,6 @@ import { connect } from "react-redux";
 import Skeleton from "react-loading-skeleton";
 
 // Actions
-import { getStakeholders } from "../../../redux/actions/stakeholderActions";
-import { getInformationElements } from "../../../redux/actions/informationElementsActions";
-import { getRelationships } from "../../../redux/actions/relationsActions";
 import { toggleHelp } from "../../../redux/actions/helpActions";
 import {
     getApplications,
@@ -19,6 +16,7 @@ import Card from "../../layouts/Card";
 import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
 import Detail from "../../layouts/Detail";
+import Modal from "../../layouts/Modal";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -39,6 +37,12 @@ import {
     unsetPrimaryAnimation
 } from "../../../utils/d3";
 
+import { toggleModal } from "../../../redux/actions/modalActions";
+import StakeholderForm from "../../forms/StakeholderForm";
+import InformationElementForm from "../../forms/InformationElementForm/InformationElementForm";
+import InformationElementAssociationForm from "../../forms/InformationElementAssociationForm/InformationElementAssociationForm";
+import StakeholderInformationElementRelationshipForm from "../../forms/StakeholderInformationElementRelationshipForm/StakeholderInformationElementRelationshipForm";
+
 const Home = ({
     application,
     stakeholder,
@@ -46,15 +50,12 @@ const Home = ({
     relationship,
     help,
     viz,
+    type,
 
-    getStakeholders,
-    getInformationElements,
-    getRelationships,
-    getApplications,
-    setApplication,
     setFocused,
     removeFocused,
-    toggleHelp
+    toggleHelp,
+    toggleModal
 }) => {
     const [expanded, setExpanded] = useState(true);
     const [endingHelp, setEndingHelp] = useState(false);
@@ -62,15 +63,7 @@ const Home = ({
         setExpanded(!expanded);
     };
 
-    useEffect(() => {
-        const selectedApp = 1;
-        getApplications().then(() => {
-            setApplication(selectedApp);
-        });
-        getStakeholders({ application: selectedApp });
-        getInformationElements({ application: selectedApp });
-        getRelationships({ stakeholder__application: selectedApp });
-    }, []);
+    useEffect(() => {}, []);
 
     const handleCardClick = (event, element) => {
         event.preventDefault();
@@ -122,8 +115,28 @@ const Home = ({
         }, 500);
     };
 
+    const renderForm = () => {
+        switch (type) {
+            case "stakeholder":
+                return <StakeholderForm />;
+            case "information-element":
+                return <InformationElementForm />;
+            case "ie-association":
+                return <InformationElementAssociationForm />;
+            case "stakeholder-information-element-relationship":
+                return <StakeholderInformationElementRelationshipForm />;
+            default:
+                break;
+        }
+    };
+
+    const handleMenuClick = (e, type) => {
+        toggleModal(type);
+    };
+
     return (
         <>
+            <Modal>{renderForm()}</Modal>
             <div className="home">
                 {(help || endingHelp) && (
                     <>
@@ -363,6 +376,14 @@ const Home = ({
                                         />
                                     )}
                                 </div>
+                                <Card
+                                    addNew={true}
+                                    title={"add new stakeholder"}
+                                    onClick={e => {
+                                        handleMenuClick(e, "stakeholder");
+                                    }}
+                                />
+
                                 {stakeholder.loading ? (
                                     <>
                                         <Card isLoading={true} />
@@ -376,6 +397,7 @@ const Home = ({
                                     <>
                                         {stakeholder.stakeholders.map(s => (
                                             <Card
+                                                id={`card-${s.id}`}
                                                 key={s.id}
                                                 label={s.label}
                                                 name={s.name}
@@ -442,6 +464,17 @@ const Home = ({
                                         />
                                     )}
                                 </div>
+                                <Card
+                                    title={"add new information element"}
+                                    addNew={true}
+                                    onClick={e => {
+                                        handleMenuClick(
+                                            e,
+                                            "information-element"
+                                        );
+                                    }}
+                                />
+
                                 {informationElement.loading ? (
                                     <>
                                         <Card isLoading={true} />
@@ -458,6 +491,7 @@ const Home = ({
                                         {informationElement.informationElements.map(
                                             ie => (
                                                 <Card
+                                                    id={`card-${ie.id}`}
                                                     key={ie.id}
                                                     label={ie.label}
                                                     name={ie.name}
@@ -520,16 +554,15 @@ const mapSateToProps = state => ({
     informationElement: state.informationElement,
     relationship: state.relationship,
     help: state.help.help,
-    viz: state.viz
+    viz: state.viz,
+    type: state.modal.type
 });
 
 export default connect(mapSateToProps, {
-    getStakeholders,
-    getInformationElements,
-    getRelationships,
     getApplications,
     setApplication,
     setFocused,
     removeFocused,
-    toggleHelp
+    toggleHelp,
+    toggleModal
 })(Home);

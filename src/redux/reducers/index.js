@@ -6,6 +6,8 @@ import relationshipReducer from "./relationshipReducer";
 import applicationReducer from "./applicationReducer";
 import helpReducer from "./helpReducer";
 import vizReducer from "./vizReducer";
+import authReducer from "./authReducer";
+import modalReducer from "./modalReducer";
 import configReducer from "./configReducer";
 
 export default combineReducers({
@@ -15,5 +17,7 @@ export default combineReducers({
     application: applicationReducer,
     help: helpReducer,
     viz: vizReducer,
+    auth: authReducer,
+    modal: modalReducer,
     config: configReducer
 });

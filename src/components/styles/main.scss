@@ -111,3 +111,197 @@ a {
         opacity: 1;
     }
 }
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h3 {
+        text-align: center;
+        margin: 0;
+        margin-bottom: 32px;
+    }
+
+    &-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    &-label {
+        font-size: 16px;
+        // font-weight: 500;
+    }
+
+    &-control {
+        width: 100%;
+        margin-bottom: 10px;
+        height: 40px;
+        border: 1px solid lightgray;
+        font-size: 15px;
+        padding: 0 10px;
+        border-radius: 12px;
+        box-sizing: border-box;
+
+        &:focus {
+            outline: 0;
+            border-color: lighten($stakeholder, 10);
+            box-shadow: 0 0 10px lighten($stakeholder, 25);
+        }
+    }
+
+    textarea {
+        padding: 10px;
+        height: auto;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        resize: vertical;
+    }
+
+    &-submit {
+        margin-top: 10px;
+        padding: 5px;
+        border: none;
+        background-color: $stakeholder;
+        color: white;
+        cursor: pointer;
+        height: 35px;
+        font-size: 14px;
+        border-radius: 12px;
+        box-shadow: 0 1px 12px rgba(109, 117, 141, 0.8);
+
+        -webkit-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+
+        &:hover {
+            background-color: darken($stakeholder, 4);
+            box-shadow: 0 4px 14px rgba(109, 117, 141, 0.67);
+        }
+
+        &:focus {
+            outline: 0;
+            border-color: lighten($stakeholder, 10);
+            box-shadow: 0 0 10px lighten($stakeholder, 25);
+        }
+    }
+}
+
+.form-modal {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+
+    h3 {
+        text-align: center;
+        margin: 0;
+        margin-bottom: 32px;
+        line-height: 1.8rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .form-label {
+        font-size: 14px;
+        font-weight: normal;
+    }
+
+    .form-label-req {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .form-control {
+        width: 100%;
+        margin-bottom: 10px;
+        height: 40px;
+        border: 1px solid lightgray;
+        font-size: 14px;
+        padding: 0 10px;
+        border-radius: 12px;
+        box-sizing: border-box;
+        color: $text !important;
+
+        &:focus {
+            outline: 0;
+            border-color: lighten($stakeholder, 10);
+            box-shadow: 0 0 10px lighten($stakeholder, 25);
+        }
+    }
+
+    textarea {
+        padding: 10px !important;
+        height: auto !important;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        resize: vertical;
+        // font-size: 14px !important;
+        line-height: 1.7rem;
+        font-family: inherit;
+    }
+
+    select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        background: transparent;
+        background-image: url("data:image/svg+xml;utf8,<svg fill='%233d4659' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+        background-repeat: no-repeat;
+        background-position-x: 100%;
+        background-position-y: 5px;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+        margin-right: 2rem;
+        padding: 1rem;
+        padding-right: 2rem;
+        color: $text !important;
+    }
+
+    .form-submit {
+        margin-top: 10px;
+        padding: 5px;
+        border: none;
+        background-color: $stakeholder;
+        color: white;
+        cursor: pointer;
+        height: 35px;
+        font-size: 14px;
+        border-radius: 12px;
+        box-shadow: 0 1px 12px rgba(109, 117, 141, 0.8);
+
+        -webkit-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+
+        &:hover {
+            background-color: darken($stakeholder, 4);
+            box-shadow: 0 4px 14px rgba(109, 117, 141, 0.67);
+        }
+
+        &:active {
+            background-color: darken($stakeholder, 15);
+        }
+
+        &:focus {
+            outline: 0;
+            border-color: lighten($stakeholder, 10);
+            box-shadow: 0 0 10px lighten($stakeholder, 25);
+        }
+    }
+
+    .form-tip {
+        font-size: 12px;
+        opacity: 0.6;
+        line-height: 1.2rem;
+    }
+}

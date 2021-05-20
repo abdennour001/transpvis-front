@@ -8,13 +8,15 @@ import "../Detail/_detail.scss";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
+import { toggleModal } from "../../../redux/actions/modalActions";
 
 const Stakeholder = ({
     stakeholder,
     stakeholders,
     informationElements,
     relationships,
-    help
+    help,
+    toggleModal
 }) => {
     const afterRef = useRef(null);
     const [toggle, setToggle] = useState({
@@ -37,6 +39,10 @@ const Stakeholder = ({
             ...toggle,
             [toggleName]: !toggle[toggleName]
         });
+    };
+
+    const handleMenuClick = (e, type, relation) => {
+        toggleModal(type, relation);
     };
 
     const getRelatedInformationElements = type => {
@@ -162,12 +168,24 @@ const Stakeholder = ({
                                 (toggle.production ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"Add new produced Information element"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "production"
+                                    );
+                                }}
+                            />
                             {getRelatedInformationElements("production")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
                                     "production"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-production-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -254,12 +272,24 @@ const Stakeholder = ({
                                 (toggle.obligatory ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new obligatory relationship"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "obligatory"
+                                    );
+                                }}
+                            />
                             {getRelatedInformationElements("obligatory")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
                                     "obligatory"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-obligatory-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -347,12 +377,24 @@ const Stakeholder = ({
                                 (toggle.optional ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new optional relationship"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "optional"
+                                    );
+                                }}
+                            />
                             {getRelatedInformationElements("optional")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
                                     "optional"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-optional-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -440,12 +482,24 @@ const Stakeholder = ({
                                 (toggle.restricted ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new restricted relationship"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "restricted"
+                                    );
+                                }}
+                            />
                             {getRelatedInformationElements("restricted")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
                                     "restricted"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-restricted-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -533,12 +587,24 @@ const Stakeholder = ({
                                 (toggle.undecided ? "" : "-collapsed")
                             }
                         >
+                            <Card
+                                title={"add new undecided relationship"}
+                                addNew={true}
+                                onClick={e => {
+                                    handleMenuClick(
+                                        e,
+                                        "stakeholder-information-element-relationship",
+                                        "undecided"
+                                    );
+                                }}
+                            />
                             {getRelatedInformationElements("undecided")
                                 .length !== 0 ? (
                                 getRelatedInformationElements(
                                     "undecided"
                                 ).map(ie => (
                                     <Card
+                                        id={`card-relation-undecided-${ie.id}`}
                                         key={ie.id}
                                         label={ie.label}
                                         name={ie.name}
@@ -572,4 +638,4 @@ const mapSateToProps = state => ({
     help: state.help.help
 });
 
-export default connect(mapSateToProps)(Stakeholder);
+export default connect(mapSateToProps, { toggleModal })(Stakeholder);

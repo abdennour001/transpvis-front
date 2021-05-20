@@ -1,0 +1,62 @@
+.modal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10000;
+    background-color: rgba(0, 0, 0, 0.65);
+
+    @keyframes IGCoreModalShow {
+        0% {
+            opacity: 0;
+            transform: scale(1.2);
+        }
+        100% {
+            opacity: 1;
+            -webkit-transform: scale(1);
+            transform: scale(1);
+        }
+    }
+
+    &-hidden {
+        display: none;
+    }
+
+    &__menu {
+        width: 350px;
+        // height: 600px;
+        margin: 20px;
+        animation-duration: 100ms;
+        animation-timing-function: ease-out;
+        animation-delay: 0ms;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-fill-mode: none;
+        animation-play-state: running;
+        animation-name: IGCoreModalShow;
+    }
+
+    &__content {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background-color: white;
+        border-radius: 12px;
+        padding: 32px 30px;
+        // height: 400px;
+        overflow: hidden;
+    }
+
+    &__exit {
+        position: absolute;
+        top: 12px;
+        right: 16px;
+        cursor: pointer;
+    }
+}

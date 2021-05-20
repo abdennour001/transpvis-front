@@ -1,0 +1,3 @@
+import StakeholderInformationElementRelationshipForm from './StakeholderInformationElementRelationshipForm';
+
+export default StakeholderInformationElementRelationshipForm;
