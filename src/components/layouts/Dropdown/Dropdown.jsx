@@ -8,15 +8,18 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
     faCaretDown,
     faInfoCircle,
-    faCog,
+    faDownload,
     faSignOutAlt,
+    faCog,
     faLayerGroup
 } from "@fortawesome/free-solid-svg-icons";
 
 import { toggleHelp } from "../../../redux/actions/helpActions";
 import { handleTipPosition } from "../../../utils/app.utils";
 
-const Dropdown = ({ help, toggleHelp }) => {
+import exportFromJSON from "export-from-json";
+
+const Dropdown = ({ help, jsonData, application, toggleHelp }) => {
     const refDropdown = useRef(null);
 
     const toggleDropdown = event => {
@@ -42,6 +45,28 @@ const Dropdown = ({ help, toggleHelp }) => {
         });
     };
 
+    const downloadJson = e => {
+        e.preventDefault();
+        let date = new Date();
+        exportFromJSON({
+            data: jsonData,
+            fileName: `${application.name}__${
+                date.getHours() < 10 ? "0" + date.getHours() : date.getHours()
+            }.${
+                date.getMinutes() < 10
+                    ? "0" + date.getMinutes()
+                    : date.getMinutes()
+            }.${
+                date.getSeconds() < 10
+                    ? "0" + date.getSeconds()
+                    : date.getSeconds()
+            }__${date.getDate() < 10 ? "0" + date.getDate() : date.getDate()}-${
+                date.getMonth() < 10 ? "0" + date.getMonth() : date.getMonth()
+            }-${date.getFullYear()}`,
+            exportType: "json"
+        });
+    };
+
     return (
         <details className="dropdown" ref={refDropdown}>
             <summary className="dropdown__toggle" onClick={toggleDropdown}>
@@ -60,9 +85,9 @@ const Dropdown = ({ help, toggleHelp }) => {
                         Help
                     </a>
                 </div>
-                <div className="dropdown__item">
-                    <FontAwesomeIcon icon={faCog} fixedWidth size="x1" />
-                    <Link to="/">Settings</Link>
+                <div className="dropdown__item" onClick={e => downloadJson(e)}>
+                    <FontAwesomeIcon icon={faDownload} fixedWidth size="x1" />
+                    <a href="#">Download JSON</a>
                 </div>
                 <div className="dropdown__item">
                     <FontAwesomeIcon icon={faSignOutAlt} fixedWidth size="x1" />
@@ -74,7 +99,9 @@ const Dropdown = ({ help, toggleHelp }) => {
 };
 
 const mapSateToProps = state => ({
-    help: state.help.help
+    help: state.help.help,
+    jsonData: state.viz.jsonData,
+    application: state.application.application
 });
 
 export default connect(mapSateToProps, {
