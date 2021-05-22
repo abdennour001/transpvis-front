@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 
 import "./_register.scss";
 import logo from "../../../assets/logo.png";
+import { register } from "../../../redux/actions/authActions";
 
-const Register = () => {
+const Register = ({ register }) => {
+    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        register({
+            firstName: username.split(" ")[0],
+            lastName: username.split(" ")[1],
+            email,
+            password
+        });
+    };
+
     return (
         <div className="register">
             <header className="register__header">
@@ -22,20 +38,25 @@ const Register = () => {
                             platform. You can create your own applications and
                             start simulating transparency requirements now.
                         </p>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                     </div>
                 </div>
                 <div className="register__right">
                     <div className="register__form">
                         {/* <h2>Login</h2> */}
-                        <form className="form">
+                        <form className="form" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <span className="form-label">Username</span>
                                 <input
                                     type="text"
-                                    placeholder="amokrane001"
+                                    placeholder="Amokrane Abdennour"
                                     className="form-control"
+                                    value={username}
+                                    onChange={e => {
+                                        setUsername(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
                             <div className="form-group">
@@ -44,6 +65,11 @@ const Register = () => {
                                     type="email"
                                     placeholder="user@example.com"
                                     className="form-control"
+                                    value={email}
+                                    onChange={e => {
+                                        setEmail(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
                             <div className="form-group">
@@ -52,6 +78,11 @@ const Register = () => {
                                     type="password"
                                     placeholder="****"
                                     className="form-control"
+                                    value={password}
+                                    onChange={e => {
+                                        setPassword(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
                             <button type="submit" className="form-submit">
@@ -68,5 +99,8 @@ const Register = () => {
         </div>
     );
 };
+const mapSateToProps = state => ({
+    // user: state.auth.user
+});
 
-export default Register;
+export default connect(mapSateToProps, { register })(Register);

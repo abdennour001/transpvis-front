@@ -17,6 +17,7 @@ import Tag from "../../layouts/Tag";
 import Control from "../../layouts/Control";
 import Detail from "../../layouts/Detail";
 import Modal from "../../layouts/Modal";
+import ModalMenu from "../../layouts/ModalMenu";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -125,6 +126,8 @@ const Home = ({
                 return <InformationElementAssociationForm />;
             case "stakeholder-information-element-relationship":
                 return <StakeholderInformationElementRelationshipForm />;
+            case "menu":
+                return <ModalMenu />;
             default:
                 break;
         }
