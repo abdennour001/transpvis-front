@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./_card.scss";
 
+import { toggleModal } from "../../../redux/actions/modalActions";
+
 const Card = ({
     id,
     label,
@@ -15,11 +17,13 @@ const Card = ({
     isLoading,
     focused,
     addNew,
-    title
+    title,
+    toggleModal
 }) => {
     const handleMenuClick = event => {
         event.preventDefault();
         event.stopPropagation();
+        toggleModal("menu");
     };
 
     if (addNew) {
@@ -89,4 +93,4 @@ const mapSateToProps = state => ({
     focused: state.application.focused
 });
 
-export default connect(mapSateToProps)(Card);
+export default connect(mapSateToProps, { toggleModal })(Card);

@@ -1,0 +1,13 @@
+@import "../../styles/themes/_variables";
+
+.button-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+}
+
+.button-red {
+    background: darken($policy, 10) !important;
+}

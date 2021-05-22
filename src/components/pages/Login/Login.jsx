@@ -1,9 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
+import { connect } from "react-redux";
 
 import "./_login.scss";
 import logo from "../../../assets/logo.png";
+import { login } from "../../../redux/actions/authActions";
 
-const Login = () => {
+const Login = ({ login }) => {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+
+    const handleSubmit = e => {
+        e.preventDefault();
+        login({
+            email,
+            password
+        });
+    };
+
     return (
         <div className="login">
             <header className="login__header">
@@ -22,20 +35,25 @@ const Login = () => {
                             platform. You can create your own applications and
                             start simulating transparency requirements now.
                         </p>
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                     </div>
                 </div>
                 <div className="login__right">
                     <div className="login__form">
                         {/* <h2>Login</h2> */}
-                        <form className="form">
+                        <form className="form" onSubmit={handleSubmit}>
                             <div className="form-group">
                                 <span className="form-label">Email</span>
                                 <input
                                     type="email"
                                     placeholder="user@example.com"
                                     className="form-control"
+                                    value={email}
+                                    onChange={e => {
+                                        setEmail(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
                             <div className="form-group">
@@ -44,6 +62,11 @@ const Login = () => {
                                     type="password"
                                     placeholder="****"
                                     className="form-control"
+                                    value={password}
+                                    onChange={e => {
+                                        setPassword(e.target.value);
+                                    }}
+                                    required
                                 />
                             </div>
                             <button type="submit" className="form-submit">
@@ -61,4 +84,8 @@ const Login = () => {
     );
 };
 
-export default Login;
+const mapSateToProps = state => ({
+    // user: state.auth.user
+});
+
+export default connect(mapSateToProps, { login })(Login);

@@ -1,9 +1,12 @@
+import axios from "axios";
+
 import {
     REGISTER_SUCCESS,
     LOGIN_SUCCESS,
     LOGOUT,
     TOGGLE_LOADING_AUTH
 } from "../types";
+import { environment } from "../../utils/environment";
 
 // Register User
 export const register = formData => async dispatch => {
@@ -15,9 +18,10 @@ export const register = formData => async dispatch => {
 
     try {
         dispatch(setLoading());
-
-        const res = await axios.post("/api/register", formData, config);
-
+        const url = environment.apiEndpoint;
+        console.log(formData);
+        const res = await axios.post(url + "register/", formData, config);
+        console.log(res.data);
         dispatch({
             type: REGISTER_SUCCESS,
             payload: res.data
@@ -37,8 +41,8 @@ export const login = formData => async dispatch => {
 
     try {
         dispatch(setLoading());
-
-        const res = await axios.post("api/login", formData, config);
+        const url = environment.apiEndpoint;
+        const res = await axios.post(url + "login/", formData, config);
 
         dispatch({
             type: LOGIN_SUCCESS,
