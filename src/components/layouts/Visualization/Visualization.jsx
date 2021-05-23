@@ -99,6 +99,9 @@ const Visualization = ({
             !relationship.loading
         ) {
             const data = getVizData();
+            if (data.nodes.length === 0 && data.nodes.length === 0) {
+                return;
+            }
             drawViz(data);
         }
 
@@ -113,7 +116,23 @@ const Visualization = ({
         config
     ]);
 
-    return <svg style={{ marginTop: "-40px" }} ref={svgRef}></svg>;
+    return jsonData.nodes &&
+        jsonData.nodes.length === 0 &&
+        jsonData.links.length === 0 ? (
+        <span
+            className="d-flex align-items-start justify-content-center text-muted"
+            style={{
+                margin: "14px 0",
+                fontSize: "14px",
+                width: "100%"
+            }}
+        >
+            No visualization, please add some stakeholders and information
+            elements to start
+        </span>
+    ) : (
+        <svg style={{ marginTop: "-40px" }} ref={svgRef}></svg>
+    );
 };
 
 const mapSateToProps = state => ({

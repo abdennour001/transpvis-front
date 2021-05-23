@@ -8,8 +8,8 @@ import setAuthToken from "../../utils/setAuthToken";
 
 const initialState = {
     token: localStorage.getItem("token"),
-    isAuthenticated: null,
-    loading: true,
+    isAuthenticated: false,
+    loading: false,
     user: null
 };
 
@@ -18,7 +18,7 @@ export default (state = initialState, action) => {
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
             localStorage.setItem("token", action.payload.token);
-            setAuthToken(action.payload.token); 
+            setAuthToken(action.payload.token);
 
             return {
                 ...state,

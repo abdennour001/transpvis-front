@@ -8,7 +8,7 @@ import {
 } from "../types";
 
 const initialState = {
-    informationElements: null,
+    informationElements: [],
     loading: false
 };
 
@@ -35,30 +35,25 @@ const informationElementReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                informationElements: [
-                    ...state.informationElements.filter(
-                        s => s.id !== action.payload.id
-                    ),
-                    action.payload
-                ]
+                informationElements: state.informationElements.map(ie => {
+                    return ie.id !== action.payload.id ? ie : action.payload;
+                })
             };
         case DELETE_INFORMATION_ELEMENT:
             return {
                 ...state,
                 loading: false,
                 informationElements: state.informationElements.filter(
-                    e => e.id !== action.payload.id
+                    e => e.id !== +action.payload.id
                 )
             };
         case ADD_INFORMATION_ELEMENT_ASSOCIATION:
             let newSource = state.informationElements.find(
                 e => e.id === +action.payload.source
             );
-            console.log(newSource);
             newSource.information_elements = newSource.information_elements.concat(
                 +action.payload.target
             );
-            console.log(newSource);
 
             return {
                 ...state,

@@ -15,11 +15,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { toggleHelp } from "../../../redux/actions/helpActions";
+import { logout } from "../../../redux/actions/authActions";
 import { handleTipPosition } from "../../../utils/app.utils";
 
 import exportFromJSON from "export-from-json";
 
-const Dropdown = ({ help, jsonData, application, toggleHelp }) => {
+const Dropdown = ({ help, jsonData, application, toggleHelp, logout }) => {
     const refDropdown = useRef(null);
 
     const toggleDropdown = event => {
@@ -89,9 +90,14 @@ const Dropdown = ({ help, jsonData, application, toggleHelp }) => {
                     <FontAwesomeIcon icon={faDownload} fixedWidth size="x1" />
                     <a href="#">Download JSON</a>
                 </div>
-                <div className="dropdown__item">
+                <div
+                    className="dropdown__item"
+                    onClick={e => {
+                        logout();
+                    }}
+                >
                     <FontAwesomeIcon icon={faSignOutAlt} fixedWidth size="x1" />
-                    <Link to="/">Sign out</Link>
+                    <a>Sign out</a>
                 </div>
             </div>
         </details>
@@ -105,5 +111,6 @@ const mapSateToProps = state => ({
 });
 
 export default connect(mapSateToProps, {
-    toggleHelp
+    toggleHelp,
+    logout
 })(Dropdown);

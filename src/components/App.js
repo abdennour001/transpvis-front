@@ -12,9 +12,10 @@ import Register from "./pages/Register";
 // Redux store
 import store from "../redux/store";
 import setAuthToken from "../utils/setAuthToken";
+import PrivateRoute from "../components/routes/PrivateRoute";
 
 function App() {
-    setAuthToken("ee69594f98481738e89d2dab15ed582176a683cd");
+    // setAuthToken("ee69594f98481738e89d2dab15ed582176a683cd");
 
     return (
         <Router>
@@ -27,12 +28,14 @@ function App() {
                     <Route path="/register">
                         <Register />
                     </Route>
-                    <Route path="/dashboard">
+                    <PrivateRoute exact path="/dashboard" component={Splash} />
+                    <PrivateRoute exact path="/" component={Home} />
+                    {/* <Route path="/dashboard">
                         <Splash />
-                    </Route>
-                    <Route path="/">
+                    </Route> */}
+                    {/* <Route path="/">
                         <Home />
-                    </Route>
+                    </Route> */}
                 </Switch>
                 {/* </div> */}
             </Provider>

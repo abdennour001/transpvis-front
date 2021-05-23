@@ -53,6 +53,14 @@ export const login = formData => async dispatch => {
     }
 };
 
+// load user
+export const loadUser = () => async dispatch => {
+    dispatch({
+        type: LOGIN_SUCCESS,
+        payload: { token: localStorage.getItem("token") }
+    });
+};
+
 // Logout
 export const logout = () => async dispatch => {
     dispatch({

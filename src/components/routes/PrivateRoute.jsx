@@ -1,8 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
+import { loadUser } from "../../redux/actions/authActions";
 
-function PrivateRoute({ component: Component }) {
+function PrivateRoute({
+    component: Component,
+    isAuthenticated,
+    loading,
+    loadUser,
+    ...rest
+}) {
+    useEffect(() => {
+        if (localStorage.token && !isAuthenticated) {
+            loadUser();
+        }
+    });
     return (
         <Route
             {...rest}
@@ -24,4 +36,4 @@ const mapSateToProps = state => ({
     loading: state.auth.loading
 });
 
-export default connect(mapSateToProps)(PrivateRoute);
+export default connect(mapSateToProps, { loadUser })(PrivateRoute);

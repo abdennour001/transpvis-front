@@ -323,7 +323,6 @@ export const chart = (svg, { nodes, links }) => {
 
     function bilink(root) {
         const map = new Map(root.leaves().map(d => [d.data.label, d]));
-
         for (const d of root.leaves()) {
             d.incoming = [];
             d.outgoing = d.data.targets.map(i => [d, map.get(i)]);

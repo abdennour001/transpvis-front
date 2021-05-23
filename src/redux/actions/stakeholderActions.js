@@ -5,7 +5,10 @@ import {
     TOGGLE_LOADING_STAKEHOLDERS,
     CREATE_STAKEHOLDER,
     UPDATE_STAKEHOLDER,
-    DELETE_STAKEHOLDER
+    DELETE_STAKEHOLDER,
+    SET_FOCUSED,
+    REMOVE_STAKEHOLDER_INFORMATION_ELEMENT_RELATION_FROM_REDUX,
+    REMOVE_FOCUSED
 } from "../types";
 import { environment } from "../../utils/environment";
 
@@ -50,7 +53,7 @@ export const createStakeholder = formData => async dispatch => {
 };
 
 // Update a stakeholder
-export const updateStakeholder = id => formData => async dispatch => {
+export const updateStakeholder = (id, formData) => async dispatch => {
     const config = {
         headers: {
             "Content-Type": "application/json"
@@ -60,11 +63,18 @@ export const updateStakeholder = id => formData => async dispatch => {
         dispatch({ type: TOGGLE_LOADING_STAKEHOLDERS });
         const url = environment.apiEndpoint;
         const res = await axios.patch(
-            url + `stakeholders/${id}`,
+            url + `stakeholders/${id}/`,
             formData,
             config
         );
+        dispatch({
+            type: SET_FOCUSED,
+            payload: res.data
+        });
         dispatch({ type: UPDATE_STAKEHOLDER, payload: res.data });
+        document
+            .getElementById("card-" + res.data.id)
+            .classList.add("card-highlight");
     } catch (error) {
         dispatch({ type: TOGGLE_LOADING_STAKEHOLDERS });
         console.error("Error updating stakeholder: ", error);
@@ -75,9 +85,14 @@ export const updateStakeholder = id => formData => async dispatch => {
 export const deleteStakeholder = id => async dispatch => {
     try {
         dispatch({ type: TOGGLE_LOADING_STAKEHOLDERS });
+        dispatch({ type: REMOVE_FOCUSED });
         const url = environment.apiEndpoint;
-        const res = await axios.delete(url + `stakeholders/${id}`);
-        dispatch({ type: DELETE_STAKEHOLDER, payload: res.data });
+        const res = await axios.delete(url + `stakeholders/${id}/`);
+        dispatch({ type: DELETE_STAKEHOLDER, payload: { id } });
+        dispatch({
+            type: REMOVE_STAKEHOLDER_INFORMATION_ELEMENT_RELATION_FROM_REDUX,
+            payload: { type: "s", id }
+        });
     } catch (error) {
         dispatch({ type: TOGGLE_LOADING_STAKEHOLDERS });
         console.error("Error create stakeholder: ", error);

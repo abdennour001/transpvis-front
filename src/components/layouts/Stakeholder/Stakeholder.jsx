@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
 import { toggleModal } from "../../../redux/actions/modalActions";
+import { updateStakeholder } from "../../../redux/actions/stakeholderActions";
 
 const Stakeholder = ({
     stakeholder,
@@ -16,6 +17,7 @@ const Stakeholder = ({
     informationElements,
     relationships,
     help,
+    updateStakeholder,
     toggleModal
 }) => {
     const afterRef = useRef(null);
@@ -26,6 +28,10 @@ const Stakeholder = ({
         restricted: false,
         undecided: false
     });
+    const [isEditName, setIsEditName] = useState(false);
+    const [isEditDescription, setIsEditDescription] = useState(false);
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
 
     useEffect(() => {
         afterRef?.current?.setAttribute(
@@ -33,6 +39,11 @@ const Stakeholder = ({
             "--tooltip-type-color: #4A6FA5;"
         );
     }, []);
+
+    useEffect(() => {
+        setIsEditName(false);
+        setIsEditDescription(false);
+    }, [stakeholder]);
 
     const handleToggle = toggleName => {
         setToggle({
@@ -63,17 +74,62 @@ const Stakeholder = ({
             });
     };
 
+    const handleUpdate = (e, formData) => {
+        e.preventDefault();
+        setIsEditName(false);
+        setIsEditDescription(false);
+        updateStakeholder(stakeholder.id, formData);
+    };
+
     return (
         <div className="detail__card">
             <div className="detail__title">
-                <h2
-                    style={{
-                        maxWidth: "350px",
-                        lineHeight: "2rem"
-                    }}
-                >
-                    {stakeholder.name}
-                </h2>
+                {isEditName ? (
+                    <form>
+                        <input
+                            className="detail__input"
+                            type="text"
+                            name=""
+                            value={name}
+                            onChange={e => {
+                                setName(e.target.value);
+                            }}
+                            id=""
+                            autoFocus
+                        />
+                        <div className="detail__action">
+                            <a
+                                className="detail__primary"
+                                onClick={e => {
+                                    handleUpdate(e, { name });
+                                }}
+                            >
+                                Update
+                            </a>
+                            <a
+                                className="detail__secondary"
+                                onClick={() => setIsEditName(false)}
+                            >
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                ) : (
+                    <h2
+                        style={{
+                            maxWidth: "350px",
+                            lineHeight: "2rem",
+                            cursor: "pointer"
+                        }}
+                        title="Click to edit"
+                        onClick={e => {
+                            setName(stakeholder.name);
+                            setIsEditName(true);
+                        }}
+                    >
+                        {stakeholder.name}
+                    </h2>
+                )}
                 <span
                     style={{
                         paddingBottom: "3px"
@@ -86,22 +142,62 @@ const Stakeholder = ({
                 <div className="detail__type">
                     <p ref={afterRef}>Stakeholder</p>
                 </div>
-                <p className="detail__description">
-                    {stakeholder.description ? (
-                        stakeholder.description
-                    ) : (
-                        <span
-                            className="d-flex align-items-start justify-content-center text-muted"
-                            style={{
-                                margin: "14px 0",
-                                fontSize: "14px",
-                                width: "100%"
+                {isEditDescription ? (
+                    <form style={{ marginBottom: "40px" }}>
+                        <textarea
+                            className="detail__area"
+                            name=""
+                            value={description}
+                            onChange={e => {
+                                setDescription(e.target.value);
                             }}
-                        >
-                            No description provided
-                        </span>
-                    )}
-                </p>
+                            id=""
+                            autoFocus
+                        />
+                        <div className="detail__action">
+                            <a
+                                className="detail__primary"
+                                onClick={e => {
+                                    handleUpdate(e, { description });
+                                }}
+                            >
+                                Update
+                            </a>
+                            <a
+                                className="detail__secondary"
+                                onClick={() => {
+                                    setIsEditDescription(false);
+                                }}
+                            >
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                ) : (
+                    <p
+                        className="detail__description"
+                        title="Click to edit"
+                        onClick={e => {
+                            setDescription(stakeholder.description);
+                            setIsEditDescription(true);
+                        }}
+                    >
+                        {stakeholder.description ? (
+                            stakeholder.description
+                        ) : (
+                            <span
+                                className="d-flex align-items-start justify-content-center text-muted"
+                                style={{
+                                    margin: "14px 0",
+                                    fontSize: "14px",
+                                    width: "100%"
+                                }}
+                            >
+                                No description provided
+                            </span>
+                        )}
+                    </p>
+                )}
                 <div className="detail__other">
                     <div
                         className={
@@ -638,4 +734,6 @@ const mapSateToProps = state => ({
     help: state.help.help
 });
 
-export default connect(mapSateToProps, { toggleModal })(Stakeholder);
+export default connect(mapSateToProps, { updateStakeholder, toggleModal })(
+    Stakeholder
+);

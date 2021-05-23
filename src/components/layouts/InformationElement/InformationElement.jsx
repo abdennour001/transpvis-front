@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { colors } from "../../../utils/colors";
 import { toggleModal } from "../../../redux/actions/modalActions";
+import { updateInformationElement } from "../../../redux/actions/informationElementsActions";
 
 const InformationElement = ({
     informationElement,
@@ -16,6 +17,7 @@ const InformationElement = ({
     informationElements,
     relationships,
     help,
+    updateInformationElement,
     toggleModal
 }) => {
     const afterRef = useRef(null);
@@ -27,12 +29,22 @@ const InformationElement = ({
         restricted: false
     });
 
+    const [isEditName, setIsEditName] = useState(false);
+    const [isEditDescription, setIsEditDescription] = useState(false);
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+
     useEffect(() => {
         afterRef?.current?.setAttribute(
             "style",
             `--tooltip-type-color: ${colors[informationElement.type]};`
         );
     }, [informationElement.type]);
+
+    useEffect(() => {
+        setIsEditName(false);
+        setIsEditDescription(false);
+    }, [informationElement]);
 
     const handleToggle = toggleName => {
         setToggle({
@@ -78,17 +90,62 @@ const InformationElement = ({
             });
     };
 
+    const handleUpdate = (e, formData) => {
+        e.preventDefault();
+        setIsEditName(false);
+        setIsEditDescription(false);
+        updateInformationElement(informationElement.id, formData);
+    };
+
     return (
         <div className="detail__card">
             <div className="detail__title">
-                <h2
-                    style={{
-                        maxWidth: "350px",
-                        lineHeight: "2rem"
-                    }}
-                >
-                    {informationElement.name}
-                </h2>
+                {isEditName ? (
+                    <form>
+                        <input
+                            className="detail__input"
+                            type="text"
+                            name=""
+                            value={name}
+                            onChange={e => {
+                                setName(e.target.value);
+                            }}
+                            id=""
+                            autoFocus
+                        />
+                        <div className="detail__action">
+                            <a
+                                className="detail__primary"
+                                onClick={e => {
+                                    handleUpdate(e, { name });
+                                }}
+                            >
+                                Update
+                            </a>
+                            <a
+                                className="detail__secondary"
+                                onClick={() => setIsEditName(false)}
+                            >
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                ) : (
+                    <h2
+                        style={{
+                            maxWidth: "350px",
+                            lineHeight: "2rem",
+                            cursor: "pointer"
+                        }}
+                        title="Click to edit"
+                        onClick={e => {
+                            setName(informationElement.name);
+                            setIsEditName(true);
+                        }}
+                    >
+                        {informationElement.name}
+                    </h2>
+                )}
                 <span
                     style={{
                         paddingBottom: "3px"
@@ -101,22 +158,62 @@ const InformationElement = ({
                 <div className="detail__type">
                     <p ref={afterRef}>Information Element</p>
                 </div>
-                <p className="detail__description">
-                    {informationElement.description ? (
-                        informationElement.description
-                    ) : (
-                        <span
-                            className="d-flex align-items-start justify-content-center text-muted"
-                            style={{
-                                margin: "14px 0",
-                                fontSize: "14px",
-                                width: "100%"
+                {isEditDescription ? (
+                    <form style={{ marginBottom: "40px" }}>
+                        <textarea
+                            className="detail__area"
+                            name=""
+                            value={description}
+                            onChange={e => {
+                                setDescription(e.target.value);
                             }}
-                        >
-                            No description provided
-                        </span>
-                    )}
-                </p>
+                            id=""
+                            autoFocus
+                        />
+                        <div className="detail__action">
+                            <a
+                                className="detail__primary"
+                                onClick={e => {
+                                    handleUpdate(e, { description });
+                                }}
+                            >
+                                Update
+                            </a>
+                            <a
+                                className="detail__secondary"
+                                onClick={() => {
+                                    setIsEditDescription(false);
+                                }}
+                            >
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                ) : (
+                    <p
+                        className="detail__description"
+                        title="Click to edit"
+                        onClick={e => {
+                            setDescription(informationElement.description);
+                            setIsEditDescription(true);
+                        }}
+                    >
+                        {informationElement.description ? (
+                            informationElement.description
+                        ) : (
+                            <span
+                                className="d-flex align-items-start justify-content-center text-muted"
+                                style={{
+                                    margin: "14px 0",
+                                    fontSize: "14px",
+                                    width: "100%"
+                                }}
+                            >
+                                No description provided
+                            </span>
+                        )}
+                    </p>
+                )}
                 <div className="detail__other">
                     <div
                         className={
@@ -625,4 +722,7 @@ const mapSateToProps = state => ({
     help: state.help.help
 });
 
-export default connect(mapSateToProps, { toggleModal })(InformationElement);
+export default connect(mapSateToProps, {
+    updateInformationElement,
+    toggleModal
+})(InformationElement);

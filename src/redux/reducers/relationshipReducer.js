@@ -1,11 +1,12 @@
 import {
     GET_RELATIONS,
     TOGGLE_LOADING_RELATIONS,
-    ADD_STAKEHOLDER_INFORMATION_ELEMENT_RELATION
+    ADD_STAKEHOLDER_INFORMATION_ELEMENT_RELATION,
+    REMOVE_STAKEHOLDER_INFORMATION_ELEMENT_RELATION_FROM_REDUX
 } from "../types";
 
 const initialState = {
-    relations: null,
+    relations: [],
     loading: false
 };
 
@@ -20,6 +21,16 @@ const relationshipReducer = (state = initialState, action) => {
                 ...state,
                 loading: false,
                 relations: [...state.relations, action.payload]
+            };
+        case REMOVE_STAKEHOLDER_INFORMATION_ELEMENT_RELATION_FROM_REDUX:
+            return {
+                ...state,
+                loading: false,
+                relations: state.relations.filter(r =>
+                    action.payload.type === "s"
+                        ? r.stakeholder !== +action.payload.id
+                        : r.information_element !== +action.payload.id
+                )
             };
         default:
             return state;

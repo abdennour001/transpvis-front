@@ -1,12 +1,12 @@
 import React from "react";
 import { connect } from "react-redux";
 import Skeleton from "react-loading-skeleton";
-import { faPlus, faEllipsisH } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./_card.scss";
-
-import { toggleModal } from "../../../redux/actions/modalActions";
+import { deleteInformationElement } from "../../../redux/actions/informationElementsActions";
+import { deleteStakeholder } from "../../../redux/actions/stakeholderActions";
 
 const Card = ({
     id,
@@ -18,12 +18,25 @@ const Card = ({
     focused,
     addNew,
     title,
-    toggleModal
+    deleteInformationElement,
+    deleteStakeholder
 }) => {
-    const handleMenuClick = event => {
+    const handleDelete = event => {
         event.preventDefault();
         event.stopPropagation();
-        toggleModal("menu");
+        if (window.confirm("Are you sure you want to delete this element?")) {
+            if (id.includes("relation")) {
+
+            } else if (id.includes("association")) {
+                
+            } else {
+                if (label.includes("S")) {
+                    deleteStakeholder(id.replace("card-", ""));
+                } else {
+                    deleteInformationElement(id.replace("card-", ""));
+                }
+            }
+        }
     };
 
     if (addNew) {
@@ -82,8 +95,12 @@ const Card = ({
                     <h4 className="card__name">{name}</h4>
                 </div>
             </div>
-            <div className="card__menu" onClick={e => handleMenuClick(e)}>
-                <FontAwesomeIcon icon={faEllipsisH} size="sm" />
+            <div
+                className="card__menu"
+                onClick={e => handleDelete(e)}
+                title="Delete"
+            >
+                <FontAwesomeIcon icon={faTrash} size="sm" />
             </div>
         </div>
     );
@@ -93,4 +110,7 @@ const mapSateToProps = state => ({
     focused: state.application.focused
 });
 
-export default connect(mapSateToProps, { toggleModal })(Card);
+export default connect(mapSateToProps, {
+    deleteInformationElement,
+    deleteStakeholder
+})(Card);

@@ -1,13 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
 
 import "./_login.scss";
 import logo from "../../../assets/logo.png";
-import { login } from "../../../redux/actions/authActions";
+import { login, loadUser } from "../../../redux/actions/authActions";
 
-const Login = ({ login }) => {
+const Login = ({ isAuthenticated, login, loadUser }) => {
+    const history = useHistory();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push("/dashboard");
+        } else if (localStorage.token) {
+            loadUser();
+        }
+    }, [isAuthenticated, history]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -86,6 +96,7 @@ const Login = ({ login }) => {
 
 const mapSateToProps = state => ({
     // user: state.auth.user
+    isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapSateToProps, { login })(Login);
+export default connect(mapSateToProps, { login, loadUser })(Login);

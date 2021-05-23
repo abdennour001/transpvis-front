@@ -40,6 +40,7 @@ const InformationElementForm = ({
                     onChange={e => {
                         setName(e.target.value);
                     }}
+                    autoFocus
                 />
             </div>
             <div className="form-group">

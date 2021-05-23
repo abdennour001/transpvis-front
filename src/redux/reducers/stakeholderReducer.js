@@ -7,7 +7,7 @@ import {
 } from "../types";
 
 const initialState = {
-    stakeholders: null,
+    stakeholders: [],
     loading: false
 };
 
@@ -27,19 +27,16 @@ const stakeholderReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: false,
-                stakeholders: [
-                    ...state.stakeholders.filter(
-                        s => s.id !== action.payload.id
-                    ),
-                    action.payload
-                ]
+                stakeholders: state.stakeholders.map(s => {
+                    return s.id !== action.payload.id ? s : action.payload;
+                })
             };
         case DELETE_STAKEHOLDER:
             return {
                 ...state,
                 loading: false,
                 stakeholders: state.stakeholders.filter(
-                    s => s.id !== action.payload.id
+                    s => s.id !== +action.payload.id
                 )
             };
         default:

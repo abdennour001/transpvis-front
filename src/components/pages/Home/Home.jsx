@@ -395,7 +395,16 @@ const Home = ({
                                     </>
                                 ) : !stakeholder.stakeholders ||
                                   !stakeholder.stakeholders.length ? (
-                                    <div>Empty...</div>
+                                    <span
+                                        className="d-flex align-items-start justify-content-center text-muted"
+                                        style={{
+                                            margin: "14px 0",
+                                            fontSize: "14px",
+                                            width: "100%"
+                                        }}
+                                    >
+                                        No stakeholders
+                                    </span>
                                 ) : (
                                     <>
                                         {stakeholder.stakeholders.map(s => (
@@ -488,7 +497,16 @@ const Home = ({
                                 ) : !informationElement.informationElements ||
                                   !informationElement.informationElements
                                       .length ? (
-                                    <div>Empty...</div>
+                                    <span
+                                        className="d-flex align-items-start justify-content-center text-muted"
+                                        style={{
+                                            margin: "14px 0",
+                                            fontSize: "14px",
+                                            width: "100%"
+                                        }}
+                                    >
+                                        No information elements
+                                    </span>
                                 ) : (
                                     <>
                                         {informationElement.informationElements.map(
