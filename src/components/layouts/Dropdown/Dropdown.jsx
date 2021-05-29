@@ -11,7 +11,8 @@ import {
     faDownload,
     faSignOutAlt,
     faCog,
-    faLayerGroup
+    faLayerGroup,
+    faUser
 } from "@fortawesome/free-solid-svg-icons";
 
 import { toggleHelp } from "../../../redux/actions/helpActions";
@@ -20,7 +21,14 @@ import { handleTipPosition } from "../../../utils/app.utils";
 
 import exportFromJSON from "export-from-json";
 
-const Dropdown = ({ help, jsonData, application, toggleHelp, logout }) => {
+const Dropdown = ({
+    user,
+    help,
+    jsonData,
+    application,
+    toggleHelp,
+    logout
+}) => {
     const refDropdown = useRef(null);
 
     const toggleDropdown = event => {
@@ -75,6 +83,23 @@ const Dropdown = ({ help, jsonData, application, toggleHelp, logout }) => {
                 <FontAwesomeIcon icon={faCaretDown} fixedWidth size="sm" />
             </summary>
             <div className="dropdown__menu">
+                <div className="dropdown__item__user">
+                    <span
+                        style={{
+                            fontWeight: "400"
+                        }}
+                    >
+                        Signed in as
+                    </span>
+                    <span
+                        style={{
+                            fontWeight: "bold"
+                        }}
+                    >
+                        {user.email}
+                    </span>
+                </div>
+                <div className="dropdown__devider"></div>
                 <Link className="dropdown__item" to="/dashboard">
                     <FontAwesomeIcon icon={faLayerGroup} fixedWidth size="x1" />
                     <span>Your applications</span>
@@ -105,6 +130,7 @@ const Dropdown = ({ help, jsonData, application, toggleHelp, logout }) => {
 };
 
 const mapSateToProps = state => ({
+    user: state.auth.user,
     help: state.help.help,
     jsonData: state.viz.jsonData,
     application: state.application.application

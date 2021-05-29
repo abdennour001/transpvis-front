@@ -59,6 +59,22 @@
         }
     }
 
+    &__item__user {
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        padding: 4px 15px 4px 15px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        line-height: 1.5rem;
+
+        &:hover {
+            color: white;
+            background-color: lighten($text, 0%);
+        }
+    }
+
     &__devider {
         display: block;
         height: 0;
