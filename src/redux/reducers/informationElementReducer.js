@@ -4,7 +4,8 @@ import {
     CREATE_INFORMATION_ELEMENT,
     ADD_INFORMATION_ELEMENT_ASSOCIATION,
     DELETE_INFORMATION_ELEMENT,
-    UPDATE_INFORMATION_ELEMENT
+    UPDATE_INFORMATION_ELEMENT,
+    REMOVE_INFORMATION_ELEMENT_ASSOCIATION
 } from "../types";
 
 const initialState = {
@@ -63,6 +64,24 @@ const informationElementReducer = (state = initialState, action) => {
                         e => e.id !== +action.payload.source
                     ),
                     newSource
+                ]
+            };
+        case REMOVE_INFORMATION_ELEMENT_ASSOCIATION:
+            let newSource_ = state.informationElements.find(
+                e => e.id === +action.payload.source
+            );
+            newSource_.information_elements = newSource_.information_elements.filter(
+                ie => ie !== +action.payload.target
+            );
+
+            return {
+                ...state,
+                loading: false,
+                informationElements: [
+                    ...state.informationElements.filter(
+                        e => e.id !== +action.payload.source
+                    ),
+                    newSource_
                 ]
             };
         default:

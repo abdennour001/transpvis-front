@@ -5,7 +5,7 @@ import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./_card.scss";
-import { deleteInformationElement } from "../../../redux/actions/informationElementsActions";
+import { deleteInformationElement, removeInformationElementAssociation } from "../../../redux/actions/informationElementsActions";
 import { deleteStakeholder } from "../../../redux/actions/stakeholderActions";
 import { removeStakeholderInformationElementRelation } from "../../../redux/actions/relationsActions";
 
@@ -22,7 +22,8 @@ const Card = ({
     title,
     deleteInformationElement,
     deleteStakeholder,
-    removeStakeholderInformationElementRelation
+    removeStakeholderInformationElementRelation,
+    removeInformationElementAssociation
 }) => {
     const searchRelation = () => {
         return relationships.find(r => {
@@ -47,6 +48,7 @@ const Card = ({
             } else if (id.includes("association")) {
                 // remove association
                 console.log("association");
+                removeInformationElementAssociation(focused.id, id.match(/\d+/)[0]);
             } else {
                 if (label.includes("S")) {
                     deleteStakeholder(id.replace("card-", ""));
@@ -132,5 +134,6 @@ const mapSateToProps = state => ({
 export default connect(mapSateToProps, {
     deleteInformationElement,
     deleteStakeholder,
-    removeStakeholderInformationElementRelation
+    removeStakeholderInformationElementRelation,
+    removeInformationElementAssociation
 })(Card);

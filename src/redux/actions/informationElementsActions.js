@@ -9,7 +9,8 @@ import {
     ADD_INFORMATION_ELEMENT_ASSOCIATION,
     SET_FOCUSED,
     REMOVE_STAKEHOLDER_INFORMATION_ELEMENT_RELATION_FROM_REDUX,
-    REMOVE_FOCUSED
+    REMOVE_FOCUSED,
+    REMOVE_INFORMATION_ELEMENT_ASSOCIATION
 } from "../types";
 import { environment } from "../../utils/environment";
 
@@ -132,5 +133,35 @@ export const addInformationElementAssociation = (
     } catch (error) {
         dispatch({ type: TOGGLE_LOADING_INFORMATION_ELEMENTS });
         console.error("Error adding information element association: ", error);
+    }
+};
+
+// Remove information element association
+export const removeInformationElementAssociation = (
+    source,
+    target
+) => async dispatch => {
+    const config = {
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+    try {
+        console.log(source, target);
+        dispatch({ type: TOGGLE_LOADING_INFORMATION_ELEMENTS });
+        const url = environment.apiEndpoint;
+        const formData = { data: { source: +source, target: +target } };
+        const res = await axios.delete(
+            url + `information-element-associations/`,
+            formData,
+            config
+        );
+        dispatch({
+            type: REMOVE_INFORMATION_ELEMENT_ASSOCIATION,
+            payload: { source, target }
+        });
+    } catch (error) {
+        dispatch({ type: TOGGLE_LOADING_INFORMATION_ELEMENTS });
+        console.error("Error removing information element ass: ", error);
     }
 };
