@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./_register.scss";
 import logo from "../../../assets/logo.png";
-import { register } from "../../../redux/actions/authActions";
+import { register, loadUser } from "../../../redux/actions/authActions";
 
-const Register = ({ register }) => {
+const Register = ({ isAuthenticated, register, loadUser }) => {
+    const history = useHistory();
     const [username, setUsername] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push("/dashboard");
+        } else if (localStorage.token) {
+            loadUser();
+        }
+    }, [isAuthenticated, history]);
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -56,6 +67,7 @@ const Register = ({ register }) => {
                                     onChange={e => {
                                         setUsername(e.target.value);
                                     }}
+                                    autoFocus
                                     required
                                 />
                             </div>
@@ -92,7 +104,7 @@ const Register = ({ register }) => {
                     </div>
                     <div className="register__register">
                         <p>Already have login and password? </p>
-                        <a href="#">Sign in</a>
+                        <Link to="/login">Sign in</Link>
                     </div>
                 </div>
             </div>
@@ -101,6 +113,7 @@ const Register = ({ register }) => {
 };
 const mapSateToProps = state => ({
     // user: state.auth.user
+    isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapSateToProps, { register })(Register);
+export default connect(mapSateToProps, { register, loadUser })(Register);

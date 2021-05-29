@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 import "./_login.scss";
 import logo from "../../../assets/logo.png";
@@ -63,7 +64,9 @@ const Login = ({ isAuthenticated, login, loadUser }) => {
                                     onChange={e => {
                                         setEmail(e.target.value);
                                     }}
+                                    autoFocus
                                     required
+                                    autoComplete
                                 />
                             </div>
                             <div className="form-group">
@@ -86,7 +89,7 @@ const Login = ({ isAuthenticated, login, loadUser }) => {
                     </div>
                     <div className="login__register">
                         <p>Don't have an account yet? </p>
-                        <a href="#">Register now</a>
+                        <Link to="/register">Register now</Link>
                     </div>
                 </div>
             </div>
