@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./_card.scss";
 import { deleteInformationElement } from "../../../redux/actions/informationElementsActions";
 import { deleteStakeholder } from "../../../redux/actions/stakeholderActions";
+import { removeStakeholderInformationElementRelation } from "../../../redux/actions/relationsActions";
 
 const Card = ({
     id,
@@ -16,19 +17,36 @@ const Card = ({
     onClick,
     isLoading,
     focused,
+    relationships,
     addNew,
     title,
     deleteInformationElement,
-    deleteStakeholder
+    deleteStakeholder,
+    removeStakeholderInformationElementRelation
 }) => {
+    const searchRelation = () => {
+        return relationships.find(r => {
+            return (
+                (r.stakeholder === +focused.id &&
+                    r.information_element === +id.match(/\d+/)[0]) ||
+                (r.stakeholder === +id.match(/\d+/)[0] &&
+                    r.information_element === +focused.id)
+            );
+        });
+    };
+
     const handleDelete = event => {
         event.preventDefault();
         event.stopPropagation();
         if (window.confirm("Are you sure you want to delete this element?")) {
             if (id.includes("relation")) {
-
+                // remove relation
+                let relation = searchRelation();
+                // console.log("remove relation", relation?.id);
+                removeStakeholderInformationElementRelation(relation?.id);
             } else if (id.includes("association")) {
-                
+                // remove association
+                console.log("association");
             } else {
                 if (label.includes("S")) {
                     deleteStakeholder(id.replace("card-", ""));
@@ -107,10 +125,12 @@ const Card = ({
 };
 
 const mapSateToProps = state => ({
-    focused: state.application.focused
+    focused: state.application.focused,
+    relationships: state.relationship.relations
 });
 
 export default connect(mapSateToProps, {
     deleteInformationElement,
-    deleteStakeholder
+    deleteStakeholder,
+    removeStakeholderInformationElementRelation
 })(Card);

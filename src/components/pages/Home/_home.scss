@@ -102,9 +102,9 @@
         position: relative;
         padding-top: 16px;
         overflow: hidden;
-        // height: calc(100vh - 150px);
-        // overflow-y: scroll;
-        // scroll-behavior: smooth;
+        height: calc(100vh - 150px);
+        overflow-y: scroll;
+        scroll-behavior: smooth;
     }
 
     &__expand {
