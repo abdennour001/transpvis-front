@@ -18,11 +18,13 @@ export default (state = initialState, action) => {
         case REGISTER_SUCCESS:
         case LOGIN_SUCCESS:
             localStorage.setItem("token", action.payload.token);
+            localStorage.setItem("user", JSON.stringify(action.payload.user));
             setAuthToken(action.payload.token);
 
             return {
                 ...state,
-                ...action.payload,
+                token: action.payload.token,
+                user: action.payload.user,
                 isAuthenticated: true,
                 loading: false
             };

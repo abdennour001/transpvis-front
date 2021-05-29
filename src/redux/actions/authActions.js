@@ -19,12 +19,18 @@ export const register = formData => async dispatch => {
     try {
         dispatch(setLoading());
         const url = environment.apiEndpoint;
-        console.log(formData);
         const res = await axios.post(url + "register/", formData, config);
-        console.log(res.data);
         dispatch({
             type: REGISTER_SUCCESS,
-            payload: res.data
+            payload: {
+                user: {
+                    id: res.data.id,
+                    email: res.data.email,
+                    firstName: res.data.first_name,
+                    lastName: res.data.last_name
+                },
+                token: res.data.token
+            }
         });
     } catch (error) {
         console.error("Error register new user", error);
@@ -43,10 +49,17 @@ export const login = formData => async dispatch => {
         dispatch(setLoading());
         const url = environment.apiEndpoint;
         const res = await axios.post(url + "login/", formData, config);
-
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
+            payload: {
+                user: {
+                    id: res.data.id,
+                    email: res.data.email,
+                    firstName: res.data.first_name,
+                    lastName: res.data.last_name
+                },
+                token: res.data.token
+            }
         });
     } catch (error) {
         console.error("Error login user", error);
@@ -57,7 +70,10 @@ export const login = formData => async dispatch => {
 export const loadUser = () => async dispatch => {
     dispatch({
         type: LOGIN_SUCCESS,
-        payload: { token: localStorage.getItem("token") }
+        payload: {
+            token: localStorage.getItem("token"),
+            user: JSON.parse(localStorage.getItem("user"))
+        }
     });
 };
 
