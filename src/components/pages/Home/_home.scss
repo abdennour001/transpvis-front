@@ -16,6 +16,9 @@
     background-image: url("../../../assets/background.png");
     background-repeat: space;
     background-size: 410px;
+    @media only screen and (max-width: 1640px) {
+        background-size: 250px !important;
+    }
     background-position: left center;
     // position: relative;
 
