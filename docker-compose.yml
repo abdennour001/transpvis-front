@@ -2,6 +2,7 @@ transpvis-front:
     command: npm start
     container_name: transpvis-front
     environment:
+        - REACT_APP_ENV=dev
         - PORT=3000
     build: .
     ports:
