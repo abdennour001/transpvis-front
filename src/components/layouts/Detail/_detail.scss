@@ -25,6 +25,11 @@
         max-height: calc(100vh - 170px);
         overflow-y: scroll;
         scroll-behavior: smooth;
+        scrollbar-width: none !important;
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+
     }
 
     &__title {
