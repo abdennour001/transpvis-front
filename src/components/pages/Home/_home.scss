@@ -112,7 +112,6 @@
         &::-webkit-scrollbar {
             width: 0;
         }
-
     }
 
     &__expand {
@@ -162,6 +161,9 @@
     box-shadow: 0 1px 8px rgba(109, 117, 141, 0.1);
     margin-bottom: 20px;
     padding: 16px;
+    @media only screen and (max-width: 1370px) {
+        padding: 16px 0;
+    }
     max-width: 330px;
     // position: relative;
 }
@@ -174,6 +176,9 @@
 
     span {
         font-size: 10px;
+        @media only screen and (max-width: 1370px) {
+            font-size: 8px;
+        }
         color: lighten($text, 10%);
         text-transform: uppercase;
     }
