@@ -63,6 +63,7 @@ export const login = formData => async dispatch => {
         });
     } catch (error) {
         console.error("Error login user", error);
+        alert("Error while login, please check your information and login again!")
     }
 };
 

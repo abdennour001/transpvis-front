@@ -66,7 +66,7 @@ const Login = ({ isAuthenticated, login, loadUser }) => {
                                     }}
                                     autoFocus
                                     required
-                                    autoComplete
+                                    autoComplete="true"
                                 />
                             </div>
                             <div className="form-group">
